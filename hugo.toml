@@ -12,7 +12,8 @@ pygmentsCodeFences = true
 pygmentsCodefencesNumberInline = true
 
 # 分页
-paginate = 10
+[pagination]
+  pagerSize = 10
 
 # 默认内容类型
 defaultContentLanguage = "zh"
