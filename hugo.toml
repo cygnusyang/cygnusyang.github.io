@@ -180,10 +180,10 @@ pygmentsCodefencesNumberInline = true
   [params.page.comment.giscus]
     enable = true
     # GitHub 仓库信息
-    repo = "cygnusyang/cygnusthinkingcircle"  # 你的 GitHub 仓库
-    repoId = ""  # 需要从 Giscus 配置获取
-    category = "Comments"  # Discussions 分类
-    categoryId = ""  # 需要从 Giscus 配置获取
+    repo = "cygnusyang/cygnusyang.github.io"  # 你的 GitHub Pages 仓库
+    repoId = "R_kgDOSUhMhQ"  # Giscus 自动生成
+    category = "General"  # Discussions 分类
+    categoryId = "DIC_kwDOSUhMhc4C8Y8_"  # Giscus 自动生成
     # 映射方式
     mapping = "pathname"  # 使用文章路径作为标识
     # 其他配置
