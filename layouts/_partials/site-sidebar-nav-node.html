@@ -1,0 +1,36 @@
+{{- $node := .Node -}}
+{{- $current := .Current -}}
+{{- $pages := where $node.RegularPages.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- $sections := where $node.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- if or $pages $sections -}}
+  {{- $open := hasPrefix $current $node.RelPermalink -}}
+  <div class="details collection-details{{ if $open }} open{{ end }}">
+    <div class="details-summary collection-summary">
+      {{- dict "Class" "fa-regular fa-folder-open" | partial "plugin/icon.html" -}}
+      <a class="collection-name site-sidebar-nav__section{{ if eq $current $node.RelPermalink }} active{{ end }}" href="{{ $node.RelPermalink }}" title="{{ $node.LinkTitle }}">{{ $node.LinkTitle }}</a>
+      <span class="collection-count">{{ len $node.RegularPagesRecursive }}</span>
+      {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
+    </div>
+    <div class="details-content collection-content">
+      <nav>
+        <ul class="collection-list">
+          {{- range $sections -}}
+            <li class="collection-item site-sidebar-nav__nested">
+              {{- partial "site-sidebar-nav-node.html" (dict "Node" . "Current" $current) -}}
+            </li>
+          {{- end -}}
+          {{- range $pages -}}
+            {{- $title := .Params.shortTitle | default .LinkTitle | default .File.TranslationBaseName -}}
+            <li class="collection-item">
+              {{- if eq $current .RelPermalink -}}
+                <span class="active" title="{{ $title }}">{{ $title }}</span>
+              {{- else -}}
+                <a href="{{ .RelPermalink }}" title="{{ $title }}">{{ $title }}</a>
+              {{- end -}}
+            </li>
+          {{- end -}}
+        </ul>
+      </nav>
+    </div>
+  </div>
+{{- end -}}

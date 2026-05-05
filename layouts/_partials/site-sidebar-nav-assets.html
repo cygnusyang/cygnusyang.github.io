@@ -1,0 +1,138 @@
+{{- $current := .RelPermalink -}}
+{{- $sections := where .Site.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- if $sections -}}
+<template id="site-sidebar-nav-template">
+  <aside class="aside-collection site-sidebar-nav" aria-label="文档导航">
+    {{- range $sections -}}
+      {{- partial "site-sidebar-nav-node.html" (dict "Node" . "Current" $current) -}}
+    {{- end -}}
+  </aside>
+</template>
+
+<style>
+  .site-sidebar-nav-host {
+    display: block !important;
+  }
+
+  .site-sidebar-nav {
+    flex: 1;
+    max-width: 500px;
+  }
+
+  .site-sidebar-nav .collection-details {
+    margin-bottom: 0.5rem;
+  }
+
+  .site-sidebar-nav .collection-summary a.collection-name {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .site-sidebar-nav .collection-summary a.collection-name::before {
+    content: attr(title) "・";
+  }
+
+  .site-sidebar-nav .collection-summary .collection-name.active,
+  .site-sidebar-nav .collection-summary a.collection-name:hover {
+    color: var(--fi-single-link-color, #2d96bd);
+  }
+
+  .site-sidebar-nav .site-sidebar-nav__nested {
+    text-indent: 0;
+  }
+
+  .site-sidebar-nav .site-sidebar-nav__nested > .collection-details {
+    margin: 0.25rem 0;
+  }
+
+  .site-sidebar-nav .site-sidebar-nav__nested > .collection-details > .collection-summary {
+    padding-left: 0;
+    background: transparent;
+  }
+
+  .site-sidebar-nav-is-collapsed {
+    flex: 0 0 2.5rem !important;
+    max-width: 2.5rem !important;
+    overflow: hidden;
+  }
+
+  .site-sidebar-nav-is-collapsed .site-sidebar-nav__body,
+  .site-sidebar-nav-is-collapsed .collection-details {
+    display: none;
+  }
+
+  .site-sidebar-nav-toggle {
+    display: none;
+  }
+
+  @media (min-width: 681px) {
+    .site-sidebar-nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      margin-bottom: 0.5rem;
+      border: 0;
+      border-radius: 999px;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .site-sidebar-nav-toggle:hover {
+      color: var(--fi-single-link-color, #2d96bd);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .site-sidebar-nav {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var template = document.getElementById('site-sidebar-nav-template');
+    var main = document.querySelector('main.fi-container') || document.querySelector('main');
+    if (!template || !main || main.querySelector('.site-sidebar-nav')) return;
+
+    var nav = template.content.firstElementChild.cloneNode(true);
+    var firstAside = main.querySelector(':scope > aside.aside-collection');
+    if (firstAside && firstAside.children.length === 0) {
+      firstAside.replaceWith(nav);
+    } else {
+      var anchor = main.querySelector(':scope > article, :scope > .page, :scope > section') || main.firstElementChild;
+      main.insertBefore(nav, anchor);
+    }
+
+    nav.classList.add('site-sidebar-nav-host');
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'site-sidebar-nav-toggle';
+    toggle.setAttribute('aria-label', '收起文档导航');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.innerHTML = '<i class="fa-solid fa-angle-left" aria-hidden="true"></i>';
+    nav.insertBefore(toggle, nav.firstChild);
+
+    var storageKey = 'site-sidebar-nav-collapsed';
+    var setCollapsed = function (collapsed) {
+      nav.classList.toggle('site-sidebar-nav-is-collapsed', collapsed);
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      toggle.setAttribute('aria-label', collapsed ? '展开文档导航' : '收起文档导航');
+      toggle.innerHTML = collapsed
+        ? '<i class="fa-solid fa-angle-right" aria-hidden="true"></i>'
+        : '<i class="fa-solid fa-angle-left" aria-hidden="true"></i>';
+    };
+
+    setCollapsed(localStorage.getItem(storageKey) === 'true');
+    toggle.addEventListener('click', function () {
+      var collapsed = !nav.classList.contains('site-sidebar-nav-is-collapsed');
+      localStorage.setItem(storageKey, String(collapsed));
+      setCollapsed(collapsed);
+    });
+  })();
+</script>
+{{- end -}}

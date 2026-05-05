@@ -82,6 +82,10 @@ pygmentsCodefencesNumberInline = true
     enable = true
     platforms = ["github"]
 
+  # 使用 FixIt 自定义资源钩子注入站点侧边栏导航，不修改主题目录。
+  [params.customPartials]
+    assets = ["site-sidebar-nav-assets.html"]
+
 # 导航菜单
 [menu]
   [[menu.main]]
