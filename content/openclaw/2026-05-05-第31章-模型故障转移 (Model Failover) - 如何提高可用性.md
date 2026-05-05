@@ -1,5 +1,5 @@
 ---
-title: 模型故障转移 (Model Failover) —— 如何提高可用性
+title: 第31章：模型故障转移 (Model Failover) —— 如何提高可用性
 date: 2026-05-05
 category: 07 ops best practices
 tags: [07 ops best practices]

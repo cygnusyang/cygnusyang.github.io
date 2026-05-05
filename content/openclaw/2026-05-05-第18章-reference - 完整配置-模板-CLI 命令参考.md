@@ -1,5 +1,5 @@
 ---
-title: reference —— 完整配置、模板、CLI 命令参考
+title: 第18章：reference —— 完整配置、模板、CLI 命令参考
 date: 2026-05-05
 category: 03 core concepts
 tags: [03 core concepts]

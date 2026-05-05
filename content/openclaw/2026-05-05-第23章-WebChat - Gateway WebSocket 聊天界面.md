@@ -1,5 +1,5 @@
 ---
-title: WebChat —— Gateway WebSocket 聊天界面
+title: 第23章：WebChat —— Gateway WebSocket 聊天界面
 date: 2026-05-05
 category: 04 client ux
 tags: [04 client ux]

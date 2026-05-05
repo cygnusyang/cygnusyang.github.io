@@ -1,5 +1,5 @@
 ---
-title: coding-agent —— 调用外部编码代理
+title: 第30章：coding-agent —— 调用外部编码代理
 date: 2026-05-05
 category: 06 builtin skills
 tags: [06 builtin skills]

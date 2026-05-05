@@ -1,5 +1,5 @@
 ---
-title: sessions_spawn —— 多智能体协作的核心原语
+title: 第09章：sessions_spawn —— 多智能体协作的核心原语
 date: 2026-05-05
 category: 02 multi agent
 tags: [02 multi agent]

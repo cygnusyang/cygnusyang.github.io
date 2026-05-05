@@ -1,5 +1,5 @@
 ---
-title: gh-issues —— GitHub Issues 自动修复编排
+title: 第29章：gh-issues —— GitHub Issues 自动修复编排
 date: 2026-05-05
 category: 06 builtin skills
 tags: [06 builtin skills]
