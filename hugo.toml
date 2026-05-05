@@ -143,6 +143,10 @@ pygmentsCodefencesNumberInline = true
   [params.customPartials]
     assets = ["site-sidebar-nav-assets.html"]
 
+  # 关闭主题默认的 RSS 社交图标
+  [params.social]
+    RSS = false
+
 # 导航菜单
 [menu]
   [[menu.main]]
