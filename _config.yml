@@ -1,4 +1,5 @@
 # Chirpy Jekyll Theme Configuration
+remote_theme: cotes2020/jekyll-theme-chirpy
 
 # Welcome to Jekyll!
 #

@@ -1,0 +1,11 @@
+# Sharing buttons settings
+# Comment the line(s) below if you don't need it
+
+twitter:
+  id:
+facebook:
+  app_id:
+reddit:
+  enable: false
+hackernoon:
+  enable: false
