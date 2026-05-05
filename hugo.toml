@@ -19,9 +19,8 @@ defaultContentLanguage = "zh"
 defaultContentLanguageInSubdir = false
 
 # 构建设置
-build = {
+[build]
   writeStats = true
-}
 
 # 权限设置
 [params]
