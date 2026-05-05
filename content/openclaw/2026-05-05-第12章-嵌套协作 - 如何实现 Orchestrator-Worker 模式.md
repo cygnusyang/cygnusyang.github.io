@@ -3,6 +3,8 @@ title: 嵌套协作 —— 如何实现 Orchestrator-Worker 模式
 date: 2026-05-05
 category: 02 multi agent
 tags: [02 multi agent]
+collections: ["openclaw"]
+weight: 12
 ---
 
 # 第十二章：嵌套协作 —— 如何实现 Orchestrator-Worker 模式

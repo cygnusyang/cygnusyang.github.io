@@ -3,6 +3,8 @@ title: 工具系统 (Tools) —— OpenClaw 工具调用框架设计
 date: 2026-05-05
 category: 05 tools automation
 tags: [05 tools automation]
+collections: ["openclaw"]
+weight: 24
 ---
 
 # 第二十四章：工具系统 (Tools) —— OpenClaw 工具调用框架设计

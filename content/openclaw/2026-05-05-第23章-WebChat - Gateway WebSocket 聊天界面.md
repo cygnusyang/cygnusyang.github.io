@@ -3,6 +3,8 @@ title: WebChat —— Gateway WebSocket 聊天界面
 date: 2026-05-05
 category: 04 client ux
 tags: [04 client ux]
+collections: ["openclaw"]
+weight: 23
 ---
 
 # 第二十三章：WebChat —— Gateway WebSocket 聊天界面

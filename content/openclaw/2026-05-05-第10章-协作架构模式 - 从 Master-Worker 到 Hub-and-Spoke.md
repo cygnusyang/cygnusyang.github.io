@@ -3,6 +3,8 @@ title: 协作架构模式 —— 从 Master-Worker 到 Hub-and-Spoke
 date: 2026-05-05
 category: 02 multi agent
 tags: [02 multi agent]
+collections: ["openclaw"]
+weight: 10
 ---
 
 # 第十章：协作架构模式 —— 从 Master-Worker 到 Hub-and-Spoke

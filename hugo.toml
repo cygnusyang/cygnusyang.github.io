@@ -39,11 +39,26 @@ pygmentsCodefencesNumberInline = true
     copy = true
     expand = false
 
-  # 右侧目录
-  [params.toc]
+  # Collection 系列导航侧边栏
+  collectionList = true
+  collectionNavigation = true
+
+  # 面包屑导航
+  [params.breadcrumb]
     enable = true
-    # 目录浮动在右侧
-    keepInContent = false
+    sticky = false
+    showHome = true
+
+  # 右侧目录 (FixIt 使用 params.page.toc)
+  [params.page]
+    [params.page.toc]
+      enable = true
+      keepStatic = false
+      auto = true
+      position = "right"
+      ordered = false
+      startLevel = 2
+      endLevel = 6
 
   # 首页信息
   [params.home]
@@ -78,6 +93,7 @@ pygmentsCodefencesNumberInline = true
     identifier = "openclaw"
     name = "OpenClaw"
     url = "/openclaw/"
+    parent = "posts"
     weight = 2
   [[menu.main]]
     identifier = "reading"

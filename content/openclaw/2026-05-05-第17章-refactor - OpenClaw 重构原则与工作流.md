@@ -3,6 +3,8 @@ title: refactor —— OpenClaw 重构原则与工作流
 date: 2026-05-05
 category: 03 core concepts
 tags: [03 core concepts]
+collections: ["openclaw"]
+weight: 17
 ---
 
 # 第十七章： refactor —— OpenClaw 重构原则与工作流
