@@ -20,6 +20,10 @@
     transition: flex-basis 0.22s ease, max-width 0.22s ease;
   }
 
+  main.fi-container:has(.home:not(.posts)) {
+    align-items: flex-start !important;
+  }
+
   main.fi-container:has(.site-sidebar-nav) {
     gap: clamp(0.75rem, 1.3vw, 1.25rem);
   }
