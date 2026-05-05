@@ -38,10 +38,9 @@ defaultContentLanguageInSubdir = false
   showWordCount = true
 
   # 代码块配置
-  code = {
-    copy = true,
+  [params.code]
+    copy = true
     expand = false
-  }
 
   # 右侧目录
   [params.toc]
