@@ -67,6 +67,8 @@ pygmentsCodefencesNumberInline = true
   # 首页信息
   [params.home]
     enable = true
+    [params.home.posts]
+      enable = false
     [params.home.profile]
       enable = true
       avatar = ""
@@ -153,17 +155,60 @@ pygmentsCodefencesNumberInline = true
     name = "OpenClaw"
     url = "/posts/openclaw/"
     parent = "posts"
+    weight = 1
+  [[menu.main]]
+    identifier = "gstack"
+    name = "GStack"
+    url = "/tags/gstack/"
+    parent = "posts"
     weight = 2
+  [[menu.main]]
+    identifier = "gbrain"
+    name = "GBrain"
+    url = "/tags/gbrain/"
+    parent = "posts"
+    weight = 3
+  [[menu.main]]
+    identifier = "claude-code"
+    name = "Claude Code"
+    url = "/tags/claude-code/"
+    parent = "posts"
+    weight = 4
+  [[menu.main]]
+    identifier = "mcp"
+    name = "MCP"
+    url = "/tags/mcp/"
+    parent = "posts"
+    weight = 5
+  [[menu.main]]
+    identifier = "codex"
+    name = "Codex"
+    url = "/tags/codex/"
+    parent = "posts"
+    weight = 6
+  [[menu.main]]
+    identifier = "dev-things"
+    name = "研发那些事"
+    url = "/categories/研发那些事/"
+    parent = "posts"
+    weight = 7
+  [[menu.main]]
+    identifier = "eng-things"
+    name = "工程那些事"
+    url = "/categories/工程那些事/"
+    parent = "posts"
+    weight = 8
   [[menu.main]]
     identifier = "reading"
     name = "读书"
     url = "/reading/"
-    weight = 3
+    parent = "posts"
+    weight = 9
   [[menu.main]]
     identifier = "about"
     name = "关于"
     url = "/about/"
-    weight = 4
+    weight = 2
 
 # 输出格式
 [outputs]
