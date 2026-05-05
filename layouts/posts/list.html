@@ -19,8 +19,8 @@
         <nav>
           <ul class="collection-list">
             {{- /* 获取所有 collection 术语 */ -}}
-            {{- $collectionTerms := .Site.GetTerms "collections" -}}
-            {{- $allPages := .Site.RegularPages -}}
+            {{- $collectionTerms := site.GetTerms "collections" -}}
+            {{- $allPages := site.RegularPages -}}
 
             {{- /* 按 collection 分组展示 */ -}}
             {{- range $collectionTerms -}}
