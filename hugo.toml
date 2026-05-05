@@ -82,6 +82,10 @@ pygmentsCodefencesNumberInline = true
     enable = true
     platforms = ["github"]
 
+  # 站点级自定义 partial。这里用于注入通用文件浏览导航，不修改 FixIt 主题目录。
+  [params.customPartials]
+    assets = ["site-file-nav-assets.html"]
+
 # 导航菜单
 [menu]
   [[menu.main]]

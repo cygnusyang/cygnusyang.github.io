@@ -1,0 +1,251 @@
+{{- $current := .RelPermalink -}}
+{{- $sections := where .Site.Sections.ByWeight "Params.hiddenFromFileNav" "ne" true -}}
+{{- if $sections -}}
+<template id="site-file-nav-template">
+  <div class="site-file-nav" data-current="{{ $current }}">
+    <div class="site-file-nav__header">
+      <span class="site-file-nav__title">文档导航</span>
+      <button class="site-file-nav__toggle" type="button" aria-label="收起文档导航" aria-expanded="true" title="收起/展开导航">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+    <nav class="site-file-nav__body" aria-label="文档导航">
+      <ul class="site-file-nav__list site-file-nav__list--root">
+        {{- range $sections -}}
+          {{- partial "site-file-nav-node.html" (dict "Node" . "Current" $current "Level" 0) -}}
+        {{- end -}}
+      </ul>
+    </nav>
+  </div>
+</template>
+
+<style>
+  .site-file-nav-host {
+    flex: 0 0 20rem !important;
+    max-width: 20rem !important;
+    transition: flex-basis 0.2s ease, max-width 0.2s ease;
+  }
+
+  .site-file-nav-host > .collection-details {
+    display: none;
+  }
+
+  .site-file-nav {
+    border: 1px solid rgba(127, 127, 127, 0.18);
+    border-radius: 8px;
+    background: var(--fi-background-color, rgba(255, 255, 255, 0.78));
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+  }
+
+  .site-file-nav__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.16);
+  }
+
+  .site-file-nav__title {
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .site-file-nav__toggle {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 6px;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .site-file-nav__toggle:hover {
+    background: rgba(127, 127, 127, 0.12);
+  }
+
+  .site-file-nav__toggle > span::before {
+    content: "";
+    display: block;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  .site-file-nav__body {
+    max-height: min(68vh, 46rem);
+    overflow: auto;
+    padding: 0.45rem 0.35rem 0.65rem;
+  }
+
+  .site-file-nav__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-file-nav__list .site-file-nav__list {
+    padding-left: 0.7rem;
+  }
+
+  .site-file-nav__summary {
+    display: grid;
+    grid-template-columns: 0.9rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.2rem;
+    min-height: 1.85rem;
+    padding: 0 0.35rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .site-file-nav__summary:hover,
+  .site-file-nav__link:hover {
+    background: rgba(127, 127, 127, 0.1);
+  }
+
+  .site-file-nav__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-file-nav__chevron::before {
+    content: "";
+    display: block;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    opacity: 0.55;
+    transform: rotate(-45deg);
+    transition: transform 0.15s ease;
+  }
+
+  .site-file-nav__details[open] > .site-file-nav__summary .site-file-nav__chevron::before {
+    transform: rotate(45deg);
+  }
+
+  .site-file-nav__section-link,
+  .site-file-nav__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .site-file-nav__section-link {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.88rem;
+    font-weight: 650;
+  }
+
+  .site-file-nav__count {
+    color: var(--fi-secondary-color, #64748b);
+    font-size: 0.75rem;
+  }
+
+  .site-file-nav__item {
+    margin: 1px 0;
+  }
+
+  .site-file-nav__link {
+    display: block;
+    min-height: 1.7rem;
+    padding: 0.28rem 0.45rem 0.28rem 1.6rem;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  .site-file-nav__link.is-active,
+  .site-file-nav__section-link.is-active {
+    color: var(--fi-single-link-color, #2d96bd);
+    font-weight: 700;
+  }
+
+  .site-file-nav__link.is-active {
+    background: rgba(45, 150, 189, 0.12);
+  }
+
+  .site-file-nav-host.site-file-nav-is-collapsed {
+    flex-basis: 3rem !important;
+    max-width: 3rem !important;
+  }
+
+  .site-file-nav-host.site-file-nav-is-collapsed > :not(.site-file-nav) {
+    display: none !important;
+  }
+
+  .site-file-nav-host.site-file-nav-is-collapsed .site-file-nav__title,
+  .site-file-nav-host.site-file-nav-is-collapsed .site-file-nav__body {
+    display: none;
+  }
+
+  .site-file-nav-host.site-file-nav-is-collapsed .site-file-nav__header {
+    justify-content: center;
+    padding-inline: 0.35rem;
+  }
+
+  .site-file-nav-host.site-file-nav-is-collapsed .site-file-nav__toggle > span::before {
+    transform: rotate(225deg);
+  }
+
+  @media (max-width: 680px) {
+    .site-file-nav-host {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var template = document.getElementById('site-file-nav-template');
+    var main = document.querySelector('main.fi-container') || document.querySelector('main');
+    if (!template || !main || main.querySelector('.site-file-nav')) return;
+
+    var nav = template.content.firstElementChild.cloneNode(true);
+    var host = main.querySelector(':scope > aside.aside-collection');
+    if (!host) {
+      host = document.createElement('aside');
+      host.className = 'aside-collection site-file-nav-aside';
+      var anchor = main.querySelector(':scope > article, :scope > .page, :scope > section') || main.firstElementChild;
+      main.insertBefore(host, anchor);
+    }
+
+    host.classList.add('site-file-nav-host');
+    host.insertBefore(nav, host.firstChild);
+
+    var active = nav.querySelector('[aria-current="page"]');
+    if (active) {
+      var parent = active.parentElement;
+      while (parent && parent !== nav) {
+        if (parent.tagName === 'DETAILS') parent.open = true;
+        parent = parent.parentElement;
+      }
+      active.scrollIntoView({ block: 'nearest' });
+    }
+
+    var storageKey = 'site-file-nav-collapsed';
+    var toggle = nav.querySelector('.site-file-nav__toggle');
+    var setCollapsed = function (collapsed) {
+      host.classList.toggle('site-file-nav-is-collapsed', collapsed);
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      toggle.setAttribute('aria-label', collapsed ? '展开文档导航' : '收起文档导航');
+    };
+
+    setCollapsed(localStorage.getItem(storageKey) === 'true');
+    toggle.addEventListener('click', function () {
+      var collapsed = !host.classList.contains('site-file-nav-is-collapsed');
+      localStorage.setItem(storageKey, String(collapsed));
+      setCollapsed(collapsed);
+    });
+  })();
+</script>
+{{- end -}}
