@@ -471,3 +471,24 @@ title: 首页
     </div>
   </a>
 </section>
+
+<!-- ==================== 捐赠支持 ==================== -->
+<section class="home-section">
+  <div class="home-section-header">
+    <span class="home-section-header-icon">☕</span>
+    <h2 class="home-section-header-title">捐赠支持<span class="home-section-header-count">请我喝杯咖啡</span></h2>
+  </div>
+
+  <a href="/donate/" class="about-card">
+    <div class="about-card-icon">❤️</div>
+    <div class="about-card-content">
+      <h3>支持创作</h3>
+      <p>如果我的内容对你有所帮助，欢迎请我喝杯咖啡。你的支持是我持续创作的动力。</p>
+      <div class="about-card-tags">
+        <span class="about-card-tag">微信赞赏</span>
+        <span class="about-card-tag">支付宝</span>
+        <span class="about-card-tag">GitHub Sponsors</span>
+      </div>
+    </div>
+  </a>
+</section>

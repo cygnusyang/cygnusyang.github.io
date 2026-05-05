@@ -20,3 +20,9 @@ draft: false
 
 - GitHub: [https://github.com/cygnusyang](https://github.com/cygnusyang)
 - Email: ruohuyang@163.com
+
+## 捐赠支持
+
+如果我的内容对你有所帮助，欢迎请我喝杯咖啡 ☕
+
+- [☕ 捐赠支持](/donate/) - 微信 / 支付宝 / GitHub Sponsors
