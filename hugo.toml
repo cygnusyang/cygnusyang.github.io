@@ -15,10 +15,6 @@ pygmentsCodefencesNumberInline = true
 [pagination]
   pagerSize = 10
 
-# 默认内容类型
-defaultContentLanguage = "zh"
-defaultContentLanguageInSubdir = false
-
 # 构建设置
 [build]
   writeStats = true
@@ -70,33 +66,28 @@ defaultContentLanguageInSubdir = false
     enable = true
     platforms = ["github"]
 
-# 多语言配置
-[Languages]
-  [Languages.zh]
-    languageName = "中文"
+# 导航菜单
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "文章"
+    url = "/posts/"
     weight = 1
-    title = "Cygnus Tech Blog"
-    [Languages.zh.menu]
-      [[Languages.zh.menu.main]]
-        identifier = "posts"
-        name = "文章"
-        url = "/posts/"
-        weight = 1
-      [[Languages.zh.menu.main]]
-        identifier = "openclaw"
-        name = "OpenClaw"
-        url = "/openclaw/"
-        weight = 2
-      [[Languages.zh.menu.main]]
-        identifier = "reading"
-        name = "读书"
-        url = "/reading/"
-        weight = 3
-      [[Languages.zh.menu.main]]
-        identifier = "about"
-        name = "关于"
-        url = "/about/"
-        weight = 4
+  [[menu.main]]
+    identifier = "openclaw"
+    name = "OpenClaw"
+    url = "/openclaw/"
+    weight = 2
+  [[menu.main]]
+    identifier = "reading"
+    name = "读书"
+    url = "/reading/"
+    weight = 3
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 4
 
 # 输出格式
 [outputs]
