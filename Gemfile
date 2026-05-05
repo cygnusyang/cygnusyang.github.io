@@ -1,12 +1,10 @@
 source "https://rubygems.org"
 
-gem "jekyll"
+# Chirpy theme dependencies
+gem "jekyll", "~> 4.3"
 gem "jekyll-include-cache"
 gem "jekyll-paginate"
 gem "jekyll-sitemap"
 gem "jekyll-feed"
-gem "jekyll-archives"
 gem "rouge"
-
-# Chirpy theme
-gem "jekyll-theme-chirpy"
+gem "jekyll-remote-theme"

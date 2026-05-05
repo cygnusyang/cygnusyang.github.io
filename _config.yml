@@ -72,15 +72,16 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache
 
-# Archives
-jekyll-archives:
-  enabled:
-    - categories
-    - tags
-  layouts:
-    category: archives
-  permalinks:
-    category: '/category/:name/'
+# Archives (Chirpy uses its own category system)
+# jekyll-archives is not needed
+# jekyll-archives:
+#   enabled:
+#     - categories
+#     - tags
+#   layouts:
+#     category: archives
+#   permalinks:
+#     category: '/category/:name/'
 
 # TOC
 toc:
