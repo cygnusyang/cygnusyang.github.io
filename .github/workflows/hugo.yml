@@ -35,9 +35,8 @@ jobs:
 
       - name: Setup Dart Sass
         run: |
-          curl -LJO https://github.com/sass/dart-sass/releases/download/1.87.0/sass-1.87.0-linux-x64.tar.gz
-          tar -xzf sass-1.87.0-linux-x64.tar.gz
-          echo "$PWD/sass" >> $GITHUB_PATH
+          curl -sL https://github.com/sass/dart-sass/releases/download/1.99.0/dart-sass-1.99.0-linux-x64.tar.gz | tar -xz
+          echo "$PWD/dart-sass" >> $GITHUB_PATH
 
       - name: Build
         run: hugo --minify
