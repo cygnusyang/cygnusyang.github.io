@@ -169,35 +169,32 @@ pygmentsCodefencesNumberInline = true
   
   # 百度统计
   [params.analytics.baidu]
-    id = ""  # 请替换为你的百度统计代码 ID (格式: xxxxxxxx)
+    id = "ca9a2cee6f2d47d57d75201cf14c2e15"
 
 # 评论系统配置
 [params.page.comment]
   enable = true
   
-  # Waline 评论系统配置 (https://waline.js.org)
-  [params.page.comment.waline]
+  # Giscus 评论系统配置 (https://giscus.app) - 推荐用于 GitHub Pages
+  # 基于 GitHub Discussions，无需服务器和数据库
+  [params.page.comment.giscus]
     enable = true
-    serverURL = ""  # 部署 Waline 后获取的地址，如：https://your-waline-app.vercel.app
-    pageview = true
-    emoji = [ "//unpkg.com/@waline/emojis@1.1.0/weibo", "//unpkg.com/@waline/emojis@1.1.0/qq", "//unpkg.com/@waline/emojis@1.1.0/bilibili" ]
-    meta = [
-      "nick",
-      "mail",
-      "link"
-    ]
-    requiredMeta = ["nick", "mail"]
-    login = "enable"
-    wordLimit = 0
-    pageSize = 10
-    imageUploader = false
-    highlighter = true
-    comment = true
-    texRenderer = false
-    search = false
-    recaptchaV3Key = ""
-    turnstileKey = ""
-    reaction = false
+    # GitHub 仓库信息
+    repo = "cygnusyang/cygnusthinkingcircle"  # 你的 GitHub 仓库
+    repoId = ""  # 需要从 Giscus 配置获取
+    category = "Comments"  # Discussions 分类
+    categoryId = ""  # 需要从 Giscus 配置获取
+    # 映射方式
+    mapping = "pathname"  # 使用文章路径作为标识
+    # 其他配置
+    strict = "0"  # 是否严格匹配
+    reactionsEnabled = "1"  # 启用反应表情
+    emitMetadata = "0"  # 是否发送元数据
+    inputPosition = "bottom"  # 输入框位置
+    lang = "zh-CN"  # 语言
+    lightTheme = "light"  # 浅色主题
+    darkTheme = "dark"  # 深色主题
+    lazyLoad = true  # 懒加载
 
 # 导航菜单
 [menu]

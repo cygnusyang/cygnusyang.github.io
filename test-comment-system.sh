@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 评论系统测试脚本
-# 用于验证 Waline 评论系统配置
+# 用于验证 Giscus 评论系统配置
 
 set -e
 
@@ -48,25 +48,32 @@ echo "1. 检查配置文件"
 echo "--------------"
 
 check_file "hugo.toml" "Hugo 配置文件"
-check_file "WALINE_DEPLOYMENT.md" "Waline 部署指南"
-check_file "deploy-waline.sh" "Waline 部署脚本"
-check_file "waline-env-example.md" "环境变量示例"
-check_file "COMMENT_SYSTEM_SETUP.md" "评论系统设置指南"
+check_file "GISCUS_SETUP.md" "Giscus 配置指南"
+check_file "setup-giscus.sh" "Giscus 配置脚本"
+check_file "README_COMMENTS.md" "评论系统说明"
+check_file "COMMENT_SYSTEM_COMPARISON.md" "评论系统对比"
 
 echo ""
 echo "2. 检查 Hugo 配置"
 echo "----------------"
 
 if [ -f "hugo.toml" ]; then
-    check_config "params.page.comment.waline" "Waline 评论系统配置" "hugo.toml"
+    check_config "params.page.comment.giscus" "Giscus 评论系统配置" "hugo.toml"
     check_config "enable = true" "评论系统启用状态" "hugo.toml"
     
-    # 检查 serverURL 是否已配置
-    server_url=$(grep -A1 "serverURL" hugo.toml | tail -1 | tr -d '[:space:]' | cut -d'"' -f2)
-    if [[ "$server_url" == *"vercel.app"* ]] || [[ "$server_url" == *"localhost"* ]] || [[ "$server_url" == *"http"* ]]; then
-        echo -e "${GREEN}✅ Waline serverURL 已配置: $server_url${NC}"
+    # 检查 Giscus 配置是否完整
+    repo_id=$(grep "repoId" hugo.toml | cut -d'"' -f2)
+    if [[ -n "$repo_id" && "$repo_id" != '""' ]]; then
+        echo -e "${GREEN}✅ Giscus Repository ID 已配置${NC}"
     else
-        echo -e "${YELLOW}⚠️  Waline serverURL 可能需要更新: $server_url${NC}"
+        echo -e "${YELLOW}⚠️  Giscus Repository ID 需要配置${NC}"
+    fi
+    
+    category_id=$(grep "categoryId" hugo.toml | cut -d'"' -f2)
+    if [[ -n "$category_id" && "$category_id" != '""' ]]; then
+        echo -e "${GREEN}✅ Giscus Category ID 已配置${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Giscus Category ID 需要配置${NC}"
     fi
 fi
 
@@ -88,11 +95,11 @@ if command -v hugo &> /dev/null; then
         echo -e "${GREEN}✅ Hugo 已安装且可用${NC}"
         
         # 测试配置
-        if hugo config | grep -q "waline" 2>/dev/null; then
-            echo -e "${GREEN}✅ Waline 配置在 Hugo 中可识别${NC}"
-        else
-            echo -e "${YELLOW}⚠️  Waline 配置在 Hugo 中未找到，可能需要重新加载${NC}"
-        fi
+    if hugo config | grep -q "giscus" 2>/dev/null; then
+        echo -e "${GREEN}✅ Giscus 配置在 Hugo 中可识别${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Giscus 配置在 Hugo 中未找到，可能需要重新加载${NC}"
+    fi
     else
         echo -e "${RED}❌ Hugo 无法运行${NC}"
     fi
@@ -139,19 +146,14 @@ echo "--------------"
 
 echo "请完成以下检查:"
 echo ""
-echo "1. 访问 Waline 管理后台:"
-echo "   https://your-waline-app.vercel.app/ui"
+echo "1. 启用 GitHub Discussions:"
+echo "   https://github.com/cygnusyang/cygnusthinkingcircle/settings"
 echo ""
-echo "2. 检查 Waline 服务状态:"
-echo "   https://your-waline-app.vercel.app/api/health"
+echo "2. 配置 Giscus 获取 ID:"
+echo "   https://giscus.app"
 echo ""
-echo "3. 测试邮件发送:"
-echo "   curl -X POST https://your-waline-app.vercel.app/api/test-email \\"
-echo "     -H 'Content-Type: application/json' \\"
-echo "     -d '{\"to\": \"your-email@example.com\"}'"
-echo ""
-echo "4. 验证数据库连接:"
-echo "   curl https://your-waline-app.vercel.app/api/env | grep MONGO"
+echo "3. 验证 GitHub 通知设置:"
+echo "   https://github.com/settings/notifications"
 echo ""
 
 echo "7. 浏览器测试步骤"
@@ -190,23 +192,23 @@ cat << 'EOF'
 
 1. 评论框不显示:
    - 检查 hugo.toml 中 enable = true
-   - 确认 Waline 服务端运行正常
+   - 确认 GitHub Discussions 已启用
    - 查看浏览器控制台错误
 
 2. 评论提交失败:
-   - 检查 SECURE_DOMAINS 配置
-   - 验证域名匹配
+   - 检查 GitHub 账户是否登录
+   - 验证仓库权限
    - 查看网络请求状态
 
 3. 邮件未发送:
-   - 检查 Vercel 环境变量
-   - 验证 SMTP 配置
-   - 查看 Vercel 日志
+   - 检查 GitHub 通知设置
+   - 验证邮箱是否正确
+   - 查看垃圾邮件文件夹
 
 4. 评论不显示:
-   - 检查数据库连接
-   - 查看评论审核设置
-   - 验证页面权限
+   - 检查 GitHub Discussions 是否启用
+   - 验证 Giscus 配置 ID
+   - 确认仓库权限
 EOF
 
 echo ""
@@ -215,18 +217,17 @@ echo "----------"
 
 echo "要完成评论系统配置，你需要:"
 echo ""
-echo "1. 部署 Waline 到 Vercel"
-echo "2. 配置 MongoDB Atlas 数据库"
-echo "3. 设置 SMTP 邮件服务"
-echo "4. 更新 hugo.toml 中的 serverURL"
-echo "5. 测试评论功能"
-echo "6. 验证邮件通知"
+echo "1. 启用 GitHub Discussions"
+echo "2. 配置 Giscus 获取 ID"
+echo "3. 更新 hugo.toml 中的 repoId 和 categoryId"
+echo "4. 测试评论功能"
+echo "5. 验证邮件通知"
 echo ""
 echo "详细步骤请参考:"
-echo "- COMMENT_SYSTEM_SETUP.md"
-echo "- WALINE_DEPLOYMENT.md"
+echo "- GISCUS_SETUP.md"
+echo "- COMMENT_SYSTEM_COMPARISON.md"
 echo ""
 
 echo "🎉 测试脚本完成!"
-echo "运行以下命令开始部署:"
-echo "./deploy-waline.sh"
+echo "运行以下命令开始配置:"
+echo "./setup-giscus.sh"
