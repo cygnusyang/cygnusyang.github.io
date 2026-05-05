@@ -23,8 +23,9 @@ pygmentsCodefencesNumberInline = true
 [params]
   # 网站描述
   description = "技术 × 产品 × 机器人"
-  author = "Cygnus Yang"
-  email = "cygnusyang@proton.me"
+  [params.author]
+    name = "Cygnus Yang"
+    email = "cygnusyang@proton.me"
 
   # 主题模式: light, dark, auto
   defaultTheme = "auto"
