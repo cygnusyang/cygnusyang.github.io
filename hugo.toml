@@ -1,28 +1,15 @@
 baseURL = "https://cygnusyang.github.io/"
 languageCode = "zh-CN"
 title = "Cygnus Tech Blog"
-theme = "hextra"
+theme = "FixIt"
 
 # 时区
 timeZone = "Asia/Shanghai"
 
-enableRobotsTXT = true
-enableGitInfo = true
-hasCJKLanguage = true
-
-# 代码高亮
-[markup.highlight]
-noClasses = false
-
-[markup.goldmark.renderer]
-unsafe = true
-
-[markup.goldmark.extensions.passthrough]
-delimiters.block = [['\[', '\]'], ['$$', '$$']]
-delimiters.inline = [['\(', '\)']]
-enable = true
-
-enableInlineShortcodes = true
+# 开启 pygments 代码高亮
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+pygmentsCodefencesNumberInline = true
 
 # 分页
 [pagination]
@@ -32,114 +19,94 @@ enableInlineShortcodes = true
 [build]
   writeStats = true
 
-[module]
-  [module.hugoVersion]
-    extended = true
-    min = "0.146.0"
-
-# ==================== Hextra 主题配置 ====================
+# ==================== FixIt 主题配置 ====================
 [params]
-  description = "技术 × 产品 × 机器人 | 关注 AI 和软件工程"
-  defaultContentLanguage = "zh-cn"
-  externalLinkDecoration = true
+  # 网站描述
+  description = "技术 × 产品 × 机器人"
+  [params.author]
+    name = "Cygnus Yang"
+    email = "ruohuyang@163.com"
 
-  # 主题模式: light, dark, system
-  [params.theme]
-    default = "system"
-    displayToggle = true
+  # 主题模式: light, dark, auto
+  defaultTheme = "auto"
 
-  # 导航栏
-  [params.navbar]
-    displayTitle = true
-    displayLogo = false
-    width = "wide"
+  # 显示阅读时间和字数统计
+  showReadingTime = true
+  showWordCount = true
 
-  # 页脚
-  [params.footer]
+  # 代码块配置
+  [params.code]
+    copy = true
+    expand = false
+
+  # 面包屑导航
+  [params.breadcrumb]
     enable = true
-    displayCopyright = true
-    displayPoweredBy = true
-    width = "normal"
+    sticky = false
+    showHome = true
 
-  # 显示最后修改日期
-  displayUpdatedDate = true
-  dateFormat = "2006年1月2日"
-  displayUpdatedAuthor = false
+  # 页面级配置 (FixIt 的 function/params.html 会合并 page.Params | site.Params.page)
+  [params.page]
+    # Collection 系列导航侧边栏
+    collectionList = true
+    collectionNavigation = true
+
+    [params.page.toc]
+      enable = true
+      keepStatic = false
+      auto = true
+      position = "right"
+      ordered = false
+      startLevel = 2
+      endLevel = 6
+
+  # 首页信息
+  [params.home]
+    enable = true
+    [params.home.profile]
+      enable = true
+      avatar = ""
+      author = "Cygnus Yang"
+      bio = "技术 × 产品 × 机器人 | 关注 AI 和软件工程"
+      [params.home.profile.socials]
+        github = "https://github.com/cygnusyang"
 
   # 搜索
   [params.search]
     enable = true
-    type = "flexsearch"
-    [params.search.flexsearch]
-      index = "content"
-      tokenize = "forward"
+    type = "lunr"
+    maxResultLength = 10
 
-  # 代码块配置
-  [params.highlight]
-    [params.highlight.copy]
-      enable = true
-      display = "hover"
-
-  # 博客配置
-  [params.blog]
-    [params.blog.list]
-      displayTags = true
-      sortBy = "date"
-      sortOrder = "desc"
-      pagerSize = 10
-    [params.blog.article]
-      displayPagination = true
-
-  # 归档配置
-  [params.archives]
-    section = "posts"
-    dateFormat = "2006年1月"
-
-  # 目录
-  [params.toc]
-    displayTags = true
-
-  # 页面宽度
-  [params.page]
-    width = "normal"
-
-  # 图片缩放
-  [params.imageZoom]
+  # 分享按钮
+  [params.share]
     enable = true
-
-  # 评论
-  [params.comments]
-    enable = false
+    platforms = ["github"]
 
 # 导航菜单
 [menu]
   [[menu.main]]
     identifier = "posts"
     name = "文章"
-    pageRef = "/posts"
+    url = "/posts/"
     weight = 1
   [[menu.main]]
     identifier = "openclaw"
     name = "OpenClaw"
-    pageRef = "/posts/openclaw"
+    url = "/posts/openclaw/"
     parent = "posts"
     weight = 2
   [[menu.main]]
     identifier = "reading"
     name = "读书"
-    pageRef = "/reading"
+    url = "/reading/"
     weight = 3
   [[menu.main]]
     identifier = "about"
     name = "关于"
-    pageRef = "/about"
+    url = "/about/"
     weight = 4
-  [[menu.main]]
-    name = "GitHub"
-    weight = 5
-    url = "https://github.com/cygnusyang"
-    params.icon = "github"
 
+# 输出格式
 [outputs]
   home = ["HTML", "RSS", "JSON"]
   section = ["HTML", "RSS"]
