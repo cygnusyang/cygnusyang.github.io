@@ -1,3 +1,16 @@
 theme: minima
 title: Cygnus Tech Blog
 description: 技术 × 产品 × 机器人
+baseurl: ""
+url: "https://cygnusyang.github.io"
+
+# 分页设置
+paginate: 10
+paginate_path: "/page:num/"
+
+# 排序：按日期倒序（最新文章在前）
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      layout: post
