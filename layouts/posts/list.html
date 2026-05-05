@@ -8,16 +8,17 @@
 
   {{- /* 左侧：文章集合导航（可折叠分组） */ -}}
   <aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="文章集合导航">
-    {{- $collectionTerms := site.GetTerms "collections" -}}
-    {{- $allPages := site.RegularPages -}}
+    {{- $allPages := .Site.RegularPages -}}
+    {{- $collectionTaxonomy := .Site.Taxonomies.collections -}}
 
     {{- /* 按 collection 分组，每个 collection 独立可折叠 */ -}}
-    {{- range $idx, $term := $collectionTerms -}}
-      {{- $pages := (where $term.Pages "Params.Weight" "!=" nil) | append (where $term.Pages "Params.Weight" "eq" nil).ByDate -}}
+    {{- $idx := 0 -}}
+    {{- range $termName, $weightedPages := $collectionTaxonomy -}}
+      {{- $pages := $weightedPages.Pages.ByWeight -}}
       <div class="details collection-details{{ if eq $idx 0 }} open{{ end }}">
         <div class="details-summary collection-summary">
           {{ dict "Class" "fa-regular fa-folder-open" | partial "plugin/icon.html" }}
-          <span class="collection-name">{{- $term.LinkTitle -}}</span>
+          <span class="collection-name">{{- $termName -}}</span>
           <span class="collection-count">{{ $pages.Len }}</span>
           {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
         </div>
@@ -36,6 +37,7 @@
           </nav>
         </div>
       </div>
+      {{- $idx = add $idx 1 -}}
     {{- end -}}
 
     {{- /* 没有 collection 的普通文章 */ -}}
