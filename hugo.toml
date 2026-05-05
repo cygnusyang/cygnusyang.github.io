@@ -39,18 +39,18 @@ pygmentsCodefencesNumberInline = true
     copy = true
     expand = false
 
-  # Collection 系列导航侧边栏
-  collectionList = true
-  collectionNavigation = true
-
   # 面包屑导航
   [params.breadcrumb]
     enable = true
     sticky = false
     showHome = true
 
-  # 右侧目录 (FixIt 使用 params.page.toc)
+  # 页面级配置 (FixIt 的 function/params.html 会合并 page.Params | site.Params.page)
   [params.page]
+    # Collection 系列导航侧边栏
+    collectionList = true
+    collectionNavigation = true
+
     [params.page.toc]
       enable = true
       keepStatic = false
