@@ -1,16 +1,121 @@
-theme: minima
+# Chirpy Jekyll Theme Configuration
+
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
 title: Cygnus Tech Blog
 description: 技术 × 产品 × 机器人
-baseurl: ""
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://cygnusyang.github.io"
+lang: zh-CN
 
-# 分页设置
+# Author
+author:
+  name: Cygnus Yang
+  email: cygnusyang@proton.me
+  twitter: # username
+  github: cygnusyang
+
+# Social links
+social:
+  name: Cygnus Yang
+  links:
+    - https://github.com/cygnusyang
+
+# Build settings
+permalink: /:categories/:title/
+timezone: Asia/Shanghai
+
+# Pagination
 paginate: 10
-paginate_path: "/page:num/"
+paginate_path: /page:num/
 
-# 排序：按日期倒序（最新文章在前）
+# Exclude from processing
+exclude:
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - README.md
+  - CHANGELOG.md
+  - CNAME
+  - LICENSE
+  - img/
+  - assets/img/*.svg
+  - .github/
+  - .idea/
+  - .vscode/
+
+# Markdown Config
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Syntax theme
+sass:
+  sass_dir: assets/css
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-include-cache
+
+# Archives
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archives
+  permalinks:
+    category: '/category/:name/'
+
+# TOC
+toc:
+  minimum_level: 2
+  maximum_level: 4
+
+# Comments (disabled by default)
+comments:
+  provider: false # "disqus" or "giscus" or false
+
+# Analytics (disabled by default)
+analytics:
+  google:
+    id: false # G-XXXXXXX
+
+# Search
+search:
+  provider: google # or lunr
+  google:
+    # your Google Custom Search Engine ID here
+    cx:
+
+# Cache
+liquid:
+  cached: true
+  error_mode: strict
+
+# Defaults
 defaults:
   - scope:
       path: "_posts"
     values:
       layout: post
+      comments: false
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: page

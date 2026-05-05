@@ -3,6 +3,7 @@ _site/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
+.jekyll-cache/*
 
 # Generated
 *.log
@@ -10,3 +11,12 @@ _site/
 # Dependencies
 vendor/
 bundle/
+node_modules/
+Gemfile.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
