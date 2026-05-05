@@ -35,6 +35,9 @@ jobs:
           hugo-version: '0.160.1'
           extended: true
 
+      - name: Debug Hugo version
+        run: hugo version
+
       - name: Build
         run: hugo --minify
 
