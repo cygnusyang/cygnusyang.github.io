@@ -159,17 +159,45 @@ pygmentsCodefencesNumberInline = true
   [params.social]
     RSS = false
 
-  # 统计分析（支持多个统计服务同时使用）
-  [params.analytics]
+# 统计分析（支持多个统计服务同时使用）
+[params.analytics]
+  enable = true
+  
+  # Google Analytics 4
+  [params.analytics.google]
+    id = ""  # 请替换为你的 Google Analytics Measurement ID (格式: G-XXXXXXXXXX)
+  
+  # 百度统计
+  [params.analytics.baidu]
+    id = ""  # 请替换为你的百度统计代码 ID (格式: xxxxxxxx)
+
+# 评论系统配置
+[params.page.comment]
+  enable = true
+  
+  # Waline 评论系统配置 (https://waline.js.org)
+  [params.page.comment.waline]
     enable = true
-    
-    # Google Analytics 4
-    [params.analytics.google]
-      id = ""  # 请替换为你的 Google Analytics Measurement ID (格式: G-XXXXXXXXXX)
-    
-    # 百度统计
-    [params.analytics.baidu]
-      id = ""  # 请替换为你的百度统计代码 ID (格式: xxxxxxxx)
+    serverURL = ""  # 部署 Waline 后获取的地址，如：https://your-waline-app.vercel.app
+    pageview = true
+    emoji = [ "//unpkg.com/@waline/emojis@1.1.0/weibo", "//unpkg.com/@waline/emojis@1.1.0/qq", "//unpkg.com/@waline/emojis@1.1.0/bilibili" ]
+    meta = [
+      "nick",
+      "mail",
+      "link"
+    ]
+    requiredMeta = ["nick", "mail"]
+    login = "enable"
+    wordLimit = 0
+    pageSize = 10
+    imageUploader = false
+    highlighter = true
+    comment = true
+    texRenderer = false
+    search = false
+    recaptchaV3Key = ""
+    turnstileKey = ""
+    reaction = false
 
 # 导航菜单
 [menu]
