@@ -6,7 +6,7 @@ draft: false
 
 ## 关于我
 
-你好，我是 Cygnus Yang，一名软件工程师。
+你好，我是 Cygnus Yang，一名非典型工程师。
 
 我的兴趣领域：
 - AI 智能体和软件工程自动化
@@ -19,4 +19,4 @@ draft: false
 ## 联系方式
 
 - GitHub: [https://github.com/cygnusyang](https://github.com/cygnusyang)
-- Email: cygnusyang@proton.me
+- Email: ruohuyang@163.com

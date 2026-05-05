@@ -1,7 +1,7 @@
 baseURL = "https://cygnusyang.github.io/"
 languageCode = "zh-CN"
 title = "Cygnus Tech Blog"
-theme = "PaperMod"
+theme = "FixIt"
 
 # 时区
 timeZone = "Asia/Shanghai"
@@ -23,77 +23,81 @@ defaultContentLanguageInSubdir = false
 [build]
   writeStats = true
 
-# 权限设置
+# ==================== FixIt 主题配置 ====================
 [params]
   # 网站描述
   description = "技术 × 产品 × 机器人"
   author = "Cygnus Yang"
   email = "cygnusyang@proton.me"
-  github = "cygnusyang"
 
-  # 开启 RSS
-  showRSS = true
+  # 主题模式: light, dark, auto
+  defaultTheme = "auto"
 
-  # 开启搜索
-  enableSearch = true
-
-  # 代码块复制按钮
-  codeCopy = true
-
-  # 显示阅读时间
+  # 显示阅读时间和字数统计
   showReadingTime = true
   showWordCount = true
 
-  # 显示分享按钮
-  shareButtons = ["github", "linkedin"]
+  # 代码块配置
+  code = {
+    copy = true,
+    expand = false
+  }
 
-  # 开启默认暗黑模式
-  # defaultTheme = "auto"
-
-  # 显示首页信息
-  [params.homeInfo]
-    enabled = true
-    name = "Cygnus Yang"
-    avatar = ""
-    description = "技术 × 产品 × 机器人 | 关注 AI 和软件工程"
-    buttons = [
-      { name = "文章", url = "/posts/" },
-      { name = "GitHub", url = "https://github.com/cygnusyang" }
-    ]
-
-  # 社交链接
-  [[params.socials]]
-    name = "GitHub"
-    url = "https://github.com/cygnusyang"
-    icon = "fa-brands fa-github"
-
-  # 侧边栏
+  # 右侧目录
   [params.toc]
-    enabled = true
+    enable = true
+    # 目录浮动在右侧
     keepInContent = false
 
-# 菜单
-[menu]
-  [[menu.main]]
-    identifier = "posts"
-    name = "文章"
-    url = "/posts/"
+  # 首页信息
+  [params.home]
+    enable = true
+    [params.home.profile]
+      enable = true
+      avatar = ""
+      author = "Cygnus Yang"
+      bio = "技术 × 产品 × 机器人 | 关注 AI 和软件工程"
+      [params.home.profile.socials]
+        github = "https://github.com/cygnusyang"
+
+  # 搜索
+  [params.search]
+    enable = true
+    type = "lunr"
+    maxResultLength = 10
+
+  # 分享按钮
+  [params.share]
+    enable = true
+    platforms = ["github"]
+
+# 多语言配置
+[Languages]
+  [Languages.zh]
+    languageName = "中文"
     weight = 1
-  [[menu.main]]
-    identifier = "openclaw"
-    name = "OpenClaw"
-    url = "/openclaw/"
-    weight = 2
-  [[menu.main]]
-    identifier = "reading"
-    name = "读书"
-    url = "/reading/"
-    weight = 3
-  [[menu.main]]
-    identifier = "about"
-    name = "关于"
-    url = "/about/"
-    weight = 4
+    title = "Cygnus Tech Blog"
+    [Languages.zh.menu]
+      [[Languages.zh.menu.main]]
+        identifier = "posts"
+        name = "文章"
+        url = "/posts/"
+        weight = 1
+      [[Languages.zh.menu.main]]
+        identifier = "openclaw"
+        name = "OpenClaw"
+        url = "/openclaw/"
+        weight = 2
+      [[Languages.zh.menu.main]]
+        identifier = "reading"
+        name = "读书"
+        url = "/reading/"
+        weight = 3
+      [[Languages.zh.menu.main]]
+        identifier = "about"
+        name = "关于"
+        url = "/about/"
+        weight = 4
 
 # 输出格式
 [outputs]
