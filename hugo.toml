@@ -92,7 +92,7 @@ pygmentsCodefencesNumberInline = true
   [[menu.main]]
     identifier = "openclaw"
     name = "OpenClaw"
-    url = "/openclaw/"
+    url = "/posts/openclaw/"
     parent = "posts"
     weight = 2
   [[menu.main]]
