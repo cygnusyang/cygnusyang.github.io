@@ -6,63 +6,64 @@
 {{- define "content" -}}
   {{- $params := partial "function/params.html" -}}
 
-  {{- /* 左侧：文章集合导航（类似文件树） */ -}}
+  {{- /* 左侧：文章集合导航（可折叠分组） */ -}}
   <aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="文章集合导航">
-    <div class="details collection-details open">
-      <div class="details-summary collection-summary">
-        {{ dict "Class" "fa-solid fa-layer-group" | partial "plugin/icon.html" }}
-        <span class="collection-name" title="collections">文章集合</span>
-        <span class="collection-count">{{ .Site.RegularPages.Len }}</span>
-        {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
-      </div>
-      <div class="details-content collection-content">
-        <nav>
-          <ul class="collection-list">
-            {{- /* 获取所有 collection 术语 */ -}}
-            {{- $collectionTerms := site.GetTerms "collections" -}}
-            {{- $allPages := site.RegularPages -}}
+    {{- $collectionTerms := site.GetTerms "collections" -}}
+    {{- $allPages := site.RegularPages -}}
 
-            {{- /* 按 collection 分组展示 */ -}}
-            {{- range $collectionTerms -}}
-              {{- $pages := (where .Pages "Params.Weight" "!=" nil) | append (where .Pages "Params.Weight" "eq" nil).ByDate -}}
-              <li class="collection-item" style="margin-top: 0.5em;">
-                <span style="font-weight: bold; color: var(--single-link-color);">
-                  {{ dict "Class" "fa-regular fa-folder-open me-1" | partial "plugin/icon.html" }}
-                  {{- .LinkTitle -}}
-                </span>
-              </li>
+    {{- /* 按 collection 分组，每个 collection 独立可折叠 */ -}}
+    {{- range $idx, $term := $collectionTerms -}}
+      {{- $pages := (where $term.Pages "Params.Weight" "!=" nil) | append (where $term.Pages "Params.Weight" "eq" nil).ByDate -}}
+      <div class="details collection-details{{ if eq $idx 0 }} open{{ end }}">
+        <div class="details-summary collection-summary">
+          {{ dict "Class" "fa-regular fa-folder-open" | partial "plugin/icon.html" }}
+          <span class="collection-name">{{- $term.LinkTitle -}}</span>
+          <span class="collection-count">{{ $pages.Len }}</span>
+          {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
+        </div>
+        <div class="details-content collection-content">
+          <nav>
+            <ul class="collection-list">
               {{- range $pages -}}
-                <li class="collection-item" style="padding-left: 1.2em;">
+                <li class="collection-item">
                   <a href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
                     {{ dict "Class" "fa-regular fa-file-lines me-1" | partial "plugin/icon.html" }}
                     {{- .LinkTitle -}}
                   </a>
                 </li>
               {{- end -}}
-            {{- end -}}
-
-            {{- /* 没有 collection 的普通文章 */ -}}
-            {{- $uncategorized := where $allPages "Params.collections" "eq" nil -}}
-            {{- if $uncategorized -}}
-              <li class="collection-item" style="margin-top: 0.5em;">
-                <span style="font-weight: bold; color: var(--single-link-color);">
-                  {{ dict "Class" "fa-regular fa-folder-open me-1" | partial "plugin/icon.html" }}
-                  其他文章
-                </span>
-              </li>
-              {{- range $uncategorized -}}
-                <li class="collection-item" style="padding-left: 1.2em;">
-                  <a href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
-                    {{ dict "Class" "fa-regular fa-file-lines me-1" | partial "plugin/icon.html" }}
-                    {{- .LinkTitle -}}
-                  </a>
-                </li>
-              {{- end -}}
-            {{- end -}}
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </div>
       </div>
-    </div>
+    {{- end -}}
+
+    {{- /* 没有 collection 的普通文章 */ -}}
+    {{- $uncategorized := where $allPages "Params.collections" "eq" nil -}}
+    {{- if $uncategorized -}}
+      <div class="details collection-details">
+        <div class="details-summary collection-summary">
+          {{ dict "Class" "fa-regular fa-folder" | partial "plugin/icon.html" }}
+          <span class="collection-name">其他文章</span>
+          <span class="collection-count">{{ $uncategorized.Len }}</span>
+          {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
+        </div>
+        <div class="details-content collection-content">
+          <nav>
+            <ul class="collection-list">
+              {{- range $uncategorized -}}
+                <li class="collection-item">
+                  <a href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+                    {{ dict "Class" "fa-regular fa-file-lines me-1" | partial "plugin/icon.html" }}
+                    {{- .LinkTitle -}}
+                  </a>
+                </li>
+              {{- end -}}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    {{- end -}}
   </aside>
 
   {{- /* 中间：文章列表 */ -}}
