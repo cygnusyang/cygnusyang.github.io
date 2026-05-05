@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 12
 ---
 
-# 第十二章：嵌套协作 —— 如何实现 Orchestrator-Worker 模式
-
 前面我们说到，OpenClaw 默认 `maxSpawnDepth: 1`，也就是主智能体可以 spawn 子智能体，但子智能体不能再 spawn 子子智能体。
 
 但是如果你打开 `maxSpawnDepth: 2`，就可以支持**两层嵌套**：
@@ -89,7 +87,6 @@ OpenClaw 对嵌套有清晰的规则，核心就一条：
 嵌套的结果是自动回传的，不用你操心：
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   W[Depth 2 Worker 完成] -->|announce| O[Depth 1 Orchestrator]
   O[Orchestrator 汇总完成] -->|announce| M[Depth 0 Main Hub]

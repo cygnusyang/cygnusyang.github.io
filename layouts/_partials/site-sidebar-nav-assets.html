@@ -15,8 +15,29 @@
   }
 
   .site-sidebar-nav {
-    flex: 1;
-    max-width: 500px;
+    flex: 0 0 clamp(16rem, 17vw, 20rem) !important;
+    max-width: clamp(16rem, 17vw, 20rem) !important;
+    transition: flex-basis 0.22s ease, max-width 0.22s ease;
+  }
+
+  main.fi-container:has(.site-sidebar-nav) {
+    gap: clamp(0.75rem, 1.3vw, 1.25rem);
+  }
+
+  main.fi-container:has(.site-sidebar-nav) > .page {
+    width: min(64vw, 68rem);
+    max-width: 68rem;
+    transition: width 0.22s ease, max-width 0.22s ease;
+  }
+
+  main.fi-container.site-sidebar-nav-collapsed > .page {
+    width: min(78vw, 78rem);
+    max-width: 78rem;
+  }
+
+  main.fi-container:has(.site-sidebar-nav) > #toc-auto {
+    flex: 0 0 clamp(12rem, 15vw, 18rem);
+    max-width: clamp(12rem, 15vw, 18rem);
   }
 
   .site-sidebar-nav .collection-details {
@@ -51,8 +72,8 @@
   }
 
   .site-sidebar-nav-is-collapsed {
-    flex: 0 0 2.5rem !important;
-    max-width: 2.5rem !important;
+    flex: 0 0 3rem !important;
+    max-width: 3rem !important;
     overflow: hidden;
   }
 
@@ -70,9 +91,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1.75rem;
-      height: 1.75rem;
-      margin-bottom: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+      margin: 0 0 0.75rem 0.25rem;
       border: 0;
       border-radius: 999px;
       color: inherit;
@@ -89,6 +110,22 @@
     .site-sidebar-nav {
       display: none !important;
     }
+  }
+
+  .diagram-container {
+    margin: 1.25rem 0;
+    padding: 1rem;
+    overflow-x: auto;
+    border: 1px solid rgba(127, 127, 127, 0.18);
+    border-radius: 8px;
+    background: rgba(127, 127, 127, 0.04);
+  }
+
+  .diagram-container svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-inline: auto;
   }
 </style>
 
@@ -120,6 +157,7 @@
     var storageKey = 'site-sidebar-nav-collapsed';
     var setCollapsed = function (collapsed) {
       nav.classList.toggle('site-sidebar-nav-is-collapsed', collapsed);
+      main.classList.toggle('site-sidebar-nav-collapsed', collapsed);
       toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
       toggle.setAttribute('aria-label', collapsed ? '展开文档导航' : '收起文档导航');
       toggle.innerHTML = collapsed

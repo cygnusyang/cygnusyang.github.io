@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 24
 ---
 
-# 第二十四章：工具系统 (Tools) —— OpenClaw 工具调用框架设计
-
 OpenClaw 的工具体系是**按内置工具名、工具组和策略配置**来组织的。
 
 ## 当前工具系统的几个核心点

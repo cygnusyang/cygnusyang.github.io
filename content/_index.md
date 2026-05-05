@@ -12,16 +12,19 @@ title: 首页
 
 .category-card {
   position: relative;
+  display: block;
   border-radius: 0.75rem;
   padding: 1.5rem;
-  background: fixit-var(light-bg-color);
+  background: fixit-var(global-background-color);
   border: 1px solid fixit-var(global-border-color);
   transition: all 0.3s ease;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
 }
 
 [data-theme=dark] .category-card {
-  background: fixit-var(dark-bg-color);
+  background: fixit-var(global-background-color);
 }
 
 .category-card:hover {
@@ -31,7 +34,7 @@ title: 首页
 }
 
 [data-theme=dark] .category-card:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .category-card-icon {
@@ -59,9 +62,10 @@ title: 首页
   right: 1rem;
   font-size: 0.75rem;
   color: fixit-var(global-font-secondary-color);
-  background: fixit-var(secondary-bg);
+  background: fixit-var(secondary);
   padding: 0.25rem 0.5rem;
   border-radius: 1rem;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
@@ -86,7 +90,7 @@ title: 首页
 
 <div class="category-cards">
 
-<a href="/posts/openclaw/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw 开发文档">
   <span class="category-card-count">34 篇</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-robot" style="color: #2563eb;"></i>
@@ -95,7 +99,7 @@ title: 首页
   <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
 </a>
 
-<a href="/tags/gstack/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/tags/gstack/" class="category-card" aria-label="Gstack 技术栈专栏">
   <span class="category-card-count">系列</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-layer-group" style="color: #0891b2;"></i>
@@ -104,7 +108,7 @@ title: 首页
   <p class="category-card-desc">全栈技术栈实践与架构设计笔记</p>
 </a>
 
-<a href="/tags/gbrain/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/tags/gbrain/" class="category-card" aria-label="GBrain 大模型专栏">
   <span class="category-card-count">系列</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-brain" style="color: #7c3aed;"></i>
@@ -113,7 +117,7 @@ title: 首页
   <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
 </a>
 
-<a href="/categories/研发那些事/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事专栏">
   <span class="category-card-count">专栏</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-code-branch" style="color: #dc2626;"></i>
@@ -122,7 +126,7 @@ title: 首页
   <p class="category-card-desc">软件开发过程中的思考与实践总结</p>
 </a>
 
-<a href="/categories/工程那些事/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事专栏">
   <span class="category-card-count">专栏</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-sitemap" style="color: #ea580c;"></i>
@@ -131,7 +135,7 @@ title: 首页
   <p class="category-card-desc">软件工程架构设计与工程化方法论</p>
 </a>
 
-<a href="/tags/claude-code/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/tags/claude-code/" class="category-card" aria-label="Claude Code 专栏">
   <span class="category-card-count">系列</span>
   <div class="category-card-icon">
     <i class="fa-brands fa-github-alt" style="color: #65a30d;"></i>
@@ -140,7 +144,7 @@ title: 首页
   <p class="category-card-desc">Claude Code 开发实践与技巧分享</p>
 </a>
 
-<a href="/tags/mcp/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/tags/mcp/" class="category-card" aria-label="MCP 开发专栏">
   <span class="category-card-count">系列</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-plug" style="color: #0d9488;"></i>
@@ -149,13 +153,31 @@ title: 首页
   <p class="category-card-desc">Model Context Protocol 开发指南</p>
 </a>
 
-<a href="/tags/codex/" class="category-card" style="text-decoration: none; color: inherit;">
+<a href="/tags/codex/" class="category-card" aria-label="Codex 知识库">
   <span class="category-card-count">系列</span>
   <div class="category-card-icon">
     <i class="fa-solid fa-book-atlas" style="color: #be185d;"></i>
   </div>
   <h3 class="category-card-title">Codex</h3>
   <p class="category-card-desc">技术知识库与最佳实践整理</p>
+</a>
+
+<a href="/reading/" class="category-card" aria-label="读书笔记">
+  <span class="category-card-count">书评</span>
+  <div class="category-card-icon">
+    <i class="fa-solid fa-book-open-reader" style="color: #0f766e;"></i>
+  </div>
+  <h3 class="category-card-title">读书</h3>
+  <p class="category-card-desc">读书笔记与书评分享</p>
+</a>
+
+<a href="/about/" class="category-card" aria-label="关于我">
+  <span class="category-card-count">关于</span>
+  <div class="category-card-icon">
+    <i class="fa-solid fa-user-astronaut" style="color: #4f46e5;"></i>
+  </div>
+  <h3 class="category-card-title">关于</h3>
+  <p class="category-card-desc">了解更多关于我的信息</p>
 </a>
 
 </div>

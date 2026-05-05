@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 10
 ---
 
-# 第十章：协作架构模式 —— 从 Master-Worker 到 Hub-and-Spoke
-
 有了 `sessions_spawn` 这个核心原语，我们就可以构建不同的多智能体协作架构。OpenClaw 并不强制你用某种特定模式，你可以根据任务特点选择最合适的模式。
 
 本文介绍四种常见的协作模式，我们会分析每种模式的优缺点，以及什么时候该用它。
@@ -18,7 +16,6 @@ weight: 10
 ### 1. Master-Worker 模式
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   M[Master<br/>Coordinator] --> W1[Worker 1]
   M --> W2[Worker 2]
@@ -46,7 +43,6 @@ graph TD
 ### 2. Peer-to-Peer 模式
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   A[Agent A] <--> B[Agent B]
   A <--> C[Agent C]
@@ -73,7 +69,6 @@ graph TD
 ### 3. Pipeline 模式
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph LR
   A[需求分析] --> B[架构设计] --> C[代码编写] --> D[代码评审] --> E[测试编写]
 ```
@@ -95,7 +90,6 @@ graph LR
 ### 4. Hub-and-Spoke 模式（推荐）
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   H[Hub<br/>Coordinator] --> S1[Specialist 1<br/>Code Expert]
   H --> S2[Specialist 2<br/>Security Expert]
@@ -169,7 +163,6 @@ OpenClaw 官方推荐 **Hub-and-Spoke** 作为生产场景的默认模式。理�
 ### Hub-and-Spoke 完整关系图
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   U[用户] --> H[Hub<br/>主协调者]
   H --> S1[专家 1<br/>code-reviewer<br/>代码评审]
@@ -251,7 +244,6 @@ graph TD
 ### 主 Hub 和专家的关系
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables': {'primaryColor':'#f1f5f9','primaryBorderColor':'#0f4c81','primaryTextColor':'#0f172a','secondaryColor':'#f1f5f9','secondaryBorderColor':'#0f4c81','secondaryTextColor':'#0f172a','tertiaryColor':'#fbbf24','tertiaryBorderColor':'#fbbf24','tertiaryTextColor':'#0f172a','background':'#f8fafc','fontFamily':'Inter, system-ui, sans-serif','fontSize':'14px','textColor':'#0f172a','lineColor':'#334155','edgeLabelBackground':'#ffffff','actorBorderColor':'#0f4c81','actorTextColor':'#0f172a','actorFill':'#f1f5f9'}}}%%
 graph TD
   U[用户] --> H[Hub<br/>主协调者]
   H --> S1[专家 1<br/>code-reviewer<br/>代码评审]

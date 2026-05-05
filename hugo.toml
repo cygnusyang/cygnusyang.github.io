@@ -11,6 +11,10 @@ pygmentsUseClasses = true
 pygmentsCodeFences = true
 pygmentsCodefencesNumberInline = true
 
+# 允许 markdown 中嵌入原始 HTML（首页卡片需要）
+[markup.goldmark.renderer]
+  unsafe = true
+
 # 分页
 [pagination]
   pagerSize = 10
@@ -74,13 +78,64 @@ pygmentsCodefencesNumberInline = true
   # 搜索
   [params.search]
     enable = true
-    type = "lunr"
+    type = "fuse"
     maxResultLength = 10
 
   # 分享按钮
   [params.share]
     enable = true
     platforms = ["github"]
+
+  # Mermaid 图表：使用技术文档风格，避免默认 hand-drawn 斜线填充。
+  [params.mermaid]
+    themes = ["base", "base"]
+    securityLevel = "loose"
+    look = "classic"
+    layout = "dagre"
+    fontFamily = "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+
+    [params.mermaid.themeVariables.light]
+      background = "#ffffff"
+      primaryColor = "#f8fafc"
+      primaryBorderColor = "#2563eb"
+      primaryTextColor = "#0f172a"
+      secondaryColor = "#eef6ff"
+      secondaryBorderColor = "#0ea5e9"
+      secondaryTextColor = "#0f172a"
+      tertiaryColor = "#fef3c7"
+      tertiaryBorderColor = "#f59e0b"
+      tertiaryTextColor = "#0f172a"
+      lineColor = "#475569"
+      textColor = "#0f172a"
+      edgeLabelBackground = "#ffffff"
+      clusterBkg = "#f8fafc"
+      clusterBorder = "#cbd5e1"
+      fontSize = "15px"
+
+    [params.mermaid.themeVariables.dark]
+      background = "#252627"
+      primaryColor = "#1e293b"
+      primaryBorderColor = "#38bdf8"
+      primaryTextColor = "#e5e7eb"
+      secondaryColor = "#172033"
+      secondaryBorderColor = "#60a5fa"
+      secondaryTextColor = "#e5e7eb"
+      tertiaryColor = "#3b2f14"
+      tertiaryBorderColor = "#fbbf24"
+      tertiaryTextColor = "#f8fafc"
+      lineColor = "#64748b"
+      textColor = "#e5e7eb"
+      edgeLabelBackground = "#252627"
+      clusterBkg = "#1f2937"
+      clusterBorder = "#475569"
+      fontSize = "15px"
+
+    [params.mermaid.flowchart]
+      curve = "basis"
+      htmlLabels = true
+      nodeSpacing = 48
+      rankSpacing = 64
+      padding = 12
 
   # 使用 FixIt 自定义资源钩子注入站点侧边栏导航，不修改主题目录。
   [params.customPartials]
@@ -112,5 +167,5 @@ pygmentsCodefencesNumberInline = true
 
 # 输出格式
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS", "JSON", "Search"]
   section = ["HTML", "RSS"]

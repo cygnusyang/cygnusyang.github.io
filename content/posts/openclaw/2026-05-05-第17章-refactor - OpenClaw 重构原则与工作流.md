@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 17
 ---
 
-# 第十七章： refactor —— OpenClaw 重构原则与工作流
-
 OpenClaw 持续演进，会定期进行大规模重构来保持代码健康。本章我们讲解 OpenClaw 的重构原则、正在进行的主要重构项目，以及重构工作流。
 
 ## 重构原则

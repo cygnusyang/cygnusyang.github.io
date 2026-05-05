@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 9
 ---
 
-# 第九章：sessions_spawn —— 多智能体协作的核心原语
-
 OpenClaw 的多智能体协作不是靠“偷偷起一个线程”实现的，而是靠一个明确的会话工具：`sessions_spawn`。
 
 当前源码里，它的职责很单纯：

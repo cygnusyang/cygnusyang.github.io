@@ -7,8 +7,6 @@ collections: ["openclaw"]
 weight: 23
 ---
 
-# 第二十三章：WebChat —— Gateway WebSocket 聊天界面
-
 当前官方文档里，WebChat 的定位是：
 
 > 它是一个直接连 Gateway WebSocket 的聊天 UI，不是独立的一套 Web 服务器产品。
