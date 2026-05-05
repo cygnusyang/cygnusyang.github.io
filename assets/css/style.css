@@ -1,0 +1,112 @@
+/* 自定义美化 minima 主题 */
+
+/* 更大的页面宽度，更好的阅读体验 */
+.container {
+  max-width: 960px !important;
+}
+
+/* 改善标题样式 */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3rem;
+}
+
+/* 改善文章列表 */
+h3 {
+  margin-bottom: 0.2rem;
+}
+
+h3 a {
+  text-decoration: none;
+  color: #24292e;
+  border-bottom: 1px solid transparent;
+}
+
+h3 a:hover {
+  border-bottom-color: #0366d6;
+  color: #0366d6;
+}
+
+/* 日期样式 */
+small {
+  color: #6a737d;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+/* 改善分隔线 */
+hr {
+  margin: 2rem 0;
+  background-color: #eaecef;
+  border: 0;
+  height: 1px;
+}
+
+/* 改善分页导航 */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 0 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid #eaecef;
+}
+
+.pagination a {
+  padding: 0.5rem 1rem;
+  border: 1px solid #eaecef;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #0366d6;
+}
+
+.pagination a:hover {
+  background-color: #f6f8fa;
+  border-color: #0366d6;
+}
+
+.pagination span {
+  color: #6a737d;
+  font-weight: 500;
+}
+
+/* 改善代码块 */
+pre {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* 改善链接 */
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 改善正文排版 */
+.post-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* 改善页脚 */
+.site-footer {
+  padding: 2rem 0;
+  border-top: 1px solid #eaecef;
+  margin-top: 3rem;
+}
