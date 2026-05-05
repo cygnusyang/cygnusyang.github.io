@@ -1,0 +1,131 @@
+{{- define "title" -}}
+  {{- title (.Params.Title | default ((T .Section) | default .Section | dict "Some" | T "allSome")) -}}
+  {{- if .Site.Params.withSiteTitle }} {{ .Site.Params.titleDelimiter }} {{ .Site.Title }}{{- end -}}
+{{- end -}}
+
+{{- define "content" -}}
+  {{- $params := partial "function/params.html" -}}
+
+  {{- /* 左侧：文章集合导航（类似文件树） */ -}}
+  <aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="文章集合导航">
+    <div class="details collection-details open">
+      <div class="details-summary collection-summary">
+        {{ dict "Class" "fa-solid fa-layer-group" | partial "plugin/icon.html" }}
+        <span class="collection-name" title="collections">文章集合</span>
+        <span class="collection-count">{{ .Site.RegularPages.Len }}</span>
+        {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}
+      </div>
+      <div class="details-content collection-content">
+        <nav>
+          <ul class="collection-list">
+            {{- /* 获取所有 collection 术语 */ -}}
+            {{- $collectionTerms := .Site.GetTerms "collections" -}}
+            {{- $allPages := .Site.RegularPages -}}
+
+            {{- /* 按 collection 分组展示 */ -}}
+            {{- range $collectionTerms -}}
+              {{- $pages := (where .Pages "Params.Weight" "!=" nil) | append (where .Pages "Params.Weight" "eq" nil).ByDate -}}
+              <li class="collection-item" style="margin-top: 0.5em;">
+                <span style="font-weight: bold; color: var(--single-link-color);">
+                  {{ dict "Class" "fa-regular fa-folder-open me-1" | partial "plugin/icon.html" }}
+                  {{- .LinkTitle -}}
+                </span>
+              </li>
+              {{- range $pages -}}
+                <li class="collection-item" style="padding-left: 1.2em;">
+                  <a href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+                    {{ dict "Class" "fa-regular fa-file-lines me-1" | partial "plugin/icon.html" }}
+                    {{- .LinkTitle -}}
+                  </a>
+                </li>
+              {{- end -}}
+            {{- end -}}
+
+            {{- /* 没有 collection 的普通文章 */ -}}
+            {{- $uncategorized := where $allPages "Params.collections" "eq" nil -}}
+            {{- if $uncategorized -}}
+              <li class="collection-item" style="margin-top: 0.5em;">
+                <span style="font-weight: bold; color: var(--single-link-color);">
+                  {{ dict "Class" "fa-regular fa-folder-open me-1" | partial "plugin/icon.html" }}
+                  其他文章
+                </span>
+              </li>
+              {{- range $uncategorized -}}
+                <li class="collection-item" style="padding-left: 1.2em;">
+                  <a href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+                    {{ dict "Class" "fa-regular fa-file-lines me-1" | partial "plugin/icon.html" }}
+                    {{- .LinkTitle -}}
+                  </a>
+                </li>
+              {{- end -}}
+            {{- end -}}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </aside>
+
+  {{- /* 中间：文章列表 */ -}}
+  <div class="page archive">
+    <div class="header">
+      {{- /* Title */ -}}
+      <h1 class="single-title animate__animated animate__pulse animate__faster">
+        {{- $titleIcon := "fa-solid fa-feather" -}}
+        {{- with .Params.titleIcon -}}
+          {{- $titleIcon = . -}}
+        {{- end -}}
+        {{- dict "Class" (add $titleIcon " me-1") | partial "plugin/icon.html" -}}
+        {{- title (.Params.Title | default ((T .Section) | default .Section | dict "Some" | T "allSome")) }} <sup>{{ .Pages.Len }}</sup>
+      </h1>
+      {{- /* Total word count */ -}}
+      {{- $localData := newScratch -}}
+      {{- range .Pages -}}
+        {{- $localData.Add "totalWordCount" .WordCount -}}
+      {{- end -}}
+      {{- with ($localData.Get "totalWordCount") -}}
+        {{- $humanizedNum := . -}}
+        {{- if ge $humanizedNum 1000 -}}
+          {{- $humanizedNum = printf "%.2fK" (div $humanizedNum 1000.0) -}}
+        {{- end -}}
+        <p class="single-subtitle total-word-count" title='{{- T "section.totalWordCount" . }}'>
+          {{- dict "Class" "fa-regular fa-keyboard" | partial "plugin/icon.html" }} {{ T "section.totalWordCount" (dict "Count" $humanizedNum) -}}
+        </p>
+      {{- end -}}
+    </div>
+
+    {{- /* Paginate */ -}}
+    {{- if .Pages -}}
+      {{- $pages := .Pages.GroupByDate "2006" -}}
+      {{- with .Site.Params.section.paginate | default .Site.Params.paginate -}}
+        {{- $pages = $.Paginate $pages . -}}
+      {{- else -}}
+        {{- $pages = .Paginate $pages -}}
+      {{- end -}}
+      {{- partial "recently-updated.html" . -}}
+      {{- range $pages.PageGroups -}}
+        <h2 class="group-title">
+          {{- dict "Class" "fa-regular fa-calendar me-1" | partial "plugin/icon.html" -}}
+          {{- .Key -}}
+        </h2>
+        {{- range .Pages -}}
+          <article class="archive-item">
+            <a href="{{ .RelPermalink }}" class="archive-item-link">
+              {{- $repost := .Params.repost | default dict -}}
+              {{- if eq $repost.enable true -}}
+                {{- dict "Class" "fa-solid fa-share text-success me-1" | partial "plugin/icon.html" -}}
+              {{- end -}}
+              {{- cond (.Param "capitalizeTitles") (title .LinkTitle) .LinkTitle -}}
+            </a>
+            <span class="archive-item-date" title='{{ "2006-01-02 15:04:05" | .Date.Format }}'>
+              {{- .Date | dateFormat ($.Site.Params.section.dateFormat | default "01-02") -}}
+            </span>
+          </article>
+        {{- end -}}
+      {{- end -}}
+      {{- partial "paginator.html" . -}}
+    {{- end -}}
+  </div>
+
+  {{- /* 右侧：空 aside 占位（保持布局平衡） */ -}}
+  <aside class="toc" id="toc-auto" aria-label="目录" style="visibility: hidden;"></aside>
+{{- end -}}
