@@ -1,4 +1,4 @@
-{{- /* 动态文档导航：扫描 content/posts/ 子目录，零硬编码 */ -}}
+{{- /* 动态文档导航：扫描 content/posts/ 子目录，列出所有文章 */ -}}
 {{- $posts := .Site.GetPage "/posts" -}}
 {{- $sections := $posts.Sections -}}
 {{- if $sections -}}
@@ -9,11 +9,24 @@
         <ul class="collection-list">
           {{- range $section := $sections.ByTitle -}}
             {{- $count := len $section.Pages -}}
-            <li class="collection-item">
-              <a href="{{ $section.RelPermalink }}" class="site-sidebar-nav__link" title="{{ $section.Title }} ({{ $count }} 篇)">
-                <span class="site-sidebar-nav__name">{{ $section.Title }}</span>
-                <span class="site-sidebar-nav__count">{{ $count }}</span>
-              </a>
+            <li class="collection-item collection-item--section">
+              <details class="collection-details"{{ if hasPrefix $.RelPermalink $section.RelPermalink }} open{{ end }}>
+                <summary class="collection-summary">
+                  <a href="{{ $section.RelPermalink }}" class="site-sidebar-nav__link" title="{{ $section.Title }} ({{ $count }} 篇)">
+                    <span class="site-sidebar-nav__name">{{ $section.Title }}</span>
+                    <span class="site-sidebar-nav__count">{{ $count }}</span>
+                  </a>
+                </summary>
+                <ul class="collection-list collection-list--nested">
+                  {{- range $section.Pages.ByWeight -}}
+                    <li class="collection-item">
+                      <a href="{{ .RelPermalink }}" class="site-sidebar-nav__link site-sidebar-nav__link--article{{ if eq $.RelPermalink .RelPermalink }} active{{ end }}" title="{{ .Title }}">
+                        <span class="site-sidebar-nav__name">{{ .LinkTitle }}</span>
+                      </a>
+                    </li>
+                  {{- end -}}
+                </ul>
+              </details>
             </li>
           {{- end -}}
         </ul>
@@ -34,6 +47,10 @@
   }
   .site-sidebar-nav .collection-list { list-style: none; padding: 0; margin: 0; }
   .site-sidebar-nav .collection-item { margin: 0; padding: 0; }
+  .collection-item--section { margin-bottom: 0.25rem !important; }
+  .collection-details > summary { list-style: none; cursor: pointer; }
+  .collection-details > summary::-webkit-details-marker { display: none; }
+  .collection-details > summary::marker { display: none; content: none; }
   .site-sidebar-nav__link {
     display: flex; align-items: center; justify-content: space-between;
     padding: 0.45rem 0.6rem; color: fixit-var(global-font-color);
@@ -41,12 +58,14 @@
   }
   .site-sidebar-nav__link:hover { background: fixit-var(secondary); color: fixit-var(global-link-hover-color); text-decoration: none; }
   .site-sidebar-nav__link.active { background: fixit-var(secondary); color: fixit-var(global-link-hover-color); font-weight: 600; }
-  .site-sidebar-nav__name { flex: 1; }
+  .site-sidebar-nav__link--article { padding: 0.3rem 0.6rem 0.3rem 1.4rem; font-size: 0.82rem; }
+  .site-sidebar-nav__name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .site-sidebar-nav__count {
     font-size: 0.72rem; color: fixit-var(global-font-secondary-color);
     background: fixit-var(secondary); padding: 0.1rem 0.4rem;
     border-radius: 0.65rem; opacity: 0.75; min-width: 1rem; text-align: center;
   }
+  .collection-list--nested { margin-left: 0 !important; }
   .site-sidebar-nav-is-collapsed { flex: 0 0 2.5rem !important; max-width: 2.5rem !important; overflow: hidden; }
   .site-sidebar-nav-is-collapsed .site-sidebar-nav__body { display: none; }
   .site-sidebar-nav-toggle { display: none; }
@@ -80,12 +99,6 @@
       main.insertBefore(nav, anchor);
     }
     nav.classList.add('site-sidebar-nav-host');
-    var currentPath = window.location.pathname;
-    nav.querySelectorAll('.site-sidebar-nav__link').forEach(function(link) {
-      if (link.getAttribute('href') && currentPath.indexOf(link.getAttribute('href')) === 0) {
-        link.classList.add('active');
-      }
-    });
     var toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'site-sidebar-nav-toggle';
