@@ -1,5 +1,6 @@
 ---
 title: 首页
+pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness"]
 ---
 
 <style>
@@ -315,16 +316,161 @@ title: 首页
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* ====== Category Header Row (文章 + 更多) ====== */
+.category-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid fixit-var(global-border-color);
+}
+
+.category-header-row .home-section-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.category-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: fixit-var(global-font-color);
+  background: fixit-var(secondary);
+  border: 1px solid fixit-var(global-border-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.category-more-btn:hover,
+.category-more-btn.active {
+  background: fixit-var(global-link-hover-color);
+  color: #fff;
+  border-color: fixit-var(global-link-hover-color);
+}
+
+.category-more-count {
+  font-size: 0.7rem;
+  background: fixit-var(global-background-color);
+  color: fixit-var(global-font-secondary-color);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.65rem;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.category-more-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.category-more-btn.active .category-more-arrow {
+  transform: rotate(180deg);
+}
+
+/* ====== Category Popup Panel ====== */
+.category-popup-panel {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: fixit-var(global-background-color);
+  border: 1px solid fixit-var(global-border-color);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  animation: popupFadeIn 0.2s ease;
+}
+
+[data-theme=dark] .category-popup-panel {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes popupFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.category-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.category-popup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  color: fixit-var(global-font-color);
+  text-decoration: none;
+  border-radius: 0.4rem;
+  transition: background 0.15s ease;
+}
+
+.category-popup-item:hover {
+  background: fixit-var(secondary);
+  text-decoration: none;
+  color: fixit-var(global-link-hover-color);
+}
+
+.category-popup-name {
+  font-weight: 500;
+}
+
+.category-popup-count {
+  font-size: 0.72rem;
+  color: fixit-var(global-font-secondary-color);
+  opacity: 0.75;
+}
+
+/* ====== Category Cards 2-row limit ====== */
+.category-cards.collapsed .category-card:nth-child(n+9) {
+  display: none;
+}
+
+/* ====== Expand Button ====== */
+.category-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: fixit-var(global-font-secondary-color);
+  background: transparent;
+  border: 1px dashed fixit-var(global-border-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-expand-btn:hover {
+  color: fixit-var(global-link-hover-color);
+  border-color: fixit-var(global-link-hover-color);
+}
+
+.category-expand-arrow {
+  transition: transform 0.2s ease;
+}
+
+.category-expand-btn.expanded .category-expand-arrow {
+  transform: rotate(180deg);
+}
+
 </style>
 
 <!-- ==================== 文章 ==================== -->
 <section class="home-section">
-  <div class="home-section-header">
-    <span class="home-section-header-icon">📝</span>
-    <h2 class="home-section-header-title">文章<span class="home-section-header-count">分类浏览</span></h2>
-  </div>
+  {{< category-popup >}}
 
-  <div class="category-cards">
+  <div class="category-cards" id="categoryCards">
 <a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
     <span class="category-card-badge">34 篇</span>
     <div class="category-card-icon">🤖</div>
@@ -409,6 +555,66 @@ title: 首页
     <p class="category-card-desc">读书笔记与书评分享</p>
   </a>
 </div>
+
+<button class="category-expand-btn" id="categoryExpandBtn" onclick="toggleExpandCards()" style="display:none">
+  展开全部 <span class="category-expand-arrow">▾</span>
+</button>
+
+<script>
+(function() {
+  var grid = document.getElementById('categoryCards');
+  var btn = document.getElementById('categoryExpandBtn');
+  if (!grid || !btn) return;
+
+  var CARDS_PER_ROW = 4; // default for desktop
+  var MAX_ROWS = 2;
+  var maxVisible = CARDS_PER_ROW * MAX_ROWS;
+
+  function updateLayout() {
+    var cards = grid.querySelectorAll('.category-card');
+    if (cards.length <= maxVisible) {
+      grid.classList.remove('collapsed');
+      btn.style.display = 'none';
+      return;
+    }
+    // Determine actual cards per row from grid
+    var firstCardTop = cards[0].getBoundingClientRect().top;
+    for (var i = 1; i < cards.length; i++) {
+      if (cards[i].getBoundingClientRect().top > firstCardTop) {
+        CARDS_PER_ROW = i;
+        maxVisible = CARDS_PER_ROW * MAX_ROWS;
+        break;
+      }
+    }
+    if (cards.length > maxVisible) {
+      grid.classList.add('collapsed');
+      btn.style.display = 'inline-flex';
+      btn.textContent = '展开全部 (' + (cards.length - maxVisible) + ') ▾';
+    } else {
+      grid.classList.remove('collapsed');
+      btn.style.display = 'none';
+    }
+  }
+
+  window.toggleExpandCards = function() {
+    var collapsed = grid.classList.contains('collapsed');
+    if (collapsed) {
+      grid.classList.remove('collapsed');
+      btn.textContent = '收起 ▴';
+      btn.classList.add('expanded');
+    } else {
+      grid.classList.add('collapsed');
+      var hidden = grid.querySelectorAll('.category-card').length - maxVisible;
+      btn.textContent = '展开全部 (' + hidden + ') ▾';
+      btn.classList.remove('expanded');
+    }
+  };
+
+  // Run on load and resize
+  updateLayout();
+  window.addEventListener('resize', updateLayout);
+})();
+</script>
 </section>
 
 <!-- ==================== GitHub 工程 ==================== -->
