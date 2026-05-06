@@ -3,6 +3,7 @@
   {{- $pages := .Pages -}}
   {{- $sections := .Sections -}}
 
+  <div class="page archive">
   {{- partial "header" . -}}
 
   <div class="posts-grid-header">
@@ -74,4 +75,5 @@
     background: fixit-var(secondary); padding: 0.1rem 0.4rem; border-radius: 0.5rem; opacity: 0.75;
   }
   </style>
+  </div>
 {{- end -}}
