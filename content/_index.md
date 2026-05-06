@@ -333,8 +333,8 @@ title: 首页
     <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
   </a>
 
-  <a href="/tags/gstack/" class="category-card" aria-label="GStack">
-    <span class="category-card-badge">敬请期待</span>
+  <a href="/posts/gstack/" class="category-card" aria-label="GStack">
+          <span class="category-card-badge">12 篇</span>
     <div class="category-card-icon">📚</div>
     <h3 class="category-card-title">GStack</h3>
     <p class="category-card-desc">全栈技术架构设计与实践</p>
@@ -361,8 +361,8 @@ title: 首页
     <p class="category-card-desc">软件工程架构设计与方法论</p>
   </a>
 
-  <a href="/tags/claude-code/" class="category-card" aria-label="Claude Code">
-    <span class="category-card-badge">敬请期待</span>
+  <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
+          <span class="category-card-badge">27 篇</span>
     <div class="category-card-icon">⌨️</div>
     <h3 class="category-card-title">Claude Code</h3>
     <p class="category-card-desc">Claude Code 开发实践与技巧</p>
