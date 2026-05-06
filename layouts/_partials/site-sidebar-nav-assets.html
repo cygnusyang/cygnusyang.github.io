@@ -1,136 +1,69 @@
-{{- $current := .RelPermalink -}}
-{{- $sections := where .Site.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- /* 动态文档导航：扫描 content/posts/ 子目录，零硬编码 */ -}}
+{{- $posts := .Site.GetPage "/posts" -}}
+{{- $sections := $posts.Sections -}}
 {{- if $sections -}}
 <template id="site-sidebar-nav-template">
   <aside class="aside-collection site-sidebar-nav" aria-label="文档导航">
-    {{- range $sections -}}
-      {{- partial "site-sidebar-nav-node.html" (dict "Node" . "Current" $current) -}}
-    {{- end -}}
+    <div class="site-sidebar-nav__body">
+      <nav>
+        <ul class="collection-list">
+          {{- range $section := $sections.ByTitle -}}
+            {{- $count := len $section.Pages -}}
+            <li class="collection-item">
+              <a href="{{ $section.RelPermalink }}" class="site-sidebar-nav__link" title="{{ $section.Title }} ({{ $count }} 篇)">
+                <span class="site-sidebar-nav__name">{{ $section.Title }}</span>
+                <span class="site-sidebar-nav__count">{{ $count }}</span>
+              </a>
+            </li>
+          {{- end -}}
+        </ul>
+      </nav>
+    </div>
   </aside>
 </template>
 
 <style>
-  .site-sidebar-nav-host {
-    display: block !important;
-  }
-
+  .site-sidebar-nav-host { display: block !important; }
   .site-sidebar-nav {
-    flex: 0 0 clamp(16rem, 17vw, 20rem) !important;
-    max-width: clamp(16rem, 17vw, 20rem) !important;
+    flex: 0 0 clamp(13rem, 15vw, 18rem) !important;
+    max-width: clamp(13rem, 15vw, 18rem) !important;
     transition: flex-basis 0.22s ease, max-width 0.22s ease;
+    padding: 1rem 0.75rem;
+    font-size: 0.88rem;
+    border-right: 1px solid fixit-var(global-border-color);
   }
-
-  main.fi-container:has(.home:not(.posts)) {
-    align-items: flex-start !important;
+  .site-sidebar-nav .collection-list { list-style: none; padding: 0; margin: 0; }
+  .site-sidebar-nav .collection-item { margin: 0; padding: 0; }
+  .site-sidebar-nav__link {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.45rem 0.6rem; color: fixit-var(global-font-color);
+    text-decoration: none; border-radius: 0.35rem; transition: background 0.15s ease;
   }
-
-  main.fi-container:has(.site-sidebar-nav) {
-    gap: clamp(0.75rem, 1.3vw, 1.25rem);
+  .site-sidebar-nav__link:hover { background: fixit-var(secondary); color: fixit-var(global-link-hover-color); text-decoration: none; }
+  .site-sidebar-nav__link.active { background: fixit-var(secondary); color: fixit-var(global-link-hover-color); font-weight: 600; }
+  .site-sidebar-nav__name { flex: 1; }
+  .site-sidebar-nav__count {
+    font-size: 0.72rem; color: fixit-var(global-font-secondary-color);
+    background: fixit-var(secondary); padding: 0.1rem 0.4rem;
+    border-radius: 0.65rem; opacity: 0.75; min-width: 1rem; text-align: center;
   }
-
-  main.fi-container:has(.site-sidebar-nav) > .page {
-    width: min(64vw, 68rem);
-    max-width: 68rem;
-    transition: width 0.22s ease, max-width 0.22s ease;
-  }
-
-  main.fi-container.site-sidebar-nav-collapsed > .page {
-    width: min(78vw, 78rem);
-    max-width: 78rem;
-  }
-
-  main.fi-container:has(.site-sidebar-nav) > #toc-auto {
-    flex: 0 0 clamp(12rem, 15vw, 18rem);
-    max-width: clamp(12rem, 15vw, 18rem);
-  }
-
-  .site-sidebar-nav .collection-details {
-    margin-bottom: 0.5rem;
-  }
-
-  .site-sidebar-nav .collection-summary a.collection-name {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .site-sidebar-nav .collection-summary a.collection-name::before {
-    content: none;
-  }
-
-  .site-sidebar-nav .collection-summary .collection-name.active,
-  .site-sidebar-nav .collection-summary a.collection-name:hover {
-    color: var(--fi-single-link-color, #2d96bd);
-  }
-
-  .site-sidebar-nav .site-sidebar-nav__nested {
-    text-indent: 0;
-  }
-
-  .site-sidebar-nav .site-sidebar-nav__nested > .collection-details {
-    margin: 0.25rem 0;
-  }
-
-  .site-sidebar-nav .site-sidebar-nav__nested > .collection-details > .collection-summary {
-    padding-left: 0;
-    background: transparent;
-  }
-
-  .site-sidebar-nav-is-collapsed {
-    flex: 0 0 3rem !important;
-    max-width: 3rem !important;
-    overflow: hidden;
-  }
-
-  .site-sidebar-nav-is-collapsed .site-sidebar-nav__body,
-  .site-sidebar-nav-is-collapsed .collection-details {
-    display: none;
-  }
-
-  .site-sidebar-nav-toggle {
-    display: none;
-  }
-
+  .site-sidebar-nav-is-collapsed { flex: 0 0 2.5rem !important; max-width: 2.5rem !important; overflow: hidden; }
+  .site-sidebar-nav-is-collapsed .site-sidebar-nav__body { display: none; }
+  .site-sidebar-nav-toggle { display: none; }
   @media (min-width: 681px) {
     .site-sidebar-nav-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      margin: 0 0 0.75rem 0.25rem;
-      border: 0;
-      border-radius: 999px;
-      color: inherit;
-      background: transparent;
-      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.75rem; height: 1.75rem; margin: 0 0 0.5rem 0.1rem;
+      border: 0; border-radius: 999px; color: inherit; background: transparent;
+      cursor: pointer; font-size: 0.85rem;
     }
-
-    .site-sidebar-nav-toggle:hover {
-      color: var(--fi-single-link-color, #2d96bd);
-    }
+    .site-sidebar-nav-toggle:hover { color: var(--fi-single-link-color, #2d96bd); }
   }
-
-  @media (max-width: 680px) {
-    .site-sidebar-nav {
-      display: none !important;
-    }
-  }
-
-  .diagram-container {
-    margin: 1.25rem 0;
-    padding: 1rem;
-    overflow-x: auto;
-    border: 1px solid rgba(127, 127, 127, 0.18);
-    border-radius: 8px;
-    background: rgba(127, 127, 127, 0.04);
-  }
-
-  .diagram-container svg {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin-inline: auto;
-  }
+  @media (max-width: 680px) { .site-sidebar-nav { display: none !important; } }
+  main.fi-container:has(.home:not(.posts)) { align-items: flex-start !important; }
+  main.fi-container:has(.site-sidebar-nav) { gap: clamp(0.75rem, 1.3vw, 1.25rem); }
+  main.fi-container:has(.site-sidebar-nav) > .page { width: min(64vw, 68rem); max-width: 68rem; transition: width 0.22s ease, max-width 0.22s ease; }
+  main.fi-container.site-sidebar-nav-collapsed > .page { width: min(78vw, 78rem); max-width: 78rem; }
 </style>
 
 <script>
@@ -138,7 +71,6 @@
     var template = document.getElementById('site-sidebar-nav-template');
     var main = document.querySelector('main.fi-container') || document.querySelector('main');
     if (!template || !main || main.querySelector('.site-sidebar-nav')) return;
-
     var nav = template.content.firstElementChild.cloneNode(true);
     var firstAside = main.querySelector(':scope > aside.aside-collection');
     if (firstAside && firstAside.children.length === 0) {
@@ -147,28 +79,28 @@
       var anchor = main.querySelector(':scope > article, :scope > .page, :scope > section') || main.firstElementChild;
       main.insertBefore(nav, anchor);
     }
-
     nav.classList.add('site-sidebar-nav-host');
-
+    var currentPath = window.location.pathname;
+    nav.querySelectorAll('.site-sidebar-nav__link').forEach(function(link) {
+      if (link.getAttribute('href') && currentPath.indexOf(link.getAttribute('href')) === 0) {
+        link.classList.add('active');
+      }
+    });
     var toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'site-sidebar-nav-toggle';
     toggle.setAttribute('aria-label', '收起文档导航');
     toggle.setAttribute('aria-expanded', 'true');
-    toggle.innerHTML = '<i class="fa-solid fa-angle-left" aria-hidden="true"></i>';
+    toggle.textContent = '\u276E';
     nav.insertBefore(toggle, nav.firstChild);
-
     var storageKey = 'site-sidebar-nav-collapsed';
     var setCollapsed = function (collapsed) {
       nav.classList.toggle('site-sidebar-nav-is-collapsed', collapsed);
       main.classList.toggle('site-sidebar-nav-collapsed', collapsed);
       toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
       toggle.setAttribute('aria-label', collapsed ? '展开文档导航' : '收起文档导航');
-      toggle.innerHTML = collapsed
-        ? '<i class="fa-solid fa-angle-right" aria-hidden="true"></i>'
-        : '<i class="fa-solid fa-angle-left" aria-hidden="true"></i>';
+      toggle.textContent = collapsed ? '\u276F' : '\u276E';
     };
-
     setCollapsed(localStorage.getItem(storageKey) === 'true');
     toggle.addEventListener('click', function () {
       var collapsed = !nav.classList.contains('site-sidebar-nav-is-collapsed');

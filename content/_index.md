@@ -10,6 +10,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 }
 
 .home-section-header {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -317,106 +318,85 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   }
 }
 
-/* ====== Category Header Row (文章 + 更多) ====== */
-.category-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid fixit-var(global-border-color);
-}
-
-.category-header-row .home-section-header {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.category-more-btn {
+/* ====== Category Popup Trigger & Panel ====== */
+.category-popup-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.82rem;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: fixit-var(global-font-color);
+  color: fixit-var(global-font-secondary-color);
   background: fixit-var(secondary);
   border: 1px solid fixit-var(global-border-color);
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: all 0.15s ease;
+  margin-left: 0.5rem;
+  vertical-align: middle;
 }
 
-.category-more-btn:hover,
-.category-more-btn.active {
-  background: fixit-var(global-link-hover-color);
+.category-popup-trigger:hover {
   color: #fff;
+  background: fixit-var(global-link-hover-color);
   border-color: fixit-var(global-link-hover-color);
 }
 
-.category-more-count {
-  font-size: 0.7rem;
-  background: fixit-var(global-background-color);
-  color: fixit-var(global-font-secondary-color);
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.65rem;
-  min-width: 1.2rem;
-  text-align: center;
+.category-popup-count-badge {
+  font-size: 0.65rem;
 }
 
-.category-more-arrow {
-  font-size: 0.7rem;
-  transition: transform 0.2s ease;
+.category-popup-trigger-arrow {
+  font-size: 0.6rem;
 }
 
-.category-more-btn.active .category-more-arrow {
-  transform: rotate(180deg);
-}
-
-/* ====== Category Popup Panel ====== */
 .category-popup-panel {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  min-width: 16rem;
   background: fixit-var(global-background-color);
   border: 1px solid fixit-var(global-border-color);
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  animation: popupFadeIn 0.2s ease;
+  border-radius: 0.65rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  animation: popupFadeIn 0.15s ease;
 }
 
 [data-theme=dark] .category-popup-panel {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes popupFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
+  from { opacity: 0; transform: translateY(-3px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .category-popup-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .category-popup-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
+  padding: 0.4rem 0.6rem;
   font-size: 0.85rem;
   color: fixit-var(global-font-color);
   text-decoration: none;
-  border-radius: 0.4rem;
-  transition: background 0.15s ease;
+  border-radius: 0.35rem;
+  transition: background 0.12s ease;
 }
 
 .category-popup-item:hover {
   background: fixit-var(secondary);
-  text-decoration: none;
   color: fixit-var(global-link-hover-color);
+  text-decoration: none;
 }
 
 .category-popup-name {
@@ -424,14 +404,9 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 }
 
 .category-popup-count {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: fixit-var(global-font-secondary-color);
-  opacity: 0.75;
-}
-
-/* ====== Category Cards 2-row limit ====== */
-.category-cards.collapsed .category-card:nth-child(n+9) {
-  display: none;
+  opacity: 0.7;
 }
 
 /* ====== Expand Button ====== */
@@ -468,7 +443,11 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 
 <!-- ==================== 文章 ==================== -->
 <section class="home-section">
-  {{< category-popup >}}
+  <div class="home-section-header">
+    <span class="home-section-header-icon">📝</span>
+    <h2 class="home-section-header-title">文章<span class="home-section-header-count">分类浏览</span></h2>
+    {{< category-popup >}}
+  </div>
 
   <div class="category-cards" id="categoryCards">
 <a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
@@ -566,53 +545,68 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   var btn = document.getElementById('categoryExpandBtn');
   if (!grid || !btn) return;
 
-  var CARDS_PER_ROW = 4; // default for desktop
   var MAX_ROWS = 2;
-  var maxVisible = CARDS_PER_ROW * MAX_ROWS;
+  var maxVisible = 0;
+  var isExpanded = false;
 
-  function updateLayout() {
+  function cardsPerRow() {
     var cards = grid.querySelectorAll('.category-card');
+    if (cards.length < 2) return cards.length;
+    var top0 = cards[0].getBoundingClientRect().top;
+    for (var i = 1; i < cards.length; i++) {
+      if (cards[i].getBoundingClientRect().top > top0 + 2) return i;
+    }
+    return cards.length;
+  }
+
+  function applyCollapse() {
+    var cards = grid.querySelectorAll('.category-card');
+    var perRow = cardsPerRow();
+    maxVisible = perRow * MAX_ROWS;
+
     if (cards.length <= maxVisible) {
-      grid.classList.remove('collapsed');
       btn.style.display = 'none';
+      isExpanded = false;
       return;
     }
-    // Determine actual cards per row from grid
-    var firstCardTop = cards[0].getBoundingClientRect().top;
-    for (var i = 1; i < cards.length; i++) {
-      if (cards[i].getBoundingClientRect().top > firstCardTop) {
-        CARDS_PER_ROW = i;
-        maxVisible = CARDS_PER_ROW * MAX_ROWS;
-        break;
+
+    btn.style.display = 'inline-flex';
+    var hidden = cards.length - maxVisible;
+    btn.textContent = '展开全部 (' + hidden + ') ▾';
+
+    if (!isExpanded) {
+      for (var i = maxVisible; i < cards.length; i++) {
+        cards[i].style.display = 'none';
       }
-    }
-    if (cards.length > maxVisible) {
-      grid.classList.add('collapsed');
-      btn.style.display = 'inline-flex';
-      btn.textContent = '展开全部 (' + (cards.length - maxVisible) + ') ▾';
-    } else {
-      grid.classList.remove('collapsed');
-      btn.style.display = 'none';
     }
   }
 
   window.toggleExpandCards = function() {
-    var collapsed = grid.classList.contains('collapsed');
-    if (collapsed) {
-      grid.classList.remove('collapsed');
-      btn.textContent = '收起 ▴';
-      btn.classList.add('expanded');
-    } else {
-      grid.classList.add('collapsed');
-      var hidden = grid.querySelectorAll('.category-card').length - maxVisible;
+    var cards = grid.querySelectorAll('.category-card');
+    if (isExpanded) {
+      // collapse back
+      for (var i = maxVisible; i < cards.length; i++) {
+        cards[i].style.display = 'none';
+      }
+      var hidden = cards.length - maxVisible;
       btn.textContent = '展开全部 (' + hidden + ') ▾';
       btn.classList.remove('expanded');
+      isExpanded = false;
+    } else {
+      // expand all
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].style.display = '';
+      }
+      btn.textContent = '收起 ▴';
+      btn.classList.add('expanded');
+      isExpanded = true;
     }
   };
 
-  // Run on load and resize
-  updateLayout();
-  window.addEventListener('resize', updateLayout);
+  applyCollapse();
+  window.addEventListener('resize', function() {
+    if (!isExpanded) applyCollapse();
+  });
 })();
 </script>
 </section>
