@@ -212,7 +212,7 @@ pygmentsCodefencesNumberInline = true
   [[menu.main]]
     identifier = "gstack"
     name = "GStack"
-    url = "/tags/gstack/"
+    url = "/posts/gstack/"
     parent = "posts"
     weight = 2
   [[menu.main]]
