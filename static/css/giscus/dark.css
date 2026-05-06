@@ -1,0 +1,101 @@
+/* Giscus 自定义深色主题 - 匹配 FixIt Dark */
+/* FixIt: bg:#292a2e text:#b1b1ba border:#454545 link:#1781b5 */
+
+main {
+  --color-prettylights-syntax-comment: #8b949e;
+  --color-prettylights-syntax-constant: #79c0ff;
+  --color-prettylights-syntax-entity: #d2a8ff;
+  --color-prettylights-syntax-storage-modifier-import: #b1b1ba;
+  --color-prettylights-syntax-entity-tag: #1781b5;
+  --color-prettylights-syntax-keyword: #ff7b72;
+  --color-prettylights-syntax-string: #a5d6ff;
+  --color-prettylights-syntax-variable: #ffa657;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+  --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+  --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
+  --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+  --color-prettylights-syntax-carriage-return-bg: #b62324;
+  --color-prettylights-syntax-string-regexp: #7ee787;
+  --color-prettylights-syntax-markup-list: #f2cc60;
+  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-markup-italic: #b1b1ba;
+  --color-prettylights-syntax-markup-bold: #b1b1ba;
+  --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+  --color-prettylights-syntax-markup-deleted-bg: #78191b;
+  --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+  --color-prettylights-syntax-markup-inserted-bg: #1b4721;
+  --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+  --color-prettylights-syntax-markup-changed-bg: #682d0f;
+  --color-prettylights-syntax-markup-ignored-text: #b1b1ba;
+  --color-prettylights-syntax-markup-ignored-bg: #1781b5;
+  --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+  --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+  --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+
+  --color-btn-text: #b1b1ba;
+  --color-btn-bg: #2d3035;
+  --color-btn-border: #454545;
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #353840;
+  --color-btn-hover-border: #555;
+  --color-btn-active-bg: #3a3d45;
+  --color-btn-active-border: #555;
+  --color-btn-selected-bg: #353840;
+  --color-btn-primary-text: #fff;
+  --color-btn-primary-bg: #1781b5;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
+  --color-btn-primary-hover-bg: #126894;
+  --color-btn-primary-hover-border: transparent;
+  --color-btn-primary-selected-bg: #126894;
+  --color-btn-primary-selected-shadow: 0 0 transparent;
+  --color-btn-primary-disabled-text: rgba(255,255,255,.5);
+  --color-btn-primary-disabled-bg: #1d5068;
+  --color-btn-primary-disabled-border: transparent;
+
+  --color-action-list-item-default-hover-bg: #353840;
+  --color-segmented-control-bg: #1c2128;
+  --color-segmented-control-button-bg: #292a2e;
+  --color-segmented-control-button-selected-border: #636e7b;
+
+  --color-fg-default: #b1b1ba;
+  --color-fg-muted: #7d8792;
+  --color-fg-subtle: #6e7681;
+  --color-canvas-default: #292a2e;
+  --color-canvas-overlay: #292a2e;
+  --color-canvas-inset: #252627;
+  --color-canvas-subtle: transparent;
+  --color-border-default: #454545;
+  --color-border-muted: #3a3a3a;
+  --color-neutral-muted: rgba(110,118,129,.4);
+
+  --color-accent-fg: #1781b5;
+  --color-accent-emphasis: #1781b5;
+  --color-accent-muted: rgba(23,129,181,.4);
+  --color-accent-subtle: #0c2d40;
+  --color-success-fg: #3fb950;
+  --color-attention-fg: #d29922;
+  --color-attention-muted: rgba(187,128,9,.4);
+  --color-attention-subtle: #2e2000;
+  --color-danger-fg: #cc5595;
+  --color-danger-muted: rgba(204,85,149,.4);
+  --color-danger-subtle: #3d0e1e;
+  --color-primer-shadow-inset: 0 0 transparent;
+
+  --color-scale-gray-1: #353840;
+  --color-scale-blue-1: #0c2d40;
+
+  --color-social-reaction-bg-hover: var(--color-scale-gray-1);
+  --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-1);
+}
+
+main .pagination-loader-container {
+  background-image: url("https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg");
+}
+
+main .gsc-pagination-button {
+  background-color: var(--color-btn-bg);
+}

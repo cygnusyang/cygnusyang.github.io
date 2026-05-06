@@ -192,8 +192,8 @@ pygmentsCodefencesNumberInline = true
     emitMetadata = "0"  # 是否发送元数据
     inputPosition = "bottom"  # 输入框位置
     lang = "zh-CN"  # 语言
-    lightTheme = "light"  # 浅色主题
-    darkTheme = "dark"  # 深色主题
+    lightTheme = "https://cygnusyang.github.io/css/giscus/light.css"  # 匹配 FixIt 浅色
+    darkTheme = "https://cygnusyang.github.io/css/giscus/dark.css"  # 匹配 FixIt 深色
     lazyLoad = true  # 懒加载
 
 # 导航菜单
