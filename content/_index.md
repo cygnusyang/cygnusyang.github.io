@@ -340,8 +340,8 @@ title: 首页
     <p class="category-card-desc">全栈技术架构设计与实践</p>
   </a>
 
-  <a href="/tags/gbrain/" class="category-card" aria-label="GBrain">
-    <span class="category-card-badge">敬请期待</span>
+  <a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
+    <span class="category-card-badge">6 篇</span>
     <div class="category-card-icon">🧠</div>
     <h3 class="category-card-title">GBrain</h3>
     <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
