@@ -325,71 +325,90 @@ title: 首页
   </div>
 
   <div class="category-cards">
-
-  <a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
+<a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
     <span class="category-card-badge">34 篇</span>
     <div class="category-card-icon">🤖</div>
     <h3 class="category-card-title">OpenClaw</h3>
     <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
   </a>
 
-  <a href="/posts/gstack/" class="category-card" aria-label="GStack">
+<a href="/posts/gstack/" class="category-card" aria-label="GStack">
           <span class="category-card-badge">12 篇</span>
     <div class="category-card-icon">📚</div>
     <h3 class="category-card-title">GStack</h3>
     <p class="category-card-desc">全栈技术架构设计与实践</p>
   </a>
 
-  <a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
+<a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
     <span class="category-card-badge">6 篇</span>
     <div class="category-card-icon">🧠</div>
     <h3 class="category-card-title">GBrain</h3>
     <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
   </a>
 
-  <a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
+<a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">💡</div>
     <h3 class="category-card-title">研发那些事</h3>
     <p class="category-card-desc">软件开发过程中的思考与实践</p>
   </a>
 
-  <a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
+<a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">⚙️</div>
     <h3 class="category-card-title">工程那些事</h3>
     <p class="category-card-desc">软件工程架构设计与方法论</p>
   </a>
 
-  <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
+<a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
     <div class="category-card-icon">⌨️</div>
     <h3 class="category-card-title">Claude Code</h3>
     <p class="category-card-desc">Claude Code 开发实践与技巧</p>
   </a>
 
-  <a href="/tags/mcp/" class="category-card" aria-label="MCP">
+<a href="/tags/mcp/" class="category-card" aria-label="MCP">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">🔌</div>
     <h3 class="category-card-title">MCP</h3>
     <p class="category-card-desc">Model Context Protocol 开发指南</p>
   </a>
 
-  <a href="/tags/codex/" class="category-card" aria-label="Codex">
+<a href="/tags/codex/" class="category-card" aria-label="Codex">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">📖</div>
     <h3 class="category-card-title">Codex</h3>
     <p class="category-card-desc">技术知识库与最佳实践</p>
   </a>
 
-  <a href="/reading/" class="category-card" aria-label="读书">
+<a href="/posts/harness/" class="category-card" aria-label="Harness">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">⚙️</div>
+    <h3 class="category-card-title">Harness</h3>
+    <p class="category-card-desc">技术文档与开发指南</p>
+  </a>
+
+<a href="/posts/Academic Research Skills/" class="category-card" aria-label="Academic research skills">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">📦</div>
+    <h3 class="category-card-title">Academic research skills</h3>
+    <p class="category-card-desc">技术文档与开发指南</p>
+  </a>
+
+<a href="/posts/newproject/" class="category-card" aria-label="Newproject">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">🎯</div>
+    <h3 class="category-card-title">Newproject</h3>
+    <p class="category-card-desc">一个全新的技术探索项目</p>
+  </a>
+
+<a href="/reading/" class="category-card" aria-label="读书">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">📗</div>
     <h3 class="category-card-title">读书</h3>
     <p class="category-card-desc">读书笔记与书评分享</p>
   </a>
-
-  </div>
+</div>
 </section>
 
 <!-- ==================== GitHub 工程 ==================== -->
