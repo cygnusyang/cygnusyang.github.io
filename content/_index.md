@@ -1,6 +1,6 @@
 ---
 title: 首页
-pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness"]
+pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness", "academic-research-skills"]
 ---
 
 <style>
@@ -450,23 +450,26 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 
   <div class="category-cards" id="categoryCards">
 <a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
-    <span class="category-card-badge">34 篇</span>
-    <div class="category-card-icon">🤖</div>
-    <h3 class="category-card-title">OpenClaw</h3>
+          <span class="category-card-badge">34 篇</span>
+      <div class="category-card-icon">🤖</div>
+      <h3 class="category-card-title">01-OpenClaw</h3>
+
     <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
   </a>
 
 <a href="/posts/gstack/" class="category-card" aria-label="GStack">
           <span class="category-card-badge">12 篇</span>
-    <div class="category-card-icon">📚</div>
-    <h3 class="category-card-title">GStack</h3>
+      <div class="category-card-icon">📚</div>
+      <h3 class="category-card-title">02-GStack</h3>
+
     <p class="category-card-desc">全栈技术架构设计与实践</p>
   </a>
 
 <a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
-    <span class="category-card-badge">6 篇</span>
-    <div class="category-card-icon">🧠</div>
-    <h3 class="category-card-title">GBrain</h3>
+          <span class="category-card-badge">6 篇</span>
+      <div class="category-card-icon">🧠</div>
+      <h3 class="category-card-title">03-GBrain</h3>
+
     <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
   </a>
 
@@ -486,36 +489,41 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 
 <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
-    <div class="category-card-icon">⌨️</div>
-    <h3 class="category-card-title">Claude Code</h3>
+      <div class="category-card-icon">⌨️</div>
+      <h3 class="category-card-title">06-Claude Code</h3>
+
     <p class="category-card-desc">Claude Code 开发实践与技巧</p>
   </a>
 
-<a href="/tags/mcp/" class="category-card" aria-label="MCP">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">🔌</div>
-    <h3 class="category-card-title">MCP</h3>
+<a href="/posts/mcp/" class="category-card" aria-label="MCP">
+          <span class="category-card-badge">1 篇</span>
+      <div class="category-card-icon">🔌</div>
+      <h3 class="category-card-title">07-MCP</h3>
+
     <p class="category-card-desc">Model Context Protocol 开发指南</p>
   </a>
 
-<a href="/tags/codex/" class="category-card" aria-label="Codex">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">📖</div>
-    <h3 class="category-card-title">Codex</h3>
+<a href="/posts/codex/" class="category-card" aria-label="Codex">
+          <span class="category-card-badge">21 篇</span>
+      <div class="category-card-icon">📖</div>
+      <h3 class="category-card-title">08-Codex</h3>
+
     <p class="category-card-desc">技术知识库与最佳实践</p>
   </a>
 
 <a href="/posts/harness/" class="category-card" aria-label="Harness">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">⚙️</div>
-    <h3 class="category-card-title">Harness</h3>
+          <span class="category-card-badge">27 篇</span>
+      <div class="category-card-icon">⚙️</div>
+      <h3 class="category-card-title">09-Harness</h3>
+
     <p class="category-card-desc">技术文档与开发指南</p>
   </a>
 
-<a href="/posts/Academic Research Skills/" class="category-card" aria-label="Academic research skills">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">📦</div>
-    <h3 class="category-card-title">Academic research skills</h3>
+<a href="/posts/academic-research-skills/" class="category-card" aria-label="Academic research skills">
+          <span class="category-card-badge">20 篇</span>
+      <div class="category-card-icon">📦</div>
+      <h3 class="category-card-title">10-Academic research skills</h3>
+
     <p class="category-card-desc">技术文档与开发指南</p>
   </a>
 

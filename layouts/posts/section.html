@@ -30,8 +30,8 @@
       {{- end -}}
     </div>
 
-    {{- /* 分类卡片 - 只在根 /posts/ 页面显示 */ -}}
-    {{- if and $sections .Parent.IsHome -}}
+    {{- /* 分类卡片 - 任何有子分类的页面都显示 */ -}}
+    {{- if $sections -}}
     <div class="posts-category-section" style="margin-bottom: 2.5rem;">
       <div class="category-cards">
         {{- range $section := $sections -}}

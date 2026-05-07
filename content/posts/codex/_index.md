@@ -1,8 +1,8 @@
 ---
-title: 01-OpenClaw 文档
+title: 08-Codex 文档
 date: 2026-05-08
 draft: false
-icon: 🤖
+icon: 📖
 sort_by: Weight
 sort_order: asc
 layout: docs
