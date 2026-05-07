@@ -1,119 +1,189 @@
-{{- /* /posts/ 页面：卡片网格布局，动态展示所有子目录 */ -}}
+{{- /* /posts/ 页面：分类列表布局，按分类折叠展示文章 */ -}}
 {{- define "content" -}}
   {{- $pages := .Pages -}}
   {{- $sections := .Sections -}}
 
-  {{- /* 按 section 分组统计 */ -}}
   <div class="page blog">
-    <div class="posts-grid-header">
+    <div class="posts-list-header">
       <h2>所有文章</h2>
-      <span class="posts-grid-count">{{ len $pages }} 篇文章 · {{ len $sections }} 个分类</span>
+      <span class="posts-list-count">{{ len $pages }} 篇文章 · {{ len $sections }} 个分类</span>
     </div>
 
     {{- if $sections -}}
-    <div class="category-cards posts-grid-cards">
+    <div class="posts-by-category">
       {{- range $section := $sections -}}
         {{- $count := len $section.Pages -}}
         {{- $name := $section.Title -}}
         {{- $url := $section.RelPermalink -}}
-        {{- $latest := index ($section.Pages.ByDate.Reverse) 0 -}}
-        <a href="{{ $url }}" class="category-card">
-          <span class="category-card-badge">{{ $count }} 篇</span>
-          <div class="category-card-icon">{{- with $section.Params.icon | default "📁" -}}{{- . -}}{{- end -}}</div>
-          <h3 class="category-card-title">{{ $name }}</h3>
-          <p class="category-card-desc">
-            {{- if $latest -}}
-              最近更新: {{ $latest.Date.Format "2006-01-02" }}
-            {{- else -}}
-              暂无文章
+        {{- $sectionPages := $section.Pages.ByDate.Reverse -}}
+
+        <details class="category-group" open>
+          <summary class="category-group-summary">
+            <span class="category-group-name">
+              {{- with $section.Params.icon | default "📁" -}}{{- . -}}{{- end -}}
+              {{ $name }}
+            </span>
+            <span class="category-group-meta">
+              <span class="category-group-badge">{{ $count }} 篇</span>
+              <a href="{{ $url }}" class="category-group-link" onclick="event.stopPropagation()">进入 →</a>
+            </span>
+          </summary>
+          <div class="category-group-articles">
+            {{- range $sectionPages -}}
+            <article class="category-article-item">
+              <span class="category-article-date">{{ .Date.Format "2006-01-02" }}</span>
+              <a href="{{ .RelPermalink }}" class="category-article-title">{{ .Title }}</a>
+              {{- with .Params.description -}}
+              <span class="category-article-desc">{{ . }}</span>
+              {{- end -}}
+            </article>
             {{- end -}}
-          </p>
-        </a>
+          </div>
+        </details>
       {{- end -}}
     </div>
     {{- else -}}
-    <div class="posts-grid-empty">
+    <div class="posts-list-empty">
       <p>暂无分类目录。在 <code>content/posts/</code> 下创建子目录即可添加分类。</p>
-    </div>
-    {{- end -}}
-
-    {{- /* 也列出所有文章 */ -}}
-    {{- if $pages -}}
-    <div class="posts-grid-header" style="margin-top:2.5rem">
-      <h3>全部文章</h3>
-    </div>
-    <div class="posts-archive-list">
-      {{- range $pages.ByDate.Reverse -}}
-      <article class="archive-item">
-        <span class="archive-item-date">{{ .Date.Format "2006-01-02" }}</span>
-        <a href="{{ .RelPermalink }}" class="archive-item-title">{{ .Title }}</a>
-        {{- with .Params.category -}}
-        <span class="archive-item-category">{{ . }}</span>
-        {{- end -}}
-      </article>
-      {{- end -}}
     </div>
     {{- end -}}
   </div>
 
   <style>
-  .posts-grid-header {
-    margin: 2rem 0 1rem;
+  .posts-list-header {
+    margin: 2rem 0 1.5rem;
     display: flex;
     align-items: baseline;
     gap: 1rem;
     flex-wrap: wrap;
   }
-  .posts-grid-header h2,
-  .posts-grid-header h3 {
+  .posts-list-header h2 {
     margin: 0;
   }
-  .posts-grid-count {
+  .posts-list-count {
     font-size: 0.85rem;
     color: fixit-var(global-font-secondary-color);
     opacity: 0.7;
   }
-  .posts-grid-cards {
-    margin-bottom: 2rem;
+  .posts-by-category {
+    margin-bottom: 3rem;
   }
-  .posts-grid-empty {
+  .posts-list-empty {
     padding: 2rem;
     text-align: center;
     color: fixit-var(global-font-secondary-color);
   }
-  .posts-archive-list {
-    margin-bottom: 3rem;
+
+  /* Category group — collapsible section */
+  .category-group {
+    margin-bottom: 0.75rem;
+    border: 1px solid fixit-var(global-border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
   }
-  .archive-item {
+  .category-group-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    background: fixit-var(global-background-color);
+    font-weight: 600;
+    font-size: 1rem;
+    list-style: none;
+    user-select: none;
+    transition: background 0.15s ease;
+  }
+  .category-group-summary::-webkit-details-marker {
+    display: none;
+  }
+  .category-group-summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+    font-size: 0.8rem;
+  }
+  .category-group[open] > .category-group-summary::before {
+    transform: rotate(90deg);
+  }
+  .category-group-summary:hover {
+    background: rgba(127, 127, 127, 0.06);
+  }
+  .category-group-name {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .category-group-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .category-group-badge {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: fixit-var(global-font-secondary-color);
+    background: fixit-var(secondary);
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .category-group-link {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: fixit-var(global-link-color);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+  }
+  .category-group-link:hover {
+    opacity: 1;
+  }
+
+  /* Article items within a category */
+  .category-group-articles {
+    padding: 0.25rem 0;
+  }
+  .category-article-item {
     display: flex;
     align-items: baseline;
-    gap: 1rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid fixit-var(global-border-color);
+    gap: 0.75rem;
+    padding: 0.45rem 1rem 0.45rem 2rem;
+    border-top: 1px solid fixit-var(global-border-color);
     font-size: 0.9rem;
+    transition: background 0.1s ease;
   }
-  .archive-item-date {
+  .category-article-item:hover {
+    background: rgba(127, 127, 127, 0.04);
+  }
+  .category-article-date {
     color: fixit-var(global-font-secondary-color);
     font-size: 0.8rem;
     white-space: nowrap;
     min-width: 5.5rem;
   }
-  .archive-item-title {
+  .category-article-title {
     flex: 1;
     font-weight: 500;
     color: fixit-var(global-font-color);
     text-decoration: none;
   }
-  .archive-item-title:hover {
+  .category-article-title:hover {
     color: fixit-var(global-link-hover-color);
   }
-  .archive-item-category {
-    font-size: 0.72rem;
+  .category-article-desc {
+    display: none;
+    font-size: 0.78rem;
     color: fixit-var(global-font-secondary-color);
-    background: fixit-var(secondary);
-    padding: 0.1rem 0.4rem;
-    border-radius: 0.5rem;
-    opacity: 0.75;
+    max-width: 18rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (min-width: 1024px) {
+    .category-article-desc {
+      display: inline;
+    }
   }
   </style>
 {{- end -}}
