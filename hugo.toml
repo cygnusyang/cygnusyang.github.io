@@ -204,65 +204,6 @@ pygmentsCodefencesNumberInline = true
     url = "/posts/"
     weight = 1
   [[menu.main]]
-    identifier = "openclaw"
-    name = "OpenClaw"
-    url = "/posts/openclaw/"
-    parent = "posts"
-    weight = 1
-  [[menu.main]]
-    identifier = "gstack"
-    name = "GStack"
-    url = "/posts/gstack/"
-    parent = "posts"
-    weight = 2
-  [[menu.main]]
-    identifier = "gbrain"
-    name = "GBrain"
-    url = "/tags/gbrain/"
-    parent = "posts"
-    weight = 3
-  [[menu.main]]
-    identifier = "claude-code"
-    name = "Claude Code"
-    url = "/tags/claude-code/"
-    parent = "posts"
-    weight = 4
-  [[menu.main]]
-    identifier = "mcp"
-    name = "MCP"
-    url = "/tags/mcp/"
-    parent = "posts"
-    weight = 5
-  [[menu.main]]
-    identifier = "codex"
-    name = "Codex"
-    url = "/tags/codex/"
-    parent = "posts"
-    weight = 6
-  [[menu.main]]
-    identifier = "dev-things"
-    name = "研发那些事"
-    url = "/categories/研发那些事/"
-    parent = "posts"
-    weight = 7
-  [[menu.main]]
-    identifier = "eng-things"
-    name = "工程那些事"
-    url = "/categories/工程那些事/"
-    parent = "posts"
-    weight = 8
-  [[menu.main]]
-    identifier = "reading"
-    name = "读书"
-    url = "/reading/"
-    parent = "posts"
-    weight = 9
-  [[menu.main]]
-    identifier = "donate"
-    name = "☕ 捐赠"
-    url = "/donate/"
-    weight = 3
-  [[menu.main]]
     identifier = "about"
     name = "关于"
     url = "/about/"

@@ -90,8 +90,6 @@
     var template = document.getElementById('site-sidebar-nav-template');
     var main = document.querySelector('main.fi-container') || document.querySelector('main');
     if (!template || !main || main.querySelector('.site-sidebar-nav')) return;
-    /* 不在首页注入侧边栏 */
-    if (document.querySelector('.page.home')) return;
     var nav = template.content.firstElementChild.cloneNode(true);
     var firstAside = main.querySelector(':scope > aside.aside-collection');
     if (firstAside && firstAside.children.length === 0) {
