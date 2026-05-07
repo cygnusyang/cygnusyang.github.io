@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 17
 ---
 
-# 第十七章：security-guidance —— 安全钩子实战
 
 上一章我们看了最简命令插件 commit-commands。这一章转向插件的另一面：**钩子（Hooks）**。security-guidance 是官方 12 个插件中最简单的钩子插件——一个事件、一个匹配器、一个 Python 脚本。但"简单"不等于"浅显"，它完整展示了钩子插件从配置到执行的全链路。
 

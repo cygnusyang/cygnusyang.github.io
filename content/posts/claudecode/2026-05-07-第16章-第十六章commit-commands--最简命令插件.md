@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 16
 ---
 
-# 第十六章：commit-commands —— 最简命令插件
 
 学习插件开发，从哪里开始？答案就在你眼前：**commit-commands**，官方 12 个插件中最简单的一个。它只有 `plugin.json` 和 3 个命令文件，没有任何代理、技能或钩子。但恰恰是这种极简，让它成为理解插件机制的完美起点。
 

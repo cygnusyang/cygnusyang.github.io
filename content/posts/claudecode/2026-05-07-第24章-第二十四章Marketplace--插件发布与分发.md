@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 24
 ---
 
-# 第二十四章：Marketplace —— 插件发布与分发
 
 插件写好了，怎么分享给别人？Claude Code 的 Marketplace 系统就是答案。
 

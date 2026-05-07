@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 3
 ---
 
-# 第三章：权限模型 —— ask/allow/deny 与沙箱
 
 想象这个场景：你让 Claude Code 帮你重构代码，它执行了 `rm -rf node_modules` 来"清理"——然后你发现它删掉了整个项目目录。这不是科幻，这是权限没有配置好的真实后果。
 

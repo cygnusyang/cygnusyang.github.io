@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 1
 ---
 
-# 第一章：Claude Code 是什么 —— 终端里的 AI 编码伙伴
 
 昨天你花了两小时手动审查 PR、写提交消息、跑测试。今天你还是在做这些。如果有人能帮你——
 

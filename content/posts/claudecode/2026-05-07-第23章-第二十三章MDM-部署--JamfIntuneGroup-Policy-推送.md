@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 23
 ---
 
-# 第二十三章：MDM 部署 —— Jamf/Intune/Group Policy 推送
 
 ## 术语表
 

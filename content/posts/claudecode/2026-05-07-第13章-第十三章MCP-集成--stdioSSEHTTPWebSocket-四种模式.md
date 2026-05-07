@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 13
 ---
 
-# 第十三章：MCP 集成 —— stdio/SSE/HTTP/WebSocket 四种模式
 
 你的插件需要调用外部服务——查询 Asana 任务、读取数据库、连接实时 API。怎么办？从头写 HTTP 客户端？不，Claude Code 提供了一个更优雅的方案：**MCP（Model Context Protocol）**。
 

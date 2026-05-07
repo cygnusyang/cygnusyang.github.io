@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 6
 ---
 
-# 第六章：两种钩子对比 —— Prompt 钩子 vs Command 钩子
 
 在上一章我们认识了 Hooks 系统——事件驱动的自动化引擎。现在进入一个实战中必然面对的选择题：**你的钩子应该用 Prompt 类型还是 Command 类型？**
 

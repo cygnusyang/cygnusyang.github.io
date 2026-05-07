@@ -7,7 +7,6 @@ collections: ["claudecode"]
 weight: 14
 ---
 
-# 第十四章：插件配置 —— .local.md 模式与 YAML frontmatter
 
 插件需要配置——启用/禁用开关、阈值参数、路径列表、模式选择。但你不想把这些硬编码在插件代码里，也不想让用户修改插件源文件。怎么办？
 
