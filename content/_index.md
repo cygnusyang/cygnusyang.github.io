@@ -446,7 +446,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   <div class="home-section-header">
     <span class="home-section-header-icon">📝</span>
     <h2 class="home-section-header-title">文章<span class="home-section-header-count">分类浏览</span></h2>
-    {{< category-popup >}}
   </div>
 
   <div class="category-cards" id="categoryCards">
