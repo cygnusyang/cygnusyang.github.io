@@ -1,6 +1,6 @@
 ---
 title: 首页
-pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness", "academic-research-skills"]
+pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness"]
 ---
 
 <style>
@@ -10,7 +10,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 }
 
 .home-section-header {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -318,95 +317,24 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   }
 }
 
-/* ====== Category Popup Trigger & Panel ====== */
-.category-popup-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: fixit-var(global-font-secondary-color);
-  background: fixit-var(secondary);
-  border: 1px solid fixit-var(global-border-color);
-  border-radius: 0.4rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  margin-left: 0.5rem;
-  vertical-align: middle;
-}
-
-.category-popup-trigger:hover {
-  color: #fff;
-  background: fixit-var(global-link-hover-color);
-  border-color: fixit-var(global-link-hover-color);
-}
-
-.category-popup-count-badge {
-  font-size: 0.65rem;
-}
-
-.category-popup-trigger-arrow {
-  font-size: 0.6rem;
-}
-
-.category-popup-panel {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.5rem;
-  padding: 0.75rem;
-  min-width: 16rem;
-  background: fixit-var(global-background-color);
-  border: 1px solid fixit-var(global-border-color);
-  border-radius: 0.65rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  animation: popupFadeIn 0.15s ease;
-}
-
-[data-theme=dark] .category-popup-panel {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes popupFadeIn {
-  from { opacity: 0; transform: translateY(-3px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.category-popup-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.category-popup-item {
+/* ====== Category Header Row ====== */
+.category-header-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.85rem;
-  color: fixit-var(global-font-color);
-  text-decoration: none;
-  border-radius: 0.35rem;
-  transition: background 0.12s ease;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid fixit-var(global-border-color);
 }
 
-.category-popup-item:hover {
-  background: fixit-var(secondary);
-  color: fixit-var(global-link-hover-color);
-  text-decoration: none;
+.category-header-row .home-section-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-.category-popup-name {
-  font-weight: 500;
-}
-
-.category-popup-count {
-  font-size: 0.7rem;
-  color: fixit-var(global-font-secondary-color);
-  opacity: 0.7;
+/* ====== Category Cards 2-row limit ====== */
+.category-cards.collapsed .category-card:nth-child(n+9) {
+  display: none;
 }
 
 /* ====== Expand Button ====== */
@@ -443,33 +371,27 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 
 <!-- ==================== 文章 ==================== -->
 <section class="home-section">
-  <div class="home-section-header">
-    <span class="home-section-header-icon">📝</span>
-    <h2 class="home-section-header-title">文章<span class="home-section-header-count">分类浏览</span></h2>
-  </div>
+  {{< category-popup >}}
 
   <div class="category-cards" id="categoryCards">
 <a href="/posts/openclaw/" class="category-card" aria-label="OpenClaw">
-          <span class="category-card-badge">34 篇</span>
-      <div class="category-card-icon">🤖</div>
-      <h3 class="category-card-title">01-OpenClaw</h3>
-
+    <span class="category-card-badge">34 篇</span>
+    <div class="category-card-icon">🤖</div>
+    <h3 class="category-card-title">OpenClaw</h3>
     <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
   </a>
 
 <a href="/posts/gstack/" class="category-card" aria-label="GStack">
           <span class="category-card-badge">12 篇</span>
-      <div class="category-card-icon">📚</div>
-      <h3 class="category-card-title">02-GStack</h3>
-
+    <div class="category-card-icon">📚</div>
+    <h3 class="category-card-title">GStack</h3>
     <p class="category-card-desc">全栈技术架构设计与实践</p>
   </a>
 
 <a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
-          <span class="category-card-badge">6 篇</span>
-      <div class="category-card-icon">🧠</div>
-      <h3 class="category-card-title">03-GBrain</h3>
-
+    <span class="category-card-badge">6 篇</span>
+    <div class="category-card-icon">🧠</div>
+    <h3 class="category-card-title">GBrain</h3>
     <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
   </a>
 
@@ -489,41 +411,36 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 
 <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
-      <div class="category-card-icon">⌨️</div>
-      <h3 class="category-card-title">06-Claude Code</h3>
-
+    <div class="category-card-icon">⌨️</div>
+    <h3 class="category-card-title">Claude Code</h3>
     <p class="category-card-desc">Claude Code 开发实践与技巧</p>
   </a>
 
-<a href="/posts/mcp/" class="category-card" aria-label="MCP">
-          <span class="category-card-badge">1 篇</span>
-      <div class="category-card-icon">🔌</div>
-      <h3 class="category-card-title">07-MCP</h3>
-
+<a href="/tags/mcp/" class="category-card" aria-label="MCP">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">🔌</div>
+    <h3 class="category-card-title">MCP</h3>
     <p class="category-card-desc">Model Context Protocol 开发指南</p>
   </a>
 
-<a href="/posts/codex/" class="category-card" aria-label="Codex">
-          <span class="category-card-badge">21 篇</span>
-      <div class="category-card-icon">📖</div>
-      <h3 class="category-card-title">08-Codex</h3>
-
+<a href="/tags/codex/" class="category-card" aria-label="Codex">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">📖</div>
+    <h3 class="category-card-title">Codex</h3>
     <p class="category-card-desc">技术知识库与最佳实践</p>
   </a>
 
 <a href="/posts/harness/" class="category-card" aria-label="Harness">
-          <span class="category-card-badge">27 篇</span>
-      <div class="category-card-icon">⚙️</div>
-      <h3 class="category-card-title">09-Harness</h3>
-
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">⚙️</div>
+    <h3 class="category-card-title">Harness</h3>
     <p class="category-card-desc">技术文档与开发指南</p>
   </a>
 
-<a href="/posts/academic-research-skills/" class="category-card" aria-label="Academic research skills">
-          <span class="category-card-badge">20 篇</span>
-      <div class="category-card-icon">📦</div>
-      <h3 class="category-card-title">10-Academic research skills</h3>
-
+<a href="/posts/Academic Research Skills/" class="category-card" aria-label="Academic research skills">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">📦</div>
+    <h3 class="category-card-title">Academic research skills</h3>
     <p class="category-card-desc">技术文档与开发指南</p>
   </a>
 
@@ -552,68 +469,53 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   var btn = document.getElementById('categoryExpandBtn');
   if (!grid || !btn) return;
 
+  var CARDS_PER_ROW = 4; // default for desktop
   var MAX_ROWS = 2;
-  var maxVisible = 0;
-  var isExpanded = false;
+  var maxVisible = CARDS_PER_ROW * MAX_ROWS;
 
-  function cardsPerRow() {
+  function updateLayout() {
     var cards = grid.querySelectorAll('.category-card');
-    if (cards.length < 2) return cards.length;
-    var top0 = cards[0].getBoundingClientRect().top;
-    for (var i = 1; i < cards.length; i++) {
-      if (cards[i].getBoundingClientRect().top > top0 + 2) return i;
-    }
-    return cards.length;
-  }
-
-  function applyCollapse() {
-    var cards = grid.querySelectorAll('.category-card');
-    var perRow = cardsPerRow();
-    maxVisible = perRow * MAX_ROWS;
-
     if (cards.length <= maxVisible) {
+      grid.classList.remove('collapsed');
       btn.style.display = 'none';
-      isExpanded = false;
       return;
     }
-
-    btn.style.display = 'inline-flex';
-    var hidden = cards.length - maxVisible;
-    btn.textContent = '展开全部 (' + hidden + ') ▾';
-
-    if (!isExpanded) {
-      for (var i = maxVisible; i < cards.length; i++) {
-        cards[i].style.display = 'none';
+    // Determine actual cards per row from grid
+    var firstCardTop = cards[0].getBoundingClientRect().top;
+    for (var i = 1; i < cards.length; i++) {
+      if (cards[i].getBoundingClientRect().top > firstCardTop) {
+        CARDS_PER_ROW = i;
+        maxVisible = CARDS_PER_ROW * MAX_ROWS;
+        break;
       }
+    }
+    if (cards.length > maxVisible) {
+      grid.classList.add('collapsed');
+      btn.style.display = 'inline-flex';
+      btn.textContent = '展开全部 (' + (cards.length - maxVisible) + ') ▾';
+    } else {
+      grid.classList.remove('collapsed');
+      btn.style.display = 'none';
     }
   }
 
   window.toggleExpandCards = function() {
-    var cards = grid.querySelectorAll('.category-card');
-    if (isExpanded) {
-      // collapse back
-      for (var i = maxVisible; i < cards.length; i++) {
-        cards[i].style.display = 'none';
-      }
-      var hidden = cards.length - maxVisible;
-      btn.textContent = '展开全部 (' + hidden + ') ▾';
-      btn.classList.remove('expanded');
-      isExpanded = false;
-    } else {
-      // expand all
-      for (var i = 0; i < cards.length; i++) {
-        cards[i].style.display = '';
-      }
+    var collapsed = grid.classList.contains('collapsed');
+    if (collapsed) {
+      grid.classList.remove('collapsed');
       btn.textContent = '收起 ▴';
       btn.classList.add('expanded');
-      isExpanded = true;
+    } else {
+      grid.classList.add('collapsed');
+      var hidden = grid.querySelectorAll('.category-card').length - maxVisible;
+      btn.textContent = '展开全部 (' + hidden + ') ▾';
+      btn.classList.remove('expanded');
     }
   };
 
-  applyCollapse();
-  window.addEventListener('resize', function() {
-    if (!isExpanded) applyCollapse();
-  });
+  // Run on load and resize
+  updateLayout();
+  window.addEventListener('resize', updateLayout);
 })();
 </script>
 </section>

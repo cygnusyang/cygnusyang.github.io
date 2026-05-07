@@ -1,41 +1,15 @@
-{{- /* 动态生成文章分类下拉面板，读取 content/posts/ 子目录，零硬编码 */ -}}
+{{- /* 动态生成分类分类标题栏
+  遍历 content/posts/ 直接子目录，不硬编码任何目录名 */ -}}
 {{- $posts := .Site.GetPage "/posts" -}}
 {{- $sections := $posts.Sections -}}
+{{- $pinned := .Page.Params.pinned_categories | default slice -}}
 
 {{- if $sections -}}
-<button class="category-popup-trigger" onclick="toggleCategoryPopup(event)" aria-label="查看所有分类">
-  <span class="category-popup-count-badge">{{ len $sections }}</span>
-  <span class="category-popup-trigger-arrow">▾</span>
-</button>
-
-<div class="category-popup-panel" id="categoryPopup" style="display:none">
-  <div class="category-popup-grid">
-    {{- range $section := $sections -}}
-      {{- $count := len $section.Pages -}}
-      <a href="{{ $section.RelPermalink }}" class="category-popup-item">
-        <span class="category-popup-name">{{ $section.Title }}</span>
-        <span class="category-popup-count">{{ $count }} 篇</span>
-      </a>
-    {{- end -}}
+<div class="category-header-row">
+  <div class="home-section-header">
+    <span class="home-section-header-icon">📝</span>
+    <h2 class="home-section-header-title">文章<span class="home-section-header-count">分类浏览</span></h2>
   </div>
 </div>
 
-<script>
-function toggleCategoryPopup(e) {
-  e.stopPropagation();
-  var panel = document.getElementById('categoryPopup');
-  if (panel.style.display === 'none' || panel.style.display === '') {
-    panel.style.display = 'block';
-  } else {
-    panel.style.display = 'none';
-  }
-}
-document.addEventListener('click', function(e) {
-  var panel = document.getElementById('categoryPopup');
-  var trigger = document.querySelector('.category-popup-trigger');
-  if (panel && panel.style.display === 'block' && !panel.contains(e.target) && !trigger.contains(e.target)) {
-    panel.style.display = 'none';
-  }
-});
-</script>
 {{- end -}}
