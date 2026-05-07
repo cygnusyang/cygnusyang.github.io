@@ -1,7 +1,7 @@
 ---
 title: 第31章：模型故障转移 (Model Failover) —— 如何提高可用性
 date: 2026-05-05
-category: 07 ops best practices
+categories: ["07 ops best practices"]
 tags: [07 ops best practices]
 collections: ["openclaw"]
 weight: 31

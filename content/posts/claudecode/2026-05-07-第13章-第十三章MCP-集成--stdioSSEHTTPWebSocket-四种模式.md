@@ -1,7 +1,7 @@
 ---
 title: "第十三章：MCP 集成 —— stdio/SSE/HTTP/WebSocket 四种模式"
 date: 2026-05-07
-category: "03 plugins"
+categories: ["03 plugins"]
 tags: []
 collections: ["claudecode"]
 weight: 13

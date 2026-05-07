@@ -1,7 +1,7 @@
 ---
 title: "第二十三章：MDM 部署 —— Jamf/Intune/Group Policy 推送"
 date: 2026-05-07
-category: "05 enterprise"
+categories: ["05 enterprise"]
 tags: []
 collections: ["claudecode"]
 weight: 23

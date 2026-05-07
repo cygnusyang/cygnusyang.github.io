@@ -1,7 +1,7 @@
 ---
 title: "第十四章：插件配置 —— .local.md 模式与 YAML frontmatter"
 date: 2026-05-07
-category: "03 plugins"
+categories: ["03 plugins"]
 tags: []
 collections: ["claudecode"]
 weight: 14

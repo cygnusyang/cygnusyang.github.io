@@ -1,7 +1,7 @@
 ---
 title: 第21章：Canvas A2UI —— 实时可视化协作 workspace
 date: 2026-05-05
-category: 04 client ux
+categories: ["04 client ux"]
 tags: [04 client ux]
 collections: ["openclaw"]
 weight: 21

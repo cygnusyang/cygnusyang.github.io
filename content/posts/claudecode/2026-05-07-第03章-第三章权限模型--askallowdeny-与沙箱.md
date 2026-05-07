@@ -1,7 +1,7 @@
 ---
 title: "第三章：权限模型 —— ask/allow/deny 与沙箱"
 date: 2026-05-07
-category: "01 intro"
+categories: ["01 intro"]
 tags: []
 collections: ["claudecode"]
 weight: 3

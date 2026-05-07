@@ -1,7 +1,7 @@
 ---
 title: "第八章：GStack的learnings与跨会话经验"
 date: 2026-04-18
-category: "chapters"
+categories: ["chapters"]
 tags: ["gstack", "learn", "learnings", "memory", "claude-code"]
 collections: ["gstack"]
 weight: 8

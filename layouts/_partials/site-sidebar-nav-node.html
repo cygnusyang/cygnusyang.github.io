@@ -3,7 +3,7 @@
 {{- $pages := where $node.RegularPages.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
 {{- $sections := where $node.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
 {{- if or $pages $sections -}}
-  {{- $open := hasPrefix $current $node.RelPermalink -}}
+  {{- $open := or (hasPrefix $current $node.RelPermalink) (hasPrefix $node.RelPermalink $current) -}}
   <div class="details collection-details{{ if $open }} open{{ end }}">
     <div class="details-summary collection-summary">
       {{- dict "Class" "fa-regular fa-folder-open" | partial "plugin/icon.html" -}}

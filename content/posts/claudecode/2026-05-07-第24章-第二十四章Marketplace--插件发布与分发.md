@@ -1,7 +1,7 @@
 ---
 title: "第二十四章：Marketplace —— 插件发布与分发"
 date: 2026-05-07
-category: "05 enterprise"
+categories: ["05 enterprise"]
 tags: []
 collections: ["claudecode"]
 weight: 24

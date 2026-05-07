@@ -1,7 +1,7 @@
 ---
 title: "第一章：Claude Code 是什么 —— 终端里的 AI 编码伙伴"
 date: 2026-05-07
-category: "01 intro"
+categories: ["01 intro"]
 tags: []
 collections: ["claudecode"]
 weight: 1

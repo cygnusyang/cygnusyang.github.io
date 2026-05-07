@@ -1,7 +1,7 @@
 ---
 title: 第28章：blogwatcher —— 博客与 RSS 更新监控
 date: 2026-05-05
-category: 06 builtin skills
+categories: ["06 builtin skills"]
 tags: [06 builtin skills]
 collections: ["openclaw"]
 weight: 28

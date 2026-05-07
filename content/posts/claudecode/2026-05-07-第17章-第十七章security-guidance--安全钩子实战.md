@@ -1,7 +1,7 @@
 ---
 title: "第十七章：security-guidance —— 安全钩子实战"
 date: 2026-05-07
-category: "04 plugin deep dives"
+categories: ["04 plugin deep dives"]
 tags: []
 collections: ["claudecode"]
 weight: 17

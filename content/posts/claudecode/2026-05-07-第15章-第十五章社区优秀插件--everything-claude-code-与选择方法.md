@@ -1,7 +1,7 @@
 ---
 title: "第十五章：社区优秀插件 —— everything-claude-code 与选择方法"
 date: 2026-05-07
-category: "03 plugins"
+categories: ["03 plugins"]
 tags: []
 collections: ["claudecode"]
 weight: 15
