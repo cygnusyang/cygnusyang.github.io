@@ -84,6 +84,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   font-size: 0.8rem;
   color: fixit-var(global-font-secondary-color);
   line-height: 1.5;
+  margin: 0;
 }
 
 .category-card-badge {
