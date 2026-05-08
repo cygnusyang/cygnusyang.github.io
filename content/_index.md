@@ -81,6 +81,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 }
 
 .category-card-desc {
+  display: block;
   font-size: 0.8rem;
   color: fixit-var(global-font-secondary-color);
   line-height: 1.5;
@@ -179,6 +180,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
 }
 
 .project-card-desc {
+  display: block;
   font-size: 0.875rem;
   color: fixit-var(global-font-secondary-color);
   line-height: 1.6;
@@ -273,7 +275,8 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
   color: fixit-var(global-font-color);
 }
 
-.about-card-content p {
+.about-card-content-p {
+  display: block;
   font-size: 0.9rem;
   color: fixit-var(global-font-secondary-color);
   line-height: 1.6;
@@ -379,84 +382,84 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
     <span class="category-card-badge">34 篇</span>
     <div class="category-card-icon">🤖</div>
     <h3 class="category-card-title">OpenClaw</h3>
-    <p class="category-card-desc">自托管个人 AI 助手框架完整开发文档</p>
+    <span class="category-card-desc">自托管个人 AI 助手框架完整开发文档</span>
   </a>
 
 <a href="/posts/gstack/" class="category-card" aria-label="GStack">
           <span class="category-card-badge">12 篇</span>
     <div class="category-card-icon">📚</div>
     <h3 class="category-card-title">GStack</h3>
-    <p class="category-card-desc">全栈技术架构设计与实践</p>
+    <span class="category-card-desc">全栈技术架构设计与实践</span>
   </a>
 
 <a href="/posts/gbrain/" class="category-card" aria-label="GBrain">
     <span class="category-card-badge">6 篇</span>
     <div class="category-card-icon">🧠</div>
     <h3 class="category-card-title">GBrain</h3>
-    <p class="category-card-desc">大模型应用开发与智能 Agent 探索</p>
+    <span class="category-card-desc">大模型应用开发与智能 Agent 探索</span>
   </a>
 
 <a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">💡</div>
     <h3 class="category-card-title">研发那些事</h3>
-    <p class="category-card-desc">软件开发过程中的思考与实践</p>
+    <span class="category-card-desc">软件开发过程中的思考与实践</span>
   </a>
 
 <a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">⚙️</div>
     <h3 class="category-card-title">工程那些事</h3>
-    <p class="category-card-desc">软件工程架构设计与方法论</p>
+    <span class="category-card-desc">软件工程架构设计与方法论</span>
   </a>
 
 <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
     <div class="category-card-icon">⌨️</div>
     <h3 class="category-card-title">Claude Code</h3>
-    <p class="category-card-desc">Claude Code 开发实践与技巧</p>
+    <span class="category-card-desc">Claude Code 开发实践与技巧</span>
   </a>
 
 <a href="/tags/mcp/" class="category-card" aria-label="MCP">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">🔌</div>
     <h3 class="category-card-title">MCP</h3>
-    <p class="category-card-desc">Model Context Protocol 开发指南</p>
+    <span class="category-card-desc">Model Context Protocol 开发指南</span>
   </a>
 
 <a href="/tags/codex/" class="category-card" aria-label="Codex">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">📖</div>
     <h3 class="category-card-title">Codex</h3>
-    <p class="category-card-desc">技术知识库与最佳实践</p>
+    <span class="category-card-desc">技术知识库与最佳实践</span>
   </a>
 
 <a href="/posts/harness/" class="category-card" aria-label="Harness">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">⚙️</div>
     <h3 class="category-card-title">Harness</h3>
-    <p class="category-card-desc">技术文档与开发指南</p>
+    <span class="category-card-desc">技术文档与开发指南</span>
   </a>
 
 <a href="/posts/Academic Research Skills/" class="category-card" aria-label="Academic research skills">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">📦</div>
     <h3 class="category-card-title">Academic research skills</h3>
-    <p class="category-card-desc">技术文档与开发指南</p>
+    <span class="category-card-desc">技术文档与开发指南</span>
   </a>
 
 <a href="/posts/newproject/" class="category-card" aria-label="Newproject">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">🎯</div>
     <h3 class="category-card-title">Newproject</h3>
-    <p class="category-card-desc">一个全新的技术探索项目</p>
+    <span class="category-card-desc">一个全新的技术探索项目</span>
   </a>
 
 <a href="/reading/" class="category-card" aria-label="读书">
     <span class="category-card-badge">敬请期待</span>
     <div class="category-card-icon">📗</div>
     <h3 class="category-card-title">读书</h3>
-    <p class="category-card-desc">读书笔记与书评分享</p>
+    <span class="category-card-desc">读书笔记与书评分享</span>
   </a>
 </div>
 
@@ -538,7 +541,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
         <span class="project-card-owner">cygnusyang</span>
       </div>
     </div>
-    <p class="project-card-desc">知乎内容自动化发布工具。将 Markdown 文章一键转换为知乎格式并发布，支持图片上传、排版优化、定时发布等功能。</p>
+    <span class="project-card-desc">知乎内容自动化发布工具。将 Markdown 文章一键转换为知乎格式并发布，支持图片上传、排版优化、定时发布等功能。</span>
     <div class="project-card-meta">
       <span class="project-card-lang">
         <span class="project-card-lang-dot" style="background: #3178c6;"></span>
@@ -561,7 +564,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
         <span class="project-card-owner">cygnusyang</span>
       </div>
     </div>
-    <p class="project-card-desc">微信公众号内容管理工具。将 Markdown 文章转换为公众号原生排版，支持代码高亮、自定义样式模板、多图文消息管理。</p>
+    <span class="project-card-desc">微信公众号内容管理工具。将 Markdown 文章转换为公众号原生排版，支持代码高亮、自定义样式模板、多图文消息管理。</span>
     <div class="project-card-meta">
       <span class="project-card-lang">
         <span class="project-card-lang-dot" style="background: #3178c6;"></span>
@@ -590,7 +593,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
     <div class="about-card-icon">🧑‍💻</div>
     <div class="about-card-content">
       <h3>Cygnus Yang</h3>
-      <p>非典型工程师，关注 AI 智能体、软件工程自动化、分布式系统架构与产品设计。这个博客用来沉淀技术思考和实践经验。</p>
+      <span class="about-card-content-p">非典型工程师，关注 AI 智能体、软件工程自动化、分布式系统架构与产品设计。这个博客用来沉淀技术思考和实践经验。</span>
       <div class="about-card-tags">
         <span class="about-card-tag">AI Agent</span>
         <span class="about-card-tag">分布式系统</span>
@@ -612,7 +615,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
     <div class="about-card-icon">❤️</div>
     <div class="about-card-content">
       <h3>支持创作</h3>
-      <p>如果我的内容对你有所帮助，欢迎请我喝杯咖啡。你的支持是我持续创作的动力。</p>
+      <span class="about-card-content-p">如果我的内容对你有所帮助，欢迎请我喝杯咖啡。你的支持是我持续创作的动力。</span>
       <div class="about-card-tags">
         <span class="about-card-tag">微信赞赏</span>
         <span class="about-card-tag">支付宝</span>
