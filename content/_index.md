@@ -1,6 +1,6 @@
 ---
 title: 首页
-pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness"]
+pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp", "harness", "工程那些事/电机控制"]
 ---
 
 <style>
@@ -399,20 +399,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
     <span class="category-card-desc">大模型应用开发与智能 Agent 探索</span>
   </a>
 
-<a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">💡</div>
-    <h3 class="category-card-title">研发那些事</h3>
-    <span class="category-card-desc">软件开发过程中的思考与实践</span>
-  </a>
-
-<a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">⚙️</div>
-    <h3 class="category-card-title">工程那些事</h3>
-    <span class="category-card-desc">软件工程架构设计与方法论</span>
-  </a>
-
 <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
     <div class="category-card-icon">⌨️</div>
@@ -453,6 +439,20 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
     <div class="category-card-icon">🎯</div>
     <h3 class="category-card-title">Newproject</h3>
     <span class="category-card-desc">一个全新的技术探索项目</span>
+  </a>
+
+<a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">⚙️</div>
+    <h3 class="category-card-title">工程那些事</h3>
+    <span class="category-card-desc">软件工程架构设计与方法论</span>
+  </a>
+
+<a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
+    <span class="category-card-badge">敬请期待</span>
+    <div class="category-card-icon">💡</div>
+    <h3 class="category-card-title">研发那些事</h3>
+    <span class="category-card-desc">软件开发过程中的思考与实践</span>
   </a>
 
 <a href="/reading/" class="category-card" aria-label="读书">
