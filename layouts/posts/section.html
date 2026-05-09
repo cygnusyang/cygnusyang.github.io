@@ -7,17 +7,22 @@
     <div class="posts-list-header">
       <h2>所有文章</h2>
       <span class="posts-list-count">{{ len $pages }} 篇文章 · {{ len $sections }} 个分类</span>
+      <div class="posts-list-actions">
+        <button type="button" class="posts-list-toggle" id="expandAll">全部展开</button>
+        <button type="button" class="posts-list-toggle" id="collapseAll">全部折叠</button>
+      </div>
     </div>
 
     {{- if $sections -}}
     <div class="posts-by-category">
-      {{- range $section := $sections -}}
+      {{- $sortedSections := sort $sections "Title" "asc" -}}
+      {{- range $section := $sortedSections -}}
         {{- $count := len $section.Pages -}}
         {{- $name := $section.Title -}}
         {{- $url := $section.RelPermalink -}}
-        {{- $sectionPages := $section.Pages.ByDate.Reverse -}}
+        {{- $sectionPages := $section.Pages.ByWeight -}}
 
-        <details class="category-group" open>
+        <details class="category-group">
           <summary class="category-group-summary">
             <span class="category-group-name">
               {{- with $section.Params.icon | default "📁" -}}{{- . -}}{{- end -}}
@@ -185,5 +190,46 @@
       display: inline;
     }
   }
+
+  /* Left-align the main container */
+  main.fi-container {
+    justify-content: flex-start !important;
+  }
+
+  /* Expand/Collapse action buttons */
+  .posts-list-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+  .posts-list-toggle {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid fixit-var(global-border-color);
+    border-radius: 0.25rem;
+    background: transparent;
+    color: fixit-var(global-font-secondary-color);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .posts-list-toggle:hover {
+    background: rgba(127, 127, 127, 0.1);
+    color: fixit-var(global-font-color);
+  }
   </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var expandBtn = document.getElementById('expandAll');
+    var collapseBtn = document.getElementById('collapseAll');
+    var groups = document.querySelectorAll('.category-group');
+
+    expandBtn.addEventListener('click', function() {
+      groups.forEach(function(g) { g.setAttribute('open', ''); });
+    });
+    collapseBtn.addEventListener('click', function() {
+      groups.forEach(function(g) { g.removeAttribute('open'); });
+    });
+  });
+  </script>
 {{- end -}}
