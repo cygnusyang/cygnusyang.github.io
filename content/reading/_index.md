@@ -5,6 +5,7 @@ draft: false
 sort_by: Date
 sort_order: desc
 layout: blog
+hiddenFromSidebarNav: true
 ---
 
 这里是我的读书笔记和书评。

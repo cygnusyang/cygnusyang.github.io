@@ -382,7 +382,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">34 篇</span>
       <div class="category-card-icon">🤖</div>
       <h3 class="category-card-title">01-OpenClaw</h3>
-
     <span class="category-card-desc">自托管个人 AI 助手框架完整开发文档</span>
   </a>
 
@@ -390,7 +389,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">12 篇</span>
       <div class="category-card-icon">📚</div>
       <h3 class="category-card-title">02-GStack</h3>
-
     <span class="category-card-desc">全栈技术架构设计与实践</span>
   </a>
 
@@ -398,15 +396,27 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">6 篇</span>
       <div class="category-card-icon">🧠</div>
       <h3 class="category-card-title">03-GBrain</h3>
-
     <span class="category-card-desc">大模型应用开发与智能 Agent 探索</span>
+  </a>
+
+<a href="/posts/工程那些事/电机控制/" class="category-card" aria-label="电机控制">
+          <span class="category-card-badge">13 篇</span>
+      <div class="category-card-icon">⚙️</div>
+      <h3 class="category-card-title">04-电机控制</h3>
+    <span class="category-card-desc">软件工程架构设计与方法论</span>
+  </a>
+
+<a href="/posts/研发那些事/研发绩效体系/" class="category-card" aria-label="研发绩效体系">
+          <span class="category-card-badge">16 篇</span>
+      <div class="category-card-icon">💡</div>
+      <h3 class="category-card-title">05-研发绩效体系</h3>
+    <span class="category-card-desc">软件开发过程中的思考与实践</span>
   </a>
 
 <a href="/posts/claudecode/" class="category-card" aria-label="Claude Code">
           <span class="category-card-badge">27 篇</span>
       <div class="category-card-icon">⌨️</div>
       <h3 class="category-card-title">06-Claude Code</h3>
-
     <span class="category-card-desc">Claude Code 开发实践与技巧</span>
   </a>
 
@@ -414,7 +424,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">1 篇</span>
       <div class="category-card-icon">🔌</div>
       <h3 class="category-card-title">07-MCP</h3>
-
     <span class="category-card-desc">Model Context Protocol 开发指南</span>
   </a>
 
@@ -422,7 +431,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">21 篇</span>
       <div class="category-card-icon">📖</div>
       <h3 class="category-card-title">08-Codex</h3>
-
     <span class="category-card-desc">技术知识库与最佳实践</span>
   </a>
 
@@ -430,7 +438,6 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">27 篇</span>
       <div class="category-card-icon">⚙️</div>
       <h3 class="category-card-title">09-Harness</h3>
-
     <span class="category-card-desc">技术文档与开发指南</span>
   </a>
 
@@ -438,29 +445,7 @@ pinned_categories: ["openclaw", "gstack", "gbrain", "claudecode", "codex", "mcp"
           <span class="category-card-badge">20 篇</span>
       <div class="category-card-icon">📦</div>
       <h3 class="category-card-title">10-Academic research skills</h3>
-
     <span class="category-card-desc">技术文档与开发指南</span>
-  </a>
-
-<a href="/posts/newproject/" class="category-card" aria-label="Newproject">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">🎯</div>
-    <h3 class="category-card-title">Newproject</h3>
-    <span class="category-card-desc">一个全新的技术探索项目</span>
-  </a>
-
-<a href="/categories/工程那些事/" class="category-card" aria-label="工程那些事">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">⚙️</div>
-    <h3 class="category-card-title">工程那些事</h3>
-    <span class="category-card-desc">软件工程架构设计与方法论</span>
-  </a>
-
-<a href="/categories/研发那些事/" class="category-card" aria-label="研发那些事">
-    <span class="category-card-badge">敬请期待</span>
-    <div class="category-card-icon">💡</div>
-    <h3 class="category-card-title">研发那些事</h3>
-    <span class="category-card-desc">软件开发过程中的思考与实践</span>
   </a>
 
 <a href="/reading/" class="category-card" aria-label="读书">
