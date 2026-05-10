@@ -1,6 +1,11 @@
 ---
-title: "研发创新及交付"
+title: 06-研发创新及交付 文档
 date: 2026-05-10
+draft: false
+icon: 🚀
+sort_by: Weight
+sort_order: asc
+layout: docs
 cascade:
   - category: "研发创新及交付"
     collections: ["研发那些事/研发创新及交付"]

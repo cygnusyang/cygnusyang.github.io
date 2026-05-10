@@ -1,6 +1,6 @@
 ---
 title: 首页
-pinned_categories: ["openclaw", "gstack", "gbrain", "工程那些事/电机控制", "研发那些事/研发绩效体系", "claudecode", "mcp", "codex", "harness", "academic-research-skills", "reading"]
+pinned_categories: ["openclaw", "gstack", "gbrain", "工程那些事/电机控制", "研发那些事/研发绩效体系", "研发那些事/研发创新及交付", "claudecode", "mcp", "codex", "harness", "academic-research-skills", "reading"]
 ---
 
 <style>
