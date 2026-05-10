@@ -13,8 +13,10 @@
       </div>
     </div>
 
-    {{- if $sections -}}
+    {{- if or $sections $pages -}}
     <div class="posts-by-category">
+      {{- if $sections -}}
+      {{- /* 有子目录：按子目录分组显示 */ -}}
       {{- $sortedSections := sort $sections "Title" "asc" -}}
       {{- range $section := $sortedSections -}}
         {{- $count := len $section.Pages -}}
@@ -54,6 +56,19 @@
           </div>
         </details>
       {{- end -}}
+      {{- else if $pages -}}
+      {{- /* 没有子目录但有页面：直接显示页面列表 */ -}}
+      {{- $sortedPages := $pages.ByDate.Reverse -}}
+      {{- range $article := $sortedPages -}}
+      <article class="category-article-item">
+        <span class="category-article-date">{{ .Date.Format "2006-01-02" }}</span>
+        <a href="{{ .RelPermalink }}" class="category-article-title">{{ .Title }}</a>
+        {{- with .Params.description -}}
+        <span class="category-article-desc">{{ . }}</span>
+        {{- end -}}
+      </article>
+      {{- end -}}
+      {{- end -}}
     </div>
     {{- else -}}
     <div class="posts-list-empty">
@@ -61,6 +76,15 @@
     </div>
     {{- end -}}
   </div>
+
+  {{- /* Hide theme's auto-generated sidebar navigation only on /posts/ page, not on subcategory pages */ -}}
+  {{- if eq .RelPermalink "/posts/" -}}
+  <style>
+  .aside-collection.site-sidebar-nav {
+    display: none !important;
+  }
+  </style>
+  {{- end -}}
 
   <style>
   .posts-list-header {
@@ -166,6 +190,10 @@
     font-size: 0.9rem;
     transition: background 0.1s ease;
   }
+  /* 当没有子目录时，文章项不需要左边距 */
+  .posts-by-category > .category-article-item {
+    padding-left: 1rem;
+  }
   .category-article-item:hover {
     background: rgba(127, 127, 127, 0.04);
   }
@@ -202,11 +230,6 @@
   /* Left-align the main container */
   main.fi-container {
     justify-content: flex-start !important;
-  }
-
-  /* Hide theme's auto-generated sidebar navigation on /posts/ page */
-  .aside-collection.site-sidebar-nav {
-    display: none !important;
   }
 
   /* Expand/Collapse action buttons */

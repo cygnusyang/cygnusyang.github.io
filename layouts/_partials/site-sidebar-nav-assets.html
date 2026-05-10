@@ -1,5 +1,19 @@
 {{- $current := .RelPermalink -}}
-{{- $sections := where .Site.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- $home := .Site.GetPage "/" -}}
+{{- $pinned := $home.Params.pinned_categories | default slice -}}
+{{- $posts := .Site.GetPage "/posts" -}}
+{{- $sections := where $posts.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
+{{- /* 只显示 pinned_categories 中列出的分类 */ -}}
+{{- $filteredSections := slice -}}
+{{- range $sections -}}
+  {{- $dir := .File.Dir | default "" -}}
+  {{- $dir = strings.TrimPrefix "posts/" $dir -}}
+  {{- $dir = strings.TrimSuffix "/" $dir -}}
+  {{- if in $pinned $dir -}}
+    {{- $filteredSections = $filteredSections | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $sections = $filteredSections -}}
 {{- if $sections -}}
 <template id="site-sidebar-nav-template">
   <aside class="aside-collection site-sidebar-nav" aria-label="文档导航">
@@ -15,6 +29,7 @@
   }
 
   .site-sidebar-nav {
+    position: relative;
     flex: 0 0 clamp(16rem, 17vw, 20rem) !important;
     max-width: clamp(16rem, 17vw, 20rem) !important;
     transition: flex-basis 0.22s ease, max-width 0.22s ease;
@@ -23,7 +38,12 @@
   /* When sidebar nav is present, align content to top (not centered) */
   main.fi-container:has(.site-sidebar-nav) {
     align-items: flex-start !important;
+    justify-content: center !important;
     gap: clamp(0.75rem, 1.3vw, 1.25rem);
+  }
+
+  .breadcrumb-container + main.fi-container:has(.site-sidebar-nav) > .site-sidebar-nav {
+    margin-top: calc(-1 * var(--site-sidebar-nav-top-offset, 0px));
   }
 
   /* Constrain page width when sidebar is open, regardless of page type */
@@ -95,9 +115,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      position: absolute;
+      top: 0;
+      right: 0.25rem;
       width: 2rem;
       height: 2rem;
-      margin: 0 0 0.75rem 0.25rem;
+      margin: 0;
       border: 0;
       border-radius: 999px;
       color: inherit;
@@ -141,7 +164,7 @@
 
     var nav = template.content.firstElementChild.cloneNode(true);
     var firstAside = main.querySelector(':scope > aside.aside-collection');
-    if (firstAside && firstAside.children.length === 0) {
+    if (firstAside) {
       firstAside.replaceWith(nav);
     } else {
       var anchor = main.querySelector(':scope > article, :scope > .page, :scope > section') || main.firstElementChild;
@@ -149,6 +172,16 @@
     }
 
     nav.classList.add('site-sidebar-nav-host');
+
+    var syncNavTopOffset = function () {
+      var previous = main.previousElementSibling;
+      var offset = previous && previous.classList && previous.classList.contains('breadcrumb-container')
+        ? previous.getBoundingClientRect().height
+        : 0;
+      main.style.setProperty('--site-sidebar-nav-top-offset', offset ? offset + 'px' : '0px');
+    };
+    syncNavTopOffset();
+    window.addEventListener('resize', syncNavTopOffset);
 
     var toggle = document.createElement('button');
     toggle.type = 'button';
