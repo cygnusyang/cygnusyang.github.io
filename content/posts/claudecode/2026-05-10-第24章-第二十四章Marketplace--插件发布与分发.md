@@ -2,7 +2,7 @@
 title: "第24章 第二十四章：Marketplace —— 插件发布与分发"
 date: 2026-05-10
 category: "05 enterprise"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 24
 ---

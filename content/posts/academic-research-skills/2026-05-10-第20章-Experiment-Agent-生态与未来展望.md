@@ -2,7 +2,7 @@
 title: "第20章 Experiment Agent 生态与未来展望"
 date: 2026-05-10
 category: "08 advanced"
-tags: []
+tags: ["研究", "AI", "工具链", "教程", "学术"]
 collections: ["academic-research-skills"]
 weight: 20
 ---

@@ -2,7 +2,7 @@
 title: "第19章 第十八章：配置系统 —— TOML + JSON Schema"
 date: 2026-05-10
 category: "06 enterprise"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 19
 ---

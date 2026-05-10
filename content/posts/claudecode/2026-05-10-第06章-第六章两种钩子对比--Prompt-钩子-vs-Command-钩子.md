@@ -2,7 +2,7 @@
 title: "第06章 第六章：两种钩子对比 —— Prompt 钩子 vs Command 钩子"
 date: 2026-05-10
 category: "02 core"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 6
 ---

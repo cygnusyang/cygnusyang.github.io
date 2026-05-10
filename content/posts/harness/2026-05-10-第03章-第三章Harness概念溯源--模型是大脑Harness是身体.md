@@ -2,7 +2,7 @@
 title: "第03章 第三章：Harness概念溯源 —— \"模型是大脑，Harness是身体\""
 date: 2026-05-10
 category: "02 fundamentals"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 3
 ---

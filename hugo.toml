@@ -23,6 +23,21 @@ pygmentsCodefencesNumberInline = true
 [build]
   writeStats = true
 
+# 输出压缩
+[minify]
+  disableSVG = false
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepDocumentTags = true
+      keepEndTags = true
+      keepQuotes = false
+      keepWhitespace = false
+    [minify.tdewolff.js]
+      keepVarNames = false
+      precision = 0
+    [minify.tdewolff.css]
+      precision = 0
+
 # ==================== FixIt 主题配置 ====================
 [params]
   # 网站描述
@@ -54,6 +69,12 @@ pygmentsCodefencesNumberInline = true
     # Collection 系列导航侧边栏
     collectionList = true
     collectionNavigation = true
+
+    # 相关文章推荐
+    [params.page.related]
+      enable = true
+      count = 5
+      position = ["footer"]
 
     [params.page.toc]
       enable = true
@@ -216,3 +237,34 @@ pygmentsCodefencesNumberInline = true
 [outputs]
   home = ["HTML", "RSS", "JSON", "Search"]
   section = ["HTML", "RSS"]
+
+# 分类法
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  collection = "collections"
+  series = "series"
+
+# 图片处理（为未来配图做准备）
+[imaging]
+  quality = 85
+  resampleFilter = "CatmullRom"
+  anchor = "Smart"
+
+# 相关文章推荐（基于标签和分类的精准匹配）
+[related]
+  includeNewer = false
+  threshold = 60
+  toLower = false
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "collections"
+    weight = 80
+  [[related.indices]]
+    name = "keywords"
+    weight = 50
+  [[related.indices]]
+    name = "date"
+    weight = 10

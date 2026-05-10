@@ -169,6 +169,22 @@
         : '<i class="fa-solid fa-angle-left" aria-hidden="true"></i>';
     };
 
+    // Lazy-load collection content from <template> on expand
+    nav.addEventListener('click', function (e) {
+      var summary = e.target.closest('.collection-summary');
+      if (!summary) return;
+      var details = summary.closest('.details');
+      if (!details) return;
+      var placeholder = details.querySelector('.collection-lazy-placeholder');
+      if (!placeholder) return;
+      // Move template content into DOM (content is Hugo-generated, not user input)
+      var content = placeholder.content.firstElementChild.cloneNode(true);
+      details.appendChild(content);
+      placeholder.remove();
+      details.classList.add('open');
+      e.preventDefault();
+    });
+
     setCollapsed(localStorage.getItem(storageKey) === 'true');
     toggle.addEventListener('click', function () {
       var collapsed = !nav.classList.contains('site-sidebar-nav-is-collapsed');

@@ -2,7 +2,7 @@
 title: "第16章 第十六章：commit-commands —— 最简命令插件"
 date: 2026-05-10
 category: "04 plugin deep dives"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 16
 ---

@@ -2,7 +2,7 @@
 title: "第16章 第十六章：Agent的生命周期 —— 从prompt到执行完成"
 date: 2026-05-10
 category: "05 agent harness"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 16
 ---

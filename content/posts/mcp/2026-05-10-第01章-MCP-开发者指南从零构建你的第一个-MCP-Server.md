@@ -1,7 +1,7 @@
 ---
 title: "第01章 MCP 开发者指南：从零构建你的第一个 MCP Server"
 date: 2026-05-10
-tags: []
+tags: ["MCP", "协议", "AI Agent", "开发", "教程"]
 collections: ["mcp"]
 weight: 1
 ---

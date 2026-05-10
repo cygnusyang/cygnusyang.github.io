@@ -2,7 +2,7 @@
 title: "第12章 第十二章：嵌套协作 —— 如何实现 Orchestrator-Worker 模式"
 date: 2026-05-10
 category: "02 multi agent"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 12
 ---

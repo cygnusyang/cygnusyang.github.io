@@ -2,7 +2,7 @@
 title: "第19章 第十九章：多智能体架构模式 —— Master-Worker、Hub-Spoke、Pipeline"
 date: 2026-05-10
 category: "06 multi agent"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 19
 ---

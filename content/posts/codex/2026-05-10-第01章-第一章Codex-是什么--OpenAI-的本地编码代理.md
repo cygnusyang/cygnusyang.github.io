@@ -2,7 +2,7 @@
 title: "第01章 第一章：Codex 是什么 —— OpenAI 的本地编码代理"
 date: 2026-05-10
 category: "01 intro"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 1
 ---

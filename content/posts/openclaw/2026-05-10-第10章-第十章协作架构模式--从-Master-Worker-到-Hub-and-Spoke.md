@@ -2,7 +2,7 @@
 title: "第10章 第十章：协作架构模式 —— 从 Master-Worker 到 Hub-and-Spoke"
 date: 2026-05-10
 category: "02 multi agent"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 10
 ---

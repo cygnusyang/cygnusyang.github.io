@@ -2,7 +2,7 @@
 title: "第17章 第十七章： refactor —— OpenClaw 重构原则与工作流"
 date: 2026-05-10
 category: "03 core concepts"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 17
 ---

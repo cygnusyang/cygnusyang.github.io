@@ -2,7 +2,7 @@
 title: "第05章 第五章：Harness vs Agent vs Model —— 三者关系辨析"
 date: 2026-05-10
 category: "02 fundamentals"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 5
 ---

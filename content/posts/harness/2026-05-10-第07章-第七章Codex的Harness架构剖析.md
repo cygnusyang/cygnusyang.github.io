@@ -2,7 +2,7 @@
 title: "第07章 第七章：Codex的Harness架构剖析"
 date: 2026-05-10
 category: "03 implementations"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 7
 ---

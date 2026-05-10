@@ -2,7 +2,7 @@
 title: "第21章 第二十一章：Canvas A2UI —— 实时可视化协作 workspace"
 date: 2026-05-10
 category: "04 client ux"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 21
 ---

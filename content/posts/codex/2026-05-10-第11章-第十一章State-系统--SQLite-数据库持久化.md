@@ -2,7 +2,7 @@
 title: "第11章 第十一章：State 系统 —— SQLite 数据库持久化"
 date: 2026-05-10
 category: "04 advanced"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 11
 ---

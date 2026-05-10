@@ -2,7 +2,7 @@
 title: "第03章 第三章：权限模型 —— ask/allow/deny 与沙箱"
 date: 2026-05-10
 category: "01 intro"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 3
 ---

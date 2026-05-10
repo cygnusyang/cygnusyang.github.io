@@ -2,7 +2,7 @@
 title: "第29章 第二十九章：gh-issues —— GitHub Issues 自动修复编排"
 date: 2026-05-10
 category: "06 builtin skills"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 29
 ---

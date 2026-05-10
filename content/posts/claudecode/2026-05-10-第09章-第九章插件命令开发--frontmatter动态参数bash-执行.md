@@ -2,7 +2,7 @@
 title: "第09章 第九章：插件命令开发 —— frontmatter、动态参数、bash 执行"
 date: 2026-05-10
 category: "03 plugins"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 9
 ---

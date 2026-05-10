@@ -2,7 +2,7 @@
 title: "第12章 第十二章：权限系统 —— deny→ask→allow的安全边界"
 date: 2026-05-10
 category: "04 deep dive"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 12
 ---

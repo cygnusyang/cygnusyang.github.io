@@ -2,7 +2,7 @@
 title: "第13章 六种审查模式与 Sprint Contract"
 date: 2026-05-10
 category: "06 reviewer"
-tags: []
+tags: ["研究", "AI", "工具链", "教程", "学术"]
 collections: ["academic-research-skills"]
 weight: 13
 ---

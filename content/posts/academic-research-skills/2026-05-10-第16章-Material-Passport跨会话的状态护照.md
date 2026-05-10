@@ -2,7 +2,7 @@
 title: "第16章 Material Passport：跨会话的状态护照"
 date: 2026-05-10
 category: "07 pipeline"
-tags: []
+tags: ["研究", "AI", "工具链", "教程", "学术"]
 collections: ["academic-research-skills"]
 weight: 16
 ---

@@ -2,7 +2,7 @@
 title: "第12章 第十五章：Tools 系统 —— 从 codex-core 独立出的工具原语"
 date: 2026-05-10
 category: "04 advanced"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 12
 ---

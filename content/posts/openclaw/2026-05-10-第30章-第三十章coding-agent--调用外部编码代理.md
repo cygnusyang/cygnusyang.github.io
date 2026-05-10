@@ -2,7 +2,7 @@
 title: "第30章 第三十章：coding-agent —— 调用外部编码代理"
 date: 2026-05-10
 category: "06 builtin skills"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 30
 ---

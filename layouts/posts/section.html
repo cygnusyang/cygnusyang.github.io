@@ -21,6 +21,7 @@
         {{- $name := $section.Title -}}
         {{- $url := $section.RelPermalink -}}
         {{- $sectionPages := $section.Pages.ByWeight -}}
+        {{- $limit := 20 -}}
 
         <details class="category-group">
           <summary class="category-group-summary">
@@ -34,7 +35,8 @@
             </span>
           </summary>
           <div class="category-group-articles">
-            {{- range $sectionPages -}}
+            {{- range $idx, $article := $sectionPages -}}
+              {{- if lt $idx $limit -}}
             <article class="category-article-item">
               <span class="category-article-date">{{ .Date.Format "2006-01-02" }}</span>
               <a href="{{ .RelPermalink }}" class="category-article-title">{{ .Title }}</a>
@@ -42,6 +44,12 @@
               <span class="category-article-desc">{{ . }}</span>
               {{- end -}}
             </article>
+              {{- end -}}
+            {{- end -}}
+            {{- if gt $count $limit -}}
+            <div class="category-group-more">
+              <a href="{{ $url }}">查看全部 {{ $count }} 篇 →</a>
+            </div>
             {{- end -}}
           </div>
         </details>
@@ -220,6 +228,23 @@
   .posts-list-toggle:hover {
     background: rgba(127, 127, 127, 0.1);
     color: fixit-var(global-font-color);
+  }
+
+  /* "查看全部 N 篇" link */
+  .category-group-more {
+    padding: 0.5rem 1rem 0.5rem 2rem;
+    text-align: center;
+    border-top: 1px solid fixit-var(global-border-color);
+  }
+  .category-group-more a {
+    font-size: 0.85rem;
+    color: fixit-var(global-link-color);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .category-group-more a:hover {
+    color: fixit-var(global-link-hover-color);
+    text-decoration: underline;
   }
   </style>
 

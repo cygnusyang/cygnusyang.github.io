@@ -2,7 +2,7 @@
 title: "第18章 第十八章：reference —— 完整配置、模板、CLI 命令参考"
 date: 2026-05-10
 category: "03 core concepts"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 18
 ---

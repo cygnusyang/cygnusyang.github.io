@@ -2,7 +2,7 @@
 title: "第22章 第二十二章：从零构建Mini-Harness —— 最小可行循环"
 date: 2026-05-10
 category: "07 build your own"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 22
 ---

@@ -2,7 +2,7 @@
 title: "第03章 第三章：认证与配置 —— ChatGPT 账号 vs API Key"
 date: 2026-05-10
 category: "01 intro"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 3
 ---

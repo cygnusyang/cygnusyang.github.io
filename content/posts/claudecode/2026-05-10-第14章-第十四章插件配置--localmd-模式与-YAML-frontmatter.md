@@ -2,7 +2,7 @@
 title: "第14章 第十四章：插件配置 —— .local.md 模式与 YAML frontmatter"
 date: 2026-05-10
 category: "03 plugins"
-tags: []
+tags: ["Claude Code", "开发工具", "AI", "自动化", "编码"]
 collections: ["claudecode"]
 weight: 14
 ---

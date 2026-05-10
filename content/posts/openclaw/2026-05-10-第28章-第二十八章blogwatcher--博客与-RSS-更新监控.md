@@ -2,7 +2,7 @@
 title: "第28章 第二十八章：blogwatcher —— 博客与 RSS 更新监控"
 date: 2026-05-10
 category: "06 builtin skills"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 28
 ---

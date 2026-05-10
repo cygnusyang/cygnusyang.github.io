@@ -2,7 +2,7 @@
 title: "第23章 第二十三章：WebChat —— Gateway WebSocket 聊天界面"
 date: 2026-05-10
 category: "04 client ux"
-tags: []
+tags: ["AI Agent", "LLM", "自动化", "架构", "部署"]
 collections: ["openclaw"]
 weight: 23
 ---

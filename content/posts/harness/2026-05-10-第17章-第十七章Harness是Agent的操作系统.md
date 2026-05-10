@@ -2,7 +2,7 @@
 title: "第17章 第十七章：Harness是Agent的操作系统"
 date: 2026-05-10
 category: "05 agent harness"
-tags: []
+tags: ["AI Agent", "编排", "自动化", "LLM", "多智能体"]
 collections: ["harness"]
 weight: 17
 ---

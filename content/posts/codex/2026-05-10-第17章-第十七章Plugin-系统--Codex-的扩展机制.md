@@ -2,7 +2,7 @@
 title: "第17章 第十七章：Plugin 系统 —— Codex 的扩展机制"
 date: 2026-05-10
 category: "05 plugins"
-tags: []
+tags: ["LLM", "OpenAI", "AI", "模型"]
 collections: ["codex"]
 weight: 17
 ---
