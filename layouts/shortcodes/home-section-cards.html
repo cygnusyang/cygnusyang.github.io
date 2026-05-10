@@ -3,20 +3,6 @@
 {{- $cardId := 0 -}}
 {{- $catalogs := hugo.Data.catalog.catalogs | default slice -}}
 
-{{- /* ====== 图标自动推导映射 ====== */ -}}
-{{- $iconMap := dict
-  "openclaw" "🤖"
-  "gstack" "📚"
-  "gbrain" "🧠"
-  "claudecode" "⌨️"
-  "codex" "📖"
-  "mcp" "🔌"
-  "harness" "⚙️"
-  "academic-research-skills" "📦"
-  "电机控制" "⚙️"
-  "研发绩效体系" "💡"
--}}
-
 {{- /* ====== 检查 reading 特殊卡片 ====== */ -}}
 {{- $readingPage := .Site.GetPage "/reading" -}}
 {{- $showReading := and $readingPage (in $pinned "reading") -}}
@@ -50,13 +36,7 @@
             {{- $rawTitle := $section.Params.title | default $section.Title -}}
             {{- $displayTitle := $entry.title | default $rawTitle -}}
             {{- $prefix := printf "%02d" (add $index 1) -}}
-            {{- $icon := $section.Params.icon | default $entry.icon -}}
-            {{- if not $icon -}}
-              {{- $lastSegment := "" -}}
-              {{- $parts := split .slug "/" -}}
-              {{- if $parts -}}{{- $lastSegment = index $parts (sub (len $parts) 1) -}}{{- end -}}
-              {{- $icon = index $iconMap $lastSegment | default "📦" -}}
-            {{- end -}}
+            {{- $icon := $section.Params.icon | default $entry.icon | default "📦" -}}
             <a href="{{ $section.RelPermalink }}" class="category-card" aria-label="{{ $displayTitle }}">
               <span class="category-card-badge">{{ $articleCount }} 篇</span>
               <span class="category-card-catalog">{{ $catalog.title }}</span>

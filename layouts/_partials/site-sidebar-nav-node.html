@@ -1,5 +1,6 @@
 {{- $node := .Node -}}
 {{- $current := .Current -}}
+{{- $displayTitle := .DisplayTitle | default $node.LinkTitle -}}
 {{- $pages := where $node.RegularPages.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
 {{- $sections := where $node.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
 {{- if or $pages $sections -}}
@@ -9,7 +10,7 @@
   <div class="details collection-details{{ if $open }} open{{ end }}">
     <div class="details-summary collection-summary">
       {{- dict "Class" "fa-regular fa-folder-open" | partial "plugin/icon.html" -}}
-      <a class="collection-name site-sidebar-nav__section{{ if eq $current $node.RelPermalink }} active{{ end }}" href="{{ $node.RelPermalink }}" title="{{ $node.LinkTitle }}">{{ $node.LinkTitle }}</a>
+      <a class="collection-name site-sidebar-nav__section{{ if eq $current $node.RelPermalink }} active{{ end }}" href="{{ $node.RelPermalink }}" title="{{ $displayTitle }}">{{ $displayTitle }}</a>
       <span class="collection-count">{{ len $node.RegularPagesRecursive }}</span>
       {{- if $hasChildren -}}
       {{- dict "Class" "details-icon fa-solid fa-angle-right" | partial "plugin/icon.html" -}}

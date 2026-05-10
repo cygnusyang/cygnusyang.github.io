@@ -1,26 +1,34 @@
 {{- $current := .RelPermalink -}}
-{{- $home := .Site.GetPage "/" -}}
-{{- $pinned := $home.Params.pinned_categories | default slice -}}
-{{- $sections := slice -}}
-{{- range $pinned -}}
-  {{- $targetSlug := . -}}
-  {{- if ne $targetSlug "reading" -}}
-    {{- $section := site.GetPage (printf "/posts/%s" $targetSlug) -}}
+{{- $catalogs := hugo.Data.catalog.catalogs | default slice -}}
+{{- $navCatalogs := slice -}}
+{{- range sort $catalogs "weight" "asc" -}}
+  {{- $catalog := . -}}
+  {{- $items := slice -}}
+  {{- range sort ($catalog.children | default slice) "weight" "asc" -}}
+    {{- $entry := . -}}
+    {{- $section := site.GetPage (printf "/posts/%s" $entry.output) -}}
     {{- if and $section (ne $section.Params.hiddenFromSidebarNav true) -}}
-      {{- $rawTitle := $section.Params.title | default $section.Title -}}
-      {{- $prefix := "99" -}}
-      {{- $titleMatch := findRE `^\d{2}` $rawTitle -}}
-      {{- if $titleMatch -}}{{- $prefix = index $titleMatch 0 -}}{{- end -}}
-      {{- $sections = $sections | append (dict "section" $section "sortKey" (printf "%s-%s" $prefix $targetSlug)) -}}
+      {{- $displayTitle := printf "%02d-%s 文档" (add (len $items) 1) $entry.title -}}
+      {{- $items = $items | append (dict "section" $section "entry" $entry "displayTitle" $displayTitle) -}}
     {{- end -}}
   {{- end -}}
+  {{- if $items -}}
+    {{- $navCatalogs = $navCatalogs | append (dict "catalog" $catalog "items" $items) -}}
+  {{- end -}}
 {{- end -}}
-{{- $sections = sort $sections "sortKey" "asc" -}}
-{{- if $sections -}}
+{{- if $navCatalogs -}}
 <template id="site-sidebar-nav-template">
   <aside class="aside-collection site-sidebar-nav" aria-label="文档导航">
-    {{- range $sections -}}
-      {{- partial "site-sidebar-nav-node.html" (dict "Node" .section "Current" $current) -}}
+    {{- range $navCatalogs -}}
+      <div class="site-sidebar-nav__catalog">
+        <div class="site-sidebar-nav__catalog-header">
+          <span class="site-sidebar-nav__catalog-icon" aria-hidden="true">{{ .catalog.icon }}</span>
+          <span class="site-sidebar-nav__catalog-title">{{ .catalog.title }}</span>
+        </div>
+        {{- range .items -}}
+          {{- partial "site-sidebar-nav-node.html" (dict "Node" .section "Current" $current "DisplayTitle" .displayTitle) -}}
+        {{- end -}}
+      </div>
     {{- end -}}
   </aside>
 </template>
@@ -70,6 +78,41 @@
     margin-bottom: 0.5rem;
   }
 
+  .site-sidebar-nav__catalog {
+    margin-bottom: 0.85rem;
+  }
+
+  .site-sidebar-nav__catalog + .site-sidebar-nav__catalog {
+    padding-top: 0.65rem;
+    border-top: 1px solid rgba(127, 127, 127, 0.18);
+  }
+
+  .site-sidebar-nav__catalog-header {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 1.5rem;
+    margin: 0.2rem 0.25rem 0.55rem;
+    color: var(--fi-global-font-secondary-color, #6b7280);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .site-sidebar-nav__catalog-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    min-width: 1.15rem;
+    line-height: 1;
+  }
+
+  .site-sidebar-nav__catalog-title {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .site-sidebar-nav .collection-summary a.collection-name {
     color: inherit;
     text-decoration: none;
@@ -104,6 +147,7 @@
   }
 
   .site-sidebar-nav-is-collapsed .site-sidebar-nav__body,
+  .site-sidebar-nav-is-collapsed .site-sidebar-nav__catalog-header,
   .site-sidebar-nav-is-collapsed .collection-details {
     display: none;
   }
