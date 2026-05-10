@@ -1,12 +1,7 @@
-{{- /* 动态生成首页分类卡片
-  遍历 content/posts/ 下所有 section（含嵌套）
-  按 pinned_categories 控制显示和排序
-  从各 section _index.md 读取 title, icon
-  图标自动推导：_index.md 无 icon 时按 slug 自动匹配
-*/ -}}
-{{- $posts := .Site.GetPage "/posts" -}}
+{{- /* 动态生成首页分类卡片。优先读取 data/catalog.yaml，将最终可读集合按 catalog 分组展示。 */ -}}
 {{- $pinned := .Page.Params.pinned_categories | default slice -}}
 {{- $cardId := 0 -}}
+{{- $catalogs := hugo.Data.catalog.catalogs | default slice -}}
 
 {{- /* ====== 图标自动推导映射 ====== */ -}}
 {{- $iconMap := dict
@@ -22,154 +17,84 @@
   "研发绩效体系" "💡"
 -}}
 
-{{- /* ====== Step 1: 收集所有 section（扁平 + 嵌套） ====== */ -}}
-{{- $allSections := slice -}}
-{{- range $posts.Sections -}}
-  {{- $section := . -}}
-  {{- $nested := .Sections -}}
-  {{- if $nested -}}
-    {{- /* 有子 section：只取子 section，不取父 section */ -}}
-    {{- range $nested -}}
-      {{- if .RegularPages -}}
-        {{- $allSections = $allSections | append . -}}
-      {{- end -}}
-    {{- end -}}
-  {{- else -}}
-    {{- /* 无子 section：取自身 */ -}}
-    {{- if .RegularPages -}}
-      {{- $allSections = $allSections | append . -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- /* ====== Step 2: 按 pinned_categories 过滤和排序 ====== */ -}}
-{{- $sortedCards := slice -}}
-{{- range $pinned -}}
-  {{- $targetSlug := . -}}
-  {{- range $allSections -}}
-    {{- /* .File.Dir gives "posts/openclaw/" or "posts/工程那些事/电机控制/" */ -}}
-    {{- $dir := .File.Dir | default "" -}}
-    {{- $dir = strings.TrimPrefix "posts/" $dir -}}
-    {{- $dir = strings.TrimSuffix "/" $dir -}}
-    {{- if eq $dir $targetSlug -}}
-      {{- $sortedCards = $sortedCards | append (dict "section" . "slug" $targetSlug) -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- /* ====== Step 3: 检查 reading 特殊卡片 ====== */ -}}
+{{- /* ====== 检查 reading 特殊卡片 ====== */ -}}
 {{- $readingPage := .Site.GetPage "/reading" -}}
 {{- $showReading := and $readingPage (in $pinned "reading") -}}
 
-{{- /* ====== Step 4: 计算总卡片数 ====== */ -}}
-{{- $totalCards := len $sortedCards -}}
-{{- if $showReading -}}{{- $totalCards = add $totalCards 1 -}}{{- end -}}
-
-{{- if gt $totalCards 0 -}}
-<div class="category-cards" id="categoryCards">
-  {{- /* ====== 渲染项目卡片 ====== */ -}}
-  {{- range $sortedCards -}}
-    {{- $section := .section -}}
-    {{- $articleCount := len $section.RegularPages -}}
-    {{- $rawTitle := $section.Params.title | default $section.Title -}}
-    {{- /* 从标题中提取显示名: "04-电机控制 文档" -> "电机控制" */ -}}
-    {{- $displayTitle := $rawTitle -}}
-    {{- $titleMatch := findRE `^\d{2}-(.+?)(?:\s+文档)?$` $rawTitle -}}
-    {{- if $titleMatch -}}
-      {{- $displayTitle = index $titleMatch 0 | replaceRE `^\d{2}-(.+?)(?:\s+文档)?$` `$1` -}}
-    {{- end -}}
-    {{- /* 图标：优先取 _index.md frontmatter，其次按 slug 最后一段推导 */ -}}
-    {{- $icon := $section.Params.icon -}}
-    {{- if not $icon -}}
-      {{- $lastSegment := "" -}}
-      {{- $parts := split .slug "/" -}}
-      {{- if $parts -}}
-        {{- $lastSegment = index $parts (sub (len $parts) 1) -}}
+{{- if $catalogs -}}
+<div class="catalog-sections" id="catalogSections">
+  {{- range sort $catalogs "weight" "asc" -}}
+    {{- $catalog := . -}}
+    {{- $items := slice -}}
+    {{- range sort $catalog.children "weight" "asc" -}}
+      {{- $slug := .output -}}
+      {{- $section := site.GetPage (printf "/posts/%s" $slug) -}}
+      {{- if $section -}}
+        {{- $items = $items | append (dict "entry" . "section" $section "slug" $slug) -}}
       {{- end -}}
-      {{- $icon = index $iconMap $lastSegment | default "📦" -}}
     {{- end -}}
-    {{- $href := $section.RelPermalink -}}
-    {{- $cardId = add $cardId 1 -}}
-    <a href="{{ $href }}" class="category-card" aria-label="{{ $displayTitle }}">
-      <span class="category-card-badge">{{ $articleCount }} 篇</span>
-      <div class="category-card-icon">{{ $icon }}</div>
-      <h3 class="category-card-title">{{ printf "%02d-%s" $cardId $displayTitle }}</h3>
-      <span class="category-card-desc">{{ $section.Params.description | default "技术文档与开发指南" }}</span>
-    </a>
+    {{- if $items -}}
+      <section class="catalog-section" data-catalog="{{ $catalog.id }}">
+        <div class="catalog-section-header">
+          <span class="catalog-section-icon">{{ $catalog.icon }}</span>
+          <div class="catalog-section-copy">
+            <h3 class="catalog-section-title">{{ $catalog.title }}</h3>
+            <span class="catalog-section-desc">{{ $catalog.description }}</span>
+          </div>
+        </div>
+        <div class="category-cards">
+          {{- range $index, $item := $items -}}
+            {{- $section := .section -}}
+            {{- $entry := .entry -}}
+            {{- $articleCount := len $section.RegularPages -}}
+            {{- $rawTitle := $section.Params.title | default $section.Title -}}
+            {{- $displayTitle := $entry.title | default $rawTitle -}}
+            {{- $prefix := printf "%02d" (add $index 1) -}}
+            {{- $icon := $section.Params.icon | default $entry.icon -}}
+            {{- if not $icon -}}
+              {{- $lastSegment := "" -}}
+              {{- $parts := split .slug "/" -}}
+              {{- if $parts -}}{{- $lastSegment = index $parts (sub (len $parts) 1) -}}{{- end -}}
+              {{- $icon = index $iconMap $lastSegment | default "📦" -}}
+            {{- end -}}
+            <a href="{{ $section.RelPermalink }}" class="category-card" aria-label="{{ $displayTitle }}">
+              <span class="category-card-badge">{{ $articleCount }} 篇</span>
+              <span class="category-card-catalog">{{ $catalog.title }}</span>
+              <div class="category-card-icon">{{ $icon }}</div>
+              <h3 class="category-card-title">{{ printf "%s-%s" $prefix $displayTitle }}</h3>
+              <span class="category-card-desc">{{ $section.Params.description | default "技术文档与开发指南" }}</span>
+            </a>
+          {{- end -}}
+        </div>
+      </section>
+    {{- end -}}
   {{- end -}}
 
   {{- /* ====== 渲染读书特殊卡片 ====== */ -}}
   {{- if $showReading -}}
     {{- $readingCount := len $readingPage.RegularPages -}}
-    {{- $cardId = add $cardId 1 -}}
-    <a href="/reading/" class="category-card" aria-label="读书">
-      {{- if gt $readingCount 0 -}}
-        <span class="category-card-badge">{{ $readingCount }} 篇</span>
-      {{- else -}}
-        <span class="category-card-badge">敬请期待</span>
-      {{- end -}}
-      <div class="category-card-icon">📗</div>
-      <h3 class="category-card-title">{{ printf "%02d-读书" $cardId }}</h3>
-      <span class="category-card-desc">读书笔记与书评分享</span>
-    </a>
+    <section class="catalog-section" data-catalog="reading">
+      <div class="catalog-section-header">
+        <span class="catalog-section-icon">📗</span>
+        <div class="catalog-section-copy">
+          <h3 class="catalog-section-title">读书</h3>
+          <span class="catalog-section-desc">读书笔记与书评分享</span>
+        </div>
+      </div>
+      <div class="category-cards">
+        <a href="/reading/" class="category-card" aria-label="读书">
+          {{- if gt $readingCount 0 -}}
+            <span class="category-card-badge">{{ $readingCount }} 篇</span>
+          {{- else -}}
+            <span class="category-card-badge">敬请期待</span>
+          {{- end -}}
+          <span class="category-card-catalog">读书</span>
+          <div class="category-card-icon">📗</div>
+          <h3 class="category-card-title">读书</h3>
+          <span class="category-card-desc">读书笔记与书评分享</span>
+        </a>
+      </div>
+    </section>
   {{- end -}}
 </div>
-
-<button class="category-expand-btn" id="categoryExpandBtn" onclick="toggleExpandCards()" style="display:none">
-  展开全部 <span class="category-expand-arrow">▾</span>
-</button>
-
-<script>
-(function() {
-  var grid = document.getElementById('categoryCards');
-  var btn = document.getElementById('categoryExpandBtn');
-  if (!grid || !btn) return;
-
-  var CARDS_PER_ROW = 4;
-  var MAX_ROWS = 2;
-  var maxVisible = CARDS_PER_ROW * MAX_ROWS;
-
-  function updateLayout() {
-    var cards = grid.querySelectorAll('.category-card');
-    if (cards.length <= maxVisible) {
-      grid.classList.remove('collapsed');
-      btn.style.display = 'none';
-      return;
-    }
-    var firstCardTop = cards[0].getBoundingClientRect().top;
-    for (var i = 1; i < cards.length; i++) {
-      if (cards[i].getBoundingClientRect().top > firstCardTop) {
-        CARDS_PER_ROW = i;
-        maxVisible = CARDS_PER_ROW * MAX_ROWS;
-        break;
-      }
-    }
-    if (cards.length > maxVisible) {
-      grid.classList.add('collapsed');
-      btn.style.display = 'inline-flex';
-      btn.textContent = '展开全部 (' + (cards.length - maxVisible) + ') ▾';
-    } else {
-      grid.classList.remove('collapsed');
-      btn.style.display = 'none';
-    }
-  }
-
-  window.toggleExpandCards = function() {
-    var collapsed = grid.classList.contains('collapsed');
-    if (collapsed) {
-      grid.classList.remove('collapsed');
-      btn.textContent = '收起 ▴';
-      btn.classList.add('expanded');
-    } else {
-      grid.classList.add('collapsed');
-      var hidden = grid.querySelectorAll('.category-card').length - maxVisible;
-      btn.textContent = '展开全部 (' + hidden + ') ▾';
-      btn.classList.remove('expanded');
-    }
-  };
-
-  updateLayout();
-  window.addEventListener('resize', updateLayout);
-})();
-</script>
 {{- end -}}

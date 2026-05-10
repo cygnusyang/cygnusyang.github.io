@@ -1,24 +1,26 @@
 {{- $current := .RelPermalink -}}
 {{- $home := .Site.GetPage "/" -}}
 {{- $pinned := $home.Params.pinned_categories | default slice -}}
-{{- $posts := .Site.GetPage "/posts" -}}
-{{- $sections := where $posts.Sections.ByWeight "Params.hiddenFromSidebarNav" "ne" true -}}
-{{- /* 只显示 pinned_categories 中列出的分类 */ -}}
-{{- $filteredSections := slice -}}
-{{- range $sections -}}
-  {{- $dir := .File.Dir | default "" -}}
-  {{- $dir = strings.TrimPrefix "posts/" $dir -}}
-  {{- $dir = strings.TrimSuffix "/" $dir -}}
-  {{- if in $pinned $dir -}}
-    {{- $filteredSections = $filteredSections | append . -}}
+{{- $sections := slice -}}
+{{- range $pinned -}}
+  {{- $targetSlug := . -}}
+  {{- if ne $targetSlug "reading" -}}
+    {{- $section := site.GetPage (printf "/posts/%s" $targetSlug) -}}
+    {{- if and $section (ne $section.Params.hiddenFromSidebarNav true) -}}
+      {{- $rawTitle := $section.Params.title | default $section.Title -}}
+      {{- $prefix := "99" -}}
+      {{- $titleMatch := findRE `^\d{2}` $rawTitle -}}
+      {{- if $titleMatch -}}{{- $prefix = index $titleMatch 0 -}}{{- end -}}
+      {{- $sections = $sections | append (dict "section" $section "sortKey" (printf "%s-%s" $prefix $targetSlug)) -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- $sections = $filteredSections -}}
+{{- $sections = sort $sections "sortKey" "asc" -}}
 {{- if $sections -}}
 <template id="site-sidebar-nav-template">
   <aside class="aside-collection site-sidebar-nav" aria-label="文档导航">
     {{- range $sections -}}
-      {{- partial "site-sidebar-nav-node.html" (dict "Node" . "Current" $current) -}}
+      {{- partial "site-sidebar-nav-node.html" (dict "Node" .section "Current" $current) -}}
     {{- end -}}
   </aside>
 </template>

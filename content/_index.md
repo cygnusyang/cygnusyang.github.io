@@ -1,6 +1,6 @@
 ---
 title: 首页
-pinned_categories: ["01-openclaw", "02-gstack", "03-gbrain", "06-claudecode", "08-codex", "07-mcp", "09-harness", "工程那些事/电机控制", "10-academic-research-skills", "研发那些事/研发绩效体系", "reading"]
+pinned_categories: ["openclaw", "gstack", "gbrain", "工程那些事/电机控制", "研发那些事/研发绩效体系", "claudecode", "mcp", "codex", "harness", "academic-research-skills", "reading"]
 ---
 
 <style>
@@ -39,6 +39,59 @@ pinned_categories: ["01-openclaw", "02-gstack", "03-gbrain", "06-claudecode", "0
 }
 
 /* ====== Category Cards Grid (文章) ====== */
+.catalog-sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.catalog-section {
+  padding: 1rem 0 0;
+  border-top: 1px solid fixit-var(global-border-color);
+}
+
+.catalog-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.catalog-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.catalog-section-icon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: rgba(127, 127, 127, 0.08);
+  font-size: 1.1rem;
+}
+
+.catalog-section-copy {
+  min-width: 0;
+}
+
+.catalog-section-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: fixit-var(global-font-color);
+}
+
+.catalog-section-desc {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  color: fixit-var(global-font-secondary-color);
+  opacity: 0.75;
+}
+
 .category-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -71,6 +124,14 @@ pinned_categories: ["01-openclaw", "02-gstack", "03-gbrain", "06-claudecode", "0
   font-size: 1.75rem;
   margin-bottom: 0.6rem;
   opacity: 0.9;
+}
+
+.category-card-catalog {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  font-size: 0.72rem;
+  color: fixit-var(global-font-secondary-color);
+  opacity: 0.72;
 }
 
 .category-card-title {

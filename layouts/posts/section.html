@@ -2,11 +2,12 @@
 {{- define "content" -}}
   {{- $pages := .Pages -}}
   {{- $sections := .Sections -}}
+  {{- $catalogs := hugo.Data.catalog.catalogs | default slice -}}
 
   <div class="page blog">
     <div class="posts-list-header">
       <h2>所有文章</h2>
-      <span class="posts-list-count">{{ len $pages }} 篇文章 · {{ len $sections }} 个分类</span>
+      <span class="posts-list-count">{{ len $pages }} 篇文章 · {{ len $sections }} 个分类{{ if $catalogs }} · {{ len $catalogs }} 个 Catalog{{ end }}</span>
       <div class="posts-list-actions">
         <button type="button" class="posts-list-toggle" id="expandAll">全部展开</button>
         <button type="button" class="posts-list-toggle" id="collapseAll">全部折叠</button>
@@ -16,20 +17,81 @@
     {{- if or $sections $pages -}}
     <div class="posts-by-category">
       {{- if $sections -}}
-      {{- /* 有子目录：按子目录分组显示 */ -}}
-      {{- $sortedSections := sort $sections "Title" "asc" -}}
-      {{- range $section := $sortedSections -}}
-        {{- $count := len $section.Pages -}}
-        {{- $name := $section.Title -}}
-        {{- $url := $section.RelPermalink -}}
-        {{- $sectionPages := $section.Pages.ByWeight -}}
-        {{- $limit := 20 -}}
-
+        {{- if $catalogs -}}
+          {{- range sort $catalogs "weight" "asc" -}}
+            {{- $catalog := . -}}
+            {{- $items := slice -}}
+            {{- range sort $catalog.children "weight" "asc" -}}
+              {{- $section := site.GetPage (printf "/posts/%s" .output) -}}
+              {{- if $section -}}
+                {{- $items = $items | append (dict "entry" . "section" $section) -}}
+              {{- end -}}
+            {{- end -}}
+            {{- if $items -}}
+        <section class="posts-catalog-section" data-catalog="{{ $catalog.id }}">
+          <div class="posts-catalog-header">
+            <span class="posts-catalog-icon">{{ $catalog.icon }}</span>
+            <div class="posts-catalog-copy">
+              <h3 class="posts-catalog-title">{{ $catalog.title }}</h3>
+              <span class="posts-catalog-desc">{{ $catalog.description }}</span>
+            </div>
+          </div>
+              {{- range $index, $item := $items -}}
+                {{- $section := .section -}}
+                {{- $count := len $section.Pages -}}
+                {{- $entry := .entry -}}
+                {{- $name := printf "%02d-%s 文档" (add $index 1) $entry.title -}}
+                {{- $url := $section.RelPermalink -}}
+                {{- $sectionPages := $section.Pages.ByWeight -}}
+                {{- $limit := 20 -}}
+          <details class="category-group">
+            <summary class="category-group-summary">
+              <span class="category-group-name">
+                <span class="category-group-icon">{{ $section.Params.icon | default "📁" }}</span>
+                <span class="category-group-title">{{ $name }}</span>
+              </span>
+              <span class="category-group-meta">
+                <span class="category-group-badge">{{ $count }} 篇</span>
+                <a href="{{ $url }}" class="category-group-link" onclick="event.stopPropagation()">进入 →</a>
+              </span>
+            </summary>
+            <div class="category-group-articles">
+              {{- range $idx, $article := $sectionPages -}}
+                {{- if lt $idx $limit -}}
+              <article class="category-article-item">
+                <span class="category-article-date">{{ .Date.Format "2006-01-02" }}</span>
+                <a href="{{ .RelPermalink }}" class="category-article-title">{{ .Title }}</a>
+                {{- with .Params.description -}}
+                <span class="category-article-desc">{{ . }}</span>
+                {{- end -}}
+              </article>
+                {{- end -}}
+              {{- end -}}
+              {{- if gt $count $limit -}}
+              <div class="category-group-more">
+                <a href="{{ $url }}">查看全部 {{ $count }} 篇 →</a>
+              </div>
+              {{- end -}}
+            </div>
+          </details>
+              {{- end -}}
+        </section>
+            {{- end -}}
+          {{- end -}}
+        {{- else -}}
+          {{- /* 无 catalog 时按子目录分组显示 */ -}}
+          {{- $sortedSections := sort $sections "Title" "asc" -}}
+          {{- range $section := $sortedSections -}}
+            {{- $count := len $section.Pages -}}
+            {{- $name := $section.Title -}}
+            {{- $url := $section.RelPermalink -}}
+            {{- $sectionPages := $section.Pages.ByWeight -}}
+            {{- $limit := 20 -}}
         <details class="category-group">
           <summary class="category-group-summary">
             <span class="category-group-name">
-              {{- with $section.Params.icon | default "📁" -}}{{- . -}}{{- end -}}
-              {{ $name }}
+              <span class="category-group-icon">{{ $section.Params.icon | default "📁" }}</span>
+              <span class="category-group-title">{{ $name }}</span>
             </span>
             <span class="category-group-meta">
               <span class="category-group-badge">{{ $count }} 篇</span>
@@ -55,7 +117,8 @@
             {{- end -}}
           </div>
         </details>
-      {{- end -}}
+          {{- end -}}
+        {{- end -}}
       {{- else if $pages -}}
       {{- /* 没有子目录但有页面：直接显示页面列表 */ -}}
       {{- $sortedPages := $pages.ByDate.Reverse -}}
@@ -105,6 +168,46 @@
   .posts-by-category {
     margin-bottom: 3rem;
   }
+  .posts-catalog-section {
+    margin-bottom: 1.5rem;
+  }
+  .posts-catalog-section + .posts-catalog-section {
+    padding-top: 1.25rem;
+    border-top: 1px solid fixit-var(global-border-color);
+  }
+  .posts-catalog-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+  .posts-catalog-icon {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 0.5rem;
+    background: rgba(127, 127, 127, 0.08);
+    font-size: 1.1rem;
+  }
+  .posts-catalog-copy {
+    min-width: 0;
+  }
+  .posts-catalog-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: fixit-var(global-font-color);
+  }
+  .posts-catalog-desc {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    color: fixit-var(global-font-secondary-color);
+    opacity: 0.75;
+  }
   .posts-list-empty {
     padding: 2rem;
     text-align: center;
@@ -120,8 +223,9 @@
   }
   .category-group-summary {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 0.75rem;
     padding: 0.75rem 1rem;
     cursor: pointer;
     background: fixit-var(global-background-color);
@@ -137,7 +241,7 @@
   .category-group-summary::before {
     content: "▸";
     display: inline-block;
-    margin-right: 0.5rem;
+    flex: 0 0 auto;
     transition: transform 0.2s ease;
     font-size: 0.8rem;
   }
@@ -151,11 +255,25 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
+  .category-group-icon {
+    flex: 0 0 auto;
+  }
+  .category-group-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .category-group-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex: 0 0 auto;
+    margin-left: auto;
   }
   .category-group-badge {
     font-size: 0.75rem;
