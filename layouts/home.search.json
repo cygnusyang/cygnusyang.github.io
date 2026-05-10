@@ -1,0 +1,27 @@
+{{- /* 自定义搜索索引 — 只索引标题和描述，不索引正文内容
+  替代 FixIt 主题的 home.search.json
+  原因：179 篇文章 4.3MB search.json，Fuse.js 全量下载后移动端不可用
+  策略：只索引 metadata（title, description, tags, categories, collections）
+*/ -}}
+{{- if .Site.Params.search.enable -}}
+  {{- $index := slice -}}
+  {{- $pages := where .Site.RegularPages "Params.password" "eq" nil -}}
+  {{- if .Site.Params.page.hiddenFromSearch -}}
+    {{- $pages = where $pages "Params.hiddenfromsearch" false -}}
+  {{- else -}}
+    {{- $pages = where $pages "Params.hiddenfromsearch" "!=" true -}}
+  {{- end -}}
+  {{- range $pages -}}
+    {{- $uri := .RelPermalink -}}
+    {{- if $.Site.Params.search.absoluteURL -}}
+      {{- $uri = .Permalink -}}
+    {{- end -}}
+    {{- $meta := dict "uri" $uri "title" .Title "tags" .Params.tags "categories" .Params.categories "collections" .Params.collections -}}
+    {{- $meta = $.Site.Params.dateFormat | default "2006-01-02" | .PublishDate.Format | dict "date" | merge $meta -}}
+    {{- /* 只使用 description 作为搜索内容，不索引正文 */ -}}
+    {{- $content := .Description | default .Title -}}
+    {{- $index = $index | append (dict "content" $content "objectID" $uri | merge $meta) -}}
+  {{- end -}}
+
+  {{- $index | jsonify | safeJS -}}
+{{- end -}}

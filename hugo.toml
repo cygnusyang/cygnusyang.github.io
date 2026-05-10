@@ -94,6 +94,9 @@ pygmentsCodefencesNumberInline = true
     enable = true
     type = "fuse"
     maxResultLength = 10
+    contentLength = 1000
+    anchorify = false
+    summaryLength = 200
 
   # 分享按钮
   [params.share]
