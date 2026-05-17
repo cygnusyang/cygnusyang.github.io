@@ -203,12 +203,12 @@ pygmentsCodefencesNumberInline = true
   # 当前推荐使用 Supabase/PostgreSQL，并在 Vercel 配置 PG_* 或 POSTGRES_* 环境变量
   # 配置指南: SUPABASE_QUICKSTART.md / WALINE_TROUBLESHOOTING.md
   [params.page.comment.waline]
-    enable = true  # Waline 配置复杂，暂时禁用
+    enable = true  # 匿名评论已开启（昵称必填，邮箱可选）
     serverURL = "https://cygnus-blog-comments-3gbflut4g-cygnusyang-s-projects.vercel.app"  # 请填写你的 Waline 服务地址（如：https://your-waline.vercel.app）
     lang = "zh-CN"
     visitor = true  # 文章访问量统计
     emoji = ["https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/weibo"]  # 表情包
-    requiredMeta = ["nick", "mail"]  # 必填字段：昵称、邮箱
+    requiredMeta = ["nick"]  # 必填字段：仅昵称，邮箱可选
     wordLimit = 0  # 评论字数限制（0 表示不限制）
     pageSize = 10  # 每页评论数
     imageUploader = false  # 图片上传功能
