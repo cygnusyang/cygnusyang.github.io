@@ -4,6 +4,7 @@ category: "04 client ux"
 tags: []
 collections: ["openclaw"]
 weight: 21
+---
 
 Canvas 是 OpenClaw 的**AI+人实时协作画布**，让你和 AI 在同一个可视化工作空间一起工作。本章我们介绍 Canvas A2UI（AI to User Interface）的设计理念和使用方法。
 

@@ -4,6 +4,7 @@ category: "05 tools automation"
 tags: []
 collections: ["openclaw"]
 weight: 24
+---
 
 OpenClaw 的工具体系是**按内置工具名、工具组和策略配置**来组织的。
 

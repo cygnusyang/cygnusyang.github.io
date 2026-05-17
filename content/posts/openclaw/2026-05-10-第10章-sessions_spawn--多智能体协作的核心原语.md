@@ -4,6 +4,7 @@ category: "02 multi agent"
 tags: []
 collections: ["openclaw"]
 weight: 10
+---
 
 OpenClaw 的多智能体协作不是靠“偷偷起一个线程”实现的，而是靠一个明确的会话工具：`sessions_spawn`。
 

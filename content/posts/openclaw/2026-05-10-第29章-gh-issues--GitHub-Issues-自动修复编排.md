@@ -4,6 +4,7 @@ category: "06 builtin skills"
 tags: []
 collections: ["openclaw"]
 weight: 29
+---
 
 想象一下这样的场景：你的开源项目仓库里堆积了 50+ 个待处理的 bug 报告，每个都需要你手动分析、定位问题、编写修复代码、创建 PR、等待 review、再根据反馈修改……这听起来是不是很让人头疼？
 

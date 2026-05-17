@@ -4,6 +4,7 @@ category: "07 ops best practices"
 tags: []
 collections: ["openclaw"]
 weight: 31
+---
 
 模型 API 不是 100% 可用，会有超时、限流、宕机。OpenClaw 设计了模型故障转移机制，主模型不可用时自动切备用模型，保证你的任务能继续跑。本章讲解故障转移配置和最佳实践。
 

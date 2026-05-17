@@ -4,6 +4,7 @@ category: "02 multi agent"
 tags: []
 collections: ["openclaw"]
 weight: 11
+---
 
 有了 `sessions_spawn` 这个核心原语，我们就可以构建不同的多智能体协作架构。OpenClaw 并不强制你用某种特定模式，你可以根据任务特点选择最合适的模式。
 

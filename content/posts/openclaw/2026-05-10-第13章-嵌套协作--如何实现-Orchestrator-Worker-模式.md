@@ -4,6 +4,7 @@ category: "02 multi agent"
 tags: []
 collections: ["openclaw"]
 weight: 13
+---
 
 前面我们说到，OpenClaw 默认 `maxSpawnDepth: 1`，也就是主智能体可以 spawn 子智能体，但子智能体不能再 spawn 子子智能体。
 

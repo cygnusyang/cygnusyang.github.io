@@ -4,6 +4,7 @@ category: "03 core concepts"
 tags: []
 collections: ["openclaw"]
 weight: 18
+---
 
 这一章只保留和当前工程一致的参考信息：配置文件位置、常见顶层结构、工作区模板文件，以及最常用的 CLI 命令族。
 
