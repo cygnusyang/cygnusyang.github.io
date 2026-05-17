@@ -1,0 +1,193 @@
+---
+title: "20-clawhub"
+date: 2026-05-18
+category: "01 AI 工具与智能体"
+---
+
+ClawHub 在当前 OpenClaw 里不是“一个 GitHub 索引仓库的别名”，而是官方 Skills 注册中心和对应的 CLI 工作流。
+
+如果你要搜索、安装、更新、发布 Skills，当前工程的正确入口是 **`clawhub`**。
+
+网站：
+
+```text
+https://clawhub.com
+```
+
+## ClawHub 是什么
+
+官方文档对它的定位很明确：
+
+- 它是 OpenClaw 的公共 Skills 注册中心
+- Skills 的发布单位是一个包含 `SKILL.md` 的文件夹
+- 你既可以在网页里浏览，也可以用 CLI 搜索、安装、更新、发布
+
+## 当前推荐的安装方式
+
+### 安装 CLI
+
+```bash
+npm i -g clawhub
+```
+
+或者：
+
+```bash
+pnpm add -g clawhub
+```
+
+### 搜索 skill
+
+```bash
+clawhub search "calendar"
+```
+
+### 安装 skill
+
+```bash
+clawhub install <skill-slug>
+```
+
+默认情况下，ClawHub 会把 skill 装到当前工作目录下的 `./skills`，如果存在 OpenClaw 工作区配置，也会回退到那个工作区。
+
+这正好和当前 OpenClaw 的 `<workspace>/skills` 加载机制对上。
+
+## 当前常用命令
+
+### 搜索
+
+```bash
+clawhub search "postgres backups"
+```
+
+### 安装
+
+```bash
+clawhub install my-skill-pack
+```
+
+常见参数：
+
+- `--version <version>`
+- `--force`
+
+### 更新
+
+```bash
+clawhub update <slug>
+clawhub update --all
+```
+
+### 查看已安装列表
+
+```bash
+clawhub list
+```
+
+### 发布
+
+```bash
+clawhub publish ./my-skill --slug my-skill --name "My Skill" --version 1.0.0 --tags latest
+```
+
+### 同步本地 skills
+
+```bash
+clawhub sync --all
+```
+
+这一套命令才是当前项目文档里的正式分发链路。
+
+## ClawHub 和 OpenClaw 的衔接方式
+
+流程其实很直白：
+
+1. 你用 `clawhub install` 把 skill 安到工作区 `skills/`
+2. OpenClaw 在下一个会话里扫描 `<workspace>/skills`
+3. Skill 出现在可用 skills 列表里
+
+也就是说，ClawHub 并不替代 OpenClaw 的 skill loader；它负责的是**分发和同步**。
+
+## 发布一个 skill 的当前正确姿势
+
+### 第一步：先准备好 skill 文件夹
+
+核心要求是：
+
+- 目录里有 `SKILL.md`
+- frontmatter 合法
+- 描述清楚依赖和使用方式
+
+### 第二步：发布
+
+```bash
+clawhub publish ./my-skill \
+  --slug my-skill \
+  --name "My Skill" \
+  --version 1.0.0 \
+  --tags latest
+```
+
+### 第三步：持续同步
+
+如果你在本地维护多个 skill，可以直接：
+
+```bash
+clawhub sync --all
+```
+
+## 当前 CLI 里的重要选项
+
+官方文档列出的全局参数包括：
+
+- `--workdir <dir>`
+- `--dir <dir>`
+- `--site <url>`
+- `--registry <url>`
+- `--no-input`
+
+认证相关命令：
+
+```bash
+clawhub login
+clawhub login --token <token>
+clawhub logout
+clawhub whoami
+```
+
+这说明当前 ClawHub 已经是完整的 registry + CLI 体系，不是单纯静态索引。
+
+## 本地状态保存在哪里
+
+当前文档提到两个本地状态文件：
+
+- 已安装技能锁文件：`.clawhub/lock.json`
+- CLI 认证/配置文件：可通过 `CLAWHUB_CONFIG_PATH` 覆盖
+
+这也是为什么 `clawhub update --all` 能知道你本地装过哪些东西。
+
+## 环境变量
+
+当前 ClawHub 文档列出的常用环境变量包括：
+
+- `CLAWHUB_SITE`
+- `CLAWHUB_REGISTRY`
+- `CLAWHUB_CONFIG_PATH`
+- `CLAWHUB_WORKDIR`
+- `CLAWHUB_DISABLE_TELEMETRY=1`
+
+## 和旧文档最大差别
+
+当前正确表述应该是：
+
+- skills 本体是 `SKILL.md` 目录
+- 安装、更新、发布用 `clawhub`
+- OpenClaw 只负责从 `skills/` 目录加载它们
+
+## 本章小结
+
+- ClawHub 是当前 OpenClaw 的官方 Skills 注册中心
+- 搜索、安装、更新、发布的主命令是 `clawhub ...`
+- Skills 的发布单位是一个包含 `SKILL.md` 的目录
+- 安装后通常落在工作区 `skills/`，由 OpenClaw 在后续会话中加载
+

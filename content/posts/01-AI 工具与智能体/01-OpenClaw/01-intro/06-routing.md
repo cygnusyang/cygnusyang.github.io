@@ -1,0 +1,207 @@
+---
+title: "06-routing"
+date: 2026-05-18
+category: "01 AI 工具与智能体"
+---
+
+OpenClaw 的路由不是“模型自己决定回复到哪里”，而是 **Gateway 按确定性规则选定 agent 和 session key**。当前源码里，这套逻辑主要围绕 `bindings`、`session key` 和线程绑定展开。
+
+## 路由真正解决的问题
+
+路由层要同时回答两个问题：
+
+1. 这条入站消息应该交给哪个 agent
+2. 这条消息应该落到哪个 session key
+
+如果这两步错了，就会出现最糟糕的问题：
+
+- 群里串台
+- 线程上下文断裂
+- 子会话结果回到错误地方
+- WebChat 和聊天渠道看到的上下文不一致
+
+## 核心概念：Session Key
+
+当前官方文档里，OpenClaw 把上下文桶定义成 **session key**。常见形态如下。
+
+### 私聊
+
+私聊会收敛到 agent 的主会话：
+
+```text
+agent:<agentId>:<mainKey>
+```
+
+默认主会话通常长这样：
+
+```text
+agent:main:main
+```
+
+### 群组 / 频道 / 房间
+
+群或频道不会和私聊共用主会话，而是按渠道维度隔离：
+
+```text
+agent:<agentId>:<channel>:group:<id>
+agent:<agentId>:<channel>:channel:<id>
+```
+
+例如：
+
+```text
+agent:main:telegram:group:-1001234567890
+agent:main:discord:channel:123456
+```
+
+### 线程 / 话题
+
+线程会在基础 key 后面继续追加后缀：
+
+- Slack / Discord 线程：`:thread:<threadId>`
+- Telegram forum topic：`:topic:<topicId>`
+
+例如：
+
+```text
+agent:main:discord:channel:123456:thread:987654
+agent:main:telegram:group:-1001234567890:topic:42
+```
+
+这里要注意一个关键点：**OpenClaw 当前没有文档化的那套旧式 scope 配置字符串。**
+
+现在的路由依据是 session key 形态和 bindings 规则，而不是那几个 scope 字符串。
+
+## 先选 agent，再选 session
+
+OpenClaw 当前文档给出的 agent 选择顺序是：
+
+1. 精确 peer 匹配
+2. 父 peer 匹配（线程继承）
+3. Discord 的 `guildId + roles`
+4. Discord 的 `guildId`
+5. Slack 的 `teamId`
+6. `accountId`
+7. `channel`
+8. 默认 agent
+
+也就是说，**路由优先级是由 `bindings` 决定的**。
+
+一个最小例子：
+
+```json5
+{
+  agents: {
+    list: [
+      {
+        id: "support",
+        name: "Support",
+        workspace: "~/.openclaw/workspace-support",
+      },
+    ],
+  },
+  bindings: [
+    {
+      match: { channel: "slack", teamId: "T123" },
+      agentId: "support",
+    },
+    {
+      match: {
+        channel: "telegram",
+        peer: { kind: "group", id: "-100123" },
+      },
+      agentId: "support",
+    },
+  ],
+}
+```
+
+一旦 agent 决定了，后面的会话仓库、工作区、转录和并发控制也就跟着这个 agent 走。
+
+## 当前路由模型的直觉理解
+
+你可以把它想成两层：
+
+- **bindings** 决定“这是谁的大脑”
+- **session key** 决定“这条消息属于这个大脑里的哪个上下文桶”
+
+这比旧式的 `per-sender / per-thread / per-channel` 说法更接近当前源码。
+
+## 线程绑定和子会话
+
+当 `sessions_spawn` 或 ACP session 请求线程绑定，而且渠道支持时，OpenClaw 会把某个线程绑定到目标 session。
+
+这时后续消息就不再只按普通群聊规则分流，而是优先落到这个绑定 session。
+
+官方文档里重点提到的内置支持渠道是 Discord。相关能力包括：
+
+- `/focus`
+- `/unfocus`
+- `/agents`
+- `/session idle`
+- `/session max-age`
+
+这类机制解决的是“持久线程继续对话”，不是普通消息分发。
+
+## WebChat 的特殊点
+
+WebChat 也走同一套路由体系，但它默认附着在**选中的 agent 主会话**上。
+
+这带来两个结果：
+
+- WebChat 看到的是这个 agent 的主上下文
+- 它不是一套单独的“网页版旧式 scope 配置”
+
+所以如果你在别的渠道上把某个 agent 的主会话聊得很长，WebChat 打开时也会看到同一 agent 的这段上下文。
+
+## Broadcast Groups 不是路由冲突，而是有意多播
+
+当前源码还有一个容易混淆的能力：**broadcast groups**。
+
+它的用途不是“随机让多个 agent 都试试”，而是在 OpenClaw 原本就应该回复的时候，把同一条消息并行发给多个 agent。
+
+例如：
+
+```json5
+{
+  broadcast: {
+    strategy: "parallel",
+    "120363403215116621@g.us": ["alfred", "baerbel"],
+    "+15555550123": ["support", "logger"],
+  },
+}
+```
+
+这属于显式配置的多播，不是普通路由算法失控。
+
+## 会话存储位置
+
+默认状态目录下，每个 agent 都有自己的 session store：
+
+- `~/.openclaw/agents/<agentId>/sessions/sessions.json`
+- 对应的 JSONL transcript 文件也在附近
+
+这也是为什么“先选 agent”很重要：agent 一旦不同，整个会话存储命名空间就不同。
+
+## 常见问题
+
+### Q: 群里为什么没有 `per-sender` 配置了？
+
+因为当前文档和源码已经转向以 `bindings` + `session key` 形态来表达路由规则，而不是靠一个旧式 scope 字符串覆盖所有场景。
+
+### Q: 线程消息为什么能持续命中同一个子会话？
+
+因为这里走的是 thread binding，不是普通 group/channel key 推导。
+
+### Q: WebChat 会不会单独开一个新的路由系统？
+
+不会。它依然挂在 Gateway 的 agent 和 session 上，只是默认更接近 agent 主会话。
+
+## 本章小结
+
+- 当前 OpenClaw 路由的核心是 `bindings` 和 `session key`
+- 私聊通常收敛到主会话，群组/频道按渠道对象隔离，线程再追加后缀
+- agent 选择是确定性优先级匹配，不是模型自由决定
+- 持久线程对话依赖 thread binding
+- WebChat 不是另一套路由模型，它仍然附着在现有 agent/session 体系上
+

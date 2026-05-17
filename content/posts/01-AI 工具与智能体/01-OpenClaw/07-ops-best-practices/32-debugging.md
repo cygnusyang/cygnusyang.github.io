@@ -1,0 +1,242 @@
+---
+title: "32-debugging"
+date: 2026-05-18
+category: "01 AI 工具与智能体"
+---
+
+OpenClaw 出问题了怎么快速定位？本章汇总常用调试技巧，帮你快速找到问题解决问题。
+
+## 第一步：运行健康检查
+
+不管什么问题，先跑这个：
+
+```bash
+openclaw doctor
+```
+
+`doctor` 会自动检查：
+
+- 配置文件格式对不对
+- 必需配置项有没有填
+- API 密钥能不能用
+- 网络通不通各个提供者
+- 插件依赖满足不满足
+- 端口被不被占用
+
+很多问题 `doctor` 直接告诉你哪里错了，甚至自动修复。
+
+**修复问题：**
+
+```bash
+openclaw doctor --fix
+```
+
+自动修复常见问题（比如配置格式迁移）。
+
+## 看日志
+
+大部分问题日志里都有错误信息。
+
+### 看最近日志
+
+```bash
+openclaw logs
+```
+
+显示 Gateway 最近的日志，从最新开始。
+
+### 过滤关键词
+
+```bash
+openclaw logs --grep "error"
+openclaw logs --grep "anthropic"
+openclaw logs --grep "failover"
+```
+
+### 实时跟踪日志
+
+```bash
+openclaw logs --follow
+```
+
+实时输出新日志，方便调试正在发生的问题。
+
+### 服务日志（systemd）
+
+如果你用 systemd 跑服务：
+
+```bash
+journalctl -u openclaw -f
+```
+
+## 常见问题分类排查
+
+### 问题 1：Gateway 启动失败
+
+**排查：**
+
+1. `openclaw doctor` 先看配置错了吗
+2. 看端口是不是被占了：`lsof -i :18789`
+3. 看日志：`openclaw logs` 找错误信息
+4. 权限问题：`~/.openclaw/` 目录权限对不对，是不是 openclaw 用户能读写
+
+**常见原因：**
+- JSON 语法错了（少逗号、引号）
+- 端口被别的程序占了
+- 权限不够读配置文件
+- 依赖没装全（`pnpm install` 没跑完）
+
+### 问题 2：AI 不响应，一直转圈
+
+**排查：**
+
+1. 看模型认证：`openclaw models status`
+   - 密钥过期了？
+   - 额度用完了？
+2. 看网络通不通：`curl https://api.anthropic.com/v1/models`
+   - 是不是网络被墙了？
+   - 代理配置对不对？
+3. 看日志找错误：`openclaw logs --grep "anthropic\|openai"`
+   - 401 → 密钥错
+   - 429 → 限流
+   - 500 → 云端宕机，等一会或者切 fallback
+
+**解决：**
+- 密钥错了重新配：`openclaw models auth setup-token --provider anthropic`
+- 限流等一会，或者开故障转移切备用模型
+- 网络问题检查代理配置
+
+### 问题 3：配对不上，收不到批准请求
+
+**排查：**
+
+1. Gateway 在线吗？`openclaw gateway status`
+2. 渠道对不对？`openclaw channels status`
+3. 看日志：`openclaw logs --grep "pairing"`
+4. 你的 bot token 对不对？
+
+**常见原因：**
+- bot 配置错了 token
+- Gateway 没启动，或者没连上网
+- 安全组没放行端口
+- Webhook 地址错了
+
+### 问题 4：工具调用失败
+
+**排查：**
+
+1. 工具启用了吗？`openclaw tools list`
+2. 权限配置对不对？看文件系统白名单
+3. 命令在白名单里吗？
+4. 看日志：`openclaw logs --grep "tool"`
+
+**常见原因：**
+- 路径不在允许列表 → 调整配置权限
+- 命令不在白名单 → 添加命令到白名单
+- 文件不存在 → 路径对不对
+
+### 问题 5：插件加载失败
+
+**排查：**
+
+1. `openclaw plugins doctor` 检查插件健康
+2. `openclaw plugins list` 看插件状态
+3. 依赖都装了吗？插件目录 `node_modules` 存在吗
+
+**解决：**
+- `openclaw plugins reinstall <plugin-id>` 重新装
+
+### 问题 6：Cron 任务没触发
+
+**排查：**
+
+1. `openclaw cron list` 看任务是不是 `enabled: true`
+2. 时区对不对？`timezone: "Asia/Shanghai"` 对吗
+3. cron 表达式写对了吗？https://crontab.guru/ 可以验证
+4. 看日志：`openclaw logs --grep "cron"`
+
+## 开启调试日志
+
+想要更详细日志，在配置开 debug，写在你的**主配置文件** `~/.openclaw/openclaw.json` 的根级别：
+
+```json5
+{
+  logging: {
+    level: "debug", // trace > debug > info > warn > error
+  },
+}
+```
+
+重启 Gateway 就有详细日志，开发排查问题有用。生产环境开 info 够了。
+
+## 网络问题排查
+
+### 测试 API 连通
+
+```bash
+# 测试 Anthropic API
+curl -i https://api.anthropic.com/v1/models \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01"
+```
+
+```bash
+# 测试 OpenAI API
+curl -i https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+```
+
+### 检查代理
+
+如果你用代理，检查环境变量：
+
+```bash
+echo $HTTP_PROXY
+echo $HTTPS_PROXY
+```
+
+OpenClaw 会读取环境变量代理，也可以配置，写在你的**主配置文件** `~/.openclaw/openclaw.json` 的根级别：
+
+```json5
+{
+  network: {
+    proxy: "http://proxy:port",
+  },
+}
+```
+
+## 获取帮助
+
+实在找不到问题，可以这样提 issue：
+
+1. `openclaw --version` 输出版本号
+2. 把错误日志贴出来（去掉密钥！）
+3. 说一下你做了什么，期望发生什么，实际发生什么
+4. 说一下你的操作系统、Node.js 版本
+
+更快得到帮助。
+
+## 调试 checklist
+
+```
+- [ ] 跑了 openclaw doctor 吗？
+- [ ] 看了日志找到错误信息了吗？
+- [ ] 检查配置语法对吗？JSON5 语法对吗？
+- [ ] 检查密钥对不对，过期没？
+- [ ] 检查网络通不通API？
+- [ ] 检查端口有没有被占？
+- [ ] 检查权限对不对，文件能读吗？
+```
+
+按顺序来，90% 的问题都能快速找到。
+
+## 本章小结
+
+- 出问题先跑 `openclaw doctor`，自动检查常见问题
+- 善用日志：`openclaw logs` 过滤关键词找错误
+- 按分类排查：启动失败、不响应、配对失败、工具失败各有套路
+- 开启 debug 日志拿更多信息
+- 本文 checklist 按顺序查，大部分问题很快找到
+
+---
+

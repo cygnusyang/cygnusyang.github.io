@@ -1,0 +1,257 @@
+---
+title: "19-skills"
+date: 2026-05-18
+category: "01 AI 工具与智能体"
+---
+
+当前 OpenClaw 的 Skills 采用 **AgentSkills 风格的目录 + `SKILL.md`** 方案。
+
+这一章按当前工程里的真实结构来讲。
+
+## 什么是 Skill
+
+在当前 OpenClaw 里，一个 Skill 本质上是：
+
+> 一个目录，目录里至少有一个带 YAML frontmatter 的 `SKILL.md`，用来教智能体在什么条件下、如何使用某组工具或外部能力。
+
+所以 Skill 更接近“可加载的能力说明包”，而不是早期设想里的“内建工作流 DSL”。
+
+## 最小结构
+
+最小可用 Skill 目录可以非常简单：
+
+```text
+my-skill/
+└── SKILL.md
+```
+
+最小 frontmatter 例子：
+
+```markdown
+---
+name: my-skill
+description: Do one thing well.
+---
+```
+
+正文里再写清楚：
+
+- 什么时候该触发这个 skill
+- 依赖哪些命令或环境变量
+- 推荐怎么调用
+- 常见命令例子是什么
+
+## 当前加载位置和优先级
+
+官方文档给出的加载来源有三个主层级：
+
+1. 内置 skills
+2. `~/.openclaw/skills`
+3. `<workspace>/skills`
+
+优先级是：
+
+```text
+<workspace>/skills > ~/.openclaw/skills > 内置 skills
+```
+
+此外还可以通过：
+
+```text
+skills.load.extraDirs
+```
+
+补充额外目录。
+
+这点很重要，因为当前 skill 的“安装”本质上就是把 skill 目录放进 OpenClaw 会扫描的位置。
+
+## 当前真正的文件格式
+
+当前核心文件是 `SKILL.md`，并且 frontmatter 支持这些重要键：
+
+- `name`
+- `description`
+- `homepage`
+- `user-invocable`
+- `disable-model-invocation`
+- `command-dispatch`
+- `command-tool`
+- `command-arg-mode`
+- `metadata`
+
+其中 `metadata` 需要是**单行 JSON 对象**，这是当前解析器的约束。
+
+## metadata 门控是当前重点
+
+现在的 skill 不是“装上就一律可见”，而是会在加载阶段按 `metadata.openclaw` 过滤。
+
+文档里的典型写法：
+
+```markdown
+---
+name: nano-banana-pro
+description: Generate or edit images via Gemini 3 Pro Image
+metadata:
+  {
+    "openclaw":
+      {
+        "requires": { "bins": ["uv"], "env": ["GEMINI_API_KEY"], "config": ["browser.enabled"] },
+        "primaryEnv": "GEMINI_API_KEY",
+      },
+  }
+---
+```
+
+当前常见门控字段包括：
+
+- `requires.bins`
+- `requires.anyBins`
+- `requires.env`
+- `requires.config`
+- `primaryEnv`
+- `os`
+- `always`
+- `install`
+
+这才是现在 skills 系统的核心，不是旧 DSL。
+
+## 一个更贴近当前源码的 Skill 例子
+
+```markdown
+---
+name: blogwatcher
+description: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI.
+metadata:
+  {
+    "openclaw":
+      {
+        "requires": { "bins": ["blogwatcher"] },
+        "install":
+          [
+            {
+              "id": "go",
+              "kind": "go",
+              "module": "github.com/Hyaxia/blogwatcher/cmd/blogwatcher@latest",
+              "bins": ["blogwatcher"],
+              "label": "Install blogwatcher (go)",
+            },
+          ],
+      },
+  }
+---
+
+# blogwatcher
+
+Track blog and RSS/Atom feed updates with the `blogwatcher` CLI.
+
+- Add a blog: `blogwatcher add "My Blog" https://example.com`
+- Scan for updates: `blogwatcher scan`
+- List articles: `blogwatcher articles`
+```
+
+这个例子体现了当前 skills 的真实风格：
+
+- 不是定义一个内部工作流引擎
+- 而是告诉 agent：这个能力何时可用、依赖什么、推荐怎么用
+
+## 配置覆盖怎么做
+
+当前配置文件里，skills 的覆盖入口在：
+
+```text
+skills.entries.<name>
+```
+
+例如：
+
+```json5
+{
+  skills: {
+    entries: {
+      "nano-banana-pro": {
+        enabled: true,
+        apiKey: "GEMINI_KEY_HERE",
+        env: {
+          GEMINI_API_KEY: "GEMINI_KEY_HERE",
+        },
+        config: {
+          model: "nano-pro",
+        },
+      },
+      peekaboo: { enabled: true },
+      sag: { enabled: false },
+    },
+  },
+}
+```
+
+规则很清楚：
+
+- `enabled: false` 可禁用 skill
+- `env` 和 `apiKey` 在 agent run 生命周期内注入
+- 自定义字段放到 `config`
+
+## 会话快照和热更新
+
+当前文档特别强调了一点：skills 列表通常在**会话开始时快照**。
+
+这意味着：
+
+- 你改了 skill 文件
+- 当前会话不一定立刻看到变化
+- 新开会话时一定会重新评估
+
+如果开启 watcher，也可能在会话中热刷新，但不应该把它当成唯一刷新机制。
+
+## 当前 CLI 命令
+
+和旧稿不同，OpenClaw 当前 CLI 里稳定的 skills 命令主要是：
+
+```bash
+openclaw skills list
+openclaw skills info <name>
+openclaw skills check
+```
+
+安装、搜索、更新、发布技能，现在主要走 **ClawHub**。
+
+## 开发一个 skill 的正确姿势
+
+### 第一步：先写 `SKILL.md`
+
+把最核心的四件事讲明白：
+
+1. 什么时候触发
+2. 依赖什么
+3. 常用命令怎么写
+4. 有什么限制
+
+### 第二步：用 `metadata.openclaw.requires` 做门控
+
+不要让一个缺依赖的 skill 永远出现在 prompt 里。
+
+### 第三步：把资源文件放在同目录
+
+当前官方模型允许 skill 目录里带辅助文件、脚本和资源，但主入口仍然是 `SKILL.md`。
+
+### 第四步：用 `openclaw skills check` 验证
+
+先检查依赖和可见性，再开始调试。
+
+## Skill 和插件的关系
+
+当前源码支持插件通过 `openclaw.plugin.json` 暴露自己的 skills 目录。也就是说：
+
+- 插件可以带工具
+- 也可以顺带带 skill
+
+所以 skill 是“如何使用能力”的说明层，插件是“把能力接进系统”的扩展层。两者可以独立，也可以一起出现。
+
+## 本章小结
+
+- 当前 OpenClaw skill 的标准入口是 `SKILL.md`
+- skills 从内置目录、`~/.openclaw/skills` 和 `<workspace>/skills` 加载
+- `metadata.openclaw` 门控是当前系统的重点能力
+- `skills.entries.*` 用于启用、注入 env/apiKey 和传入配置
+- 安装和发布工作流现在主要走 ClawHub
+
