@@ -2,21 +2,24 @@
 
 ## 当前状态
 
-✅ **Hugo 配置已完成** - 已配置 Waline 评论系统支持
+✅ **Hugo 配置已完成** - 已配置 Giscus 评论系统
 ✅ **主题支持已验证** - FixIt 主题支持评论系统
-✅ **配置指南已创建** - 提供详细配置步骤
-✅ **支持匿名评论** - 无需 GitHub 账户即可留言
+✅ **配置简单** - 无需服务器和数据库
+⚠️ **需要 GitHub 账户登录** - 不支持匿名评论
 
-## 推荐方案: Waline
+## 当前方案: Giscus
 
-**为什么选择 Waline?**
-- ✅ 支持匿名评论（无需登录）
-- ✅ 完全免费，基于 LeanCloud
-- ✅ FixIt 主题原生支持
+**为什么选择 Giscus?**
+- ✅ 配置最简单
+- ✅ 完全免费
+- ✅ 无需服务器和数据库
+- ✅ 基于 GitHub Discussions
 - ✅ 支持邮件通知
-- ✅ 支持评论审核和管理后台
-- ✅ 支持反垃圾评论
-- ✅ 支持 Markdown 和表情包
+- ✅ 适合 GitHub Pages 静态站点
+
+**缺点：**
+- ❌ 需要 GitHub 账户登录
+- ❌ 不支持匿名评论
 
 ## 快速开始
 
@@ -27,8 +30,8 @@
 ### 步骤 1: 配置 Supabase（推荐）
 1. 访问 [Supabase 官网](https://supabase.com/) 注册账号
 2. 创建项目（免费）
-3. 创建数据库表（提供 SQL 脚本）
-4. 记录 Project URL 和 anon public key
+3. 导入 Waline 官方 PostgreSQL 建表脚本 `waline.pgsql`
+4. 记录 PostgreSQL 连接信息（Host、Port、Database、User、Password）
 
 详细步骤请参考：[SUPABASE_QUICKSTART.md](./SUPABASE_QUICKSTART.md)
 
@@ -38,7 +41,16 @@
 ### 步骤 2: 部署 Waline 服务
 推荐使用 Vercel 部署（免费）：
 1. 访问 [Waline Vercel 模板](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwalinejs%2Fwaline%2Ftree%2Fmain%2Fexample)
-2. 配置环境变量（LeanCloud 凭证）
+2. 配置 Supabase PostgreSQL 环境变量：
+   ```env
+   PG_DB=postgres
+   PG_USER=postgres
+   PG_PASSWORD=你的 Supabase 数据库密码
+   PG_HOST=db.xxxxxx.supabase.co
+   PG_PORT=5432
+   PG_SSL=true
+   PG_PREFIX=wl_
+   ```
 3. 部署完成后记录服务地址
 
 ### 步骤 3: 更新 Hugo 配置
@@ -89,8 +101,8 @@ Waline 支持邮件通知：
 - 回复通知
 
 **配置方法:**
-1. 在 LeanCloud 控制台配置邮件模板
-2. 配置 SMTP 服务器（推荐阿里云邮件推送或腾讯云邮件）
+1. 在 Vercel Waline 项目中配置 SMTP 环境变量
+2. 配置 SMTP 服务器（推荐 Resend、SendGrid、阿里云邮件推送或腾讯云邮件）
 3. 用户填写邮箱后可接收回复通知
 
 详细配置请参考：[WALINE_SETUP.md](./WALINE_SETUP.md#邮件通知配置)
@@ -100,7 +112,7 @@ Waline 支持邮件通知：
 ### 访问管理后台
 1. 访问你的 Waline 服务地址
 2. 点击右上角"管理"
-3. 使用 LeanCloud 的 App ID 和 Master Key 登录
+3. 按 Waline 管理后台提示创建或登录管理员账号
 
 ### 管理功能
 - 查看所有评论

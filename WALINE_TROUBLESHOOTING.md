@@ -17,11 +17,32 @@ LEAN_KEY=你的_App_Key
 LEAN_MASTER_KEY=你的_Master_Key
 ```
 
-#### 使用 Supabase
+#### 使用 Supabase / PostgreSQL（当前推荐）
+
+Waline 使用 Supabase 时不是通过 `SUPABASE_URL` / `SUPABASE_KEY` 连接 Supabase API，而是把 Supabase 当作 PostgreSQL 数据库直连。因此 Vercel 环境变量应使用 `PG_*` 或 `POSTGRES_*`。
+
+推荐使用 `PG_*`：
+
 ```
-SUPABASE_URL=https://xxxxxxxx.supabase.co
-SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SUPABASE_MASTER_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+PG_DB=postgres
+PG_USER=postgres
+PG_PASSWORD=你的 Supabase 数据库密码
+PG_HOST=db.xxxxxx.supabase.co
+PG_PORT=5432
+PG_SSL=true
+PG_PREFIX=wl_
+```
+
+或使用等价的 `POSTGRES_*`：
+
+```
+POSTGRES_DATABASE=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=你的 Supabase 数据库密码
+POSTGRES_HOST=db.xxxxxx.supabase.co
+POSTGRES_PORT=5432
+POSTGRES_SSL=true
+POSTGRES_PREFIX=wl_
 ```
 
 #### 使用 MySQL
@@ -76,7 +97,7 @@ MYSQL_PASSWORD=密码
 SELECT table_name 
 FROM information_schema.tables 
 WHERE table_schema = 'public' 
-  AND table_name IN ('waline_comment', 'waline_user', 'waline_counter');
+  AND table_name IN ('wl_comment', 'wl_users', 'wl_counter');
 ```
 
 应该返回 3 个表名。
@@ -84,11 +105,17 @@ WHERE table_schema = 'public'
 3. 检查表结构：
 
 ```sql
--- 检查 waline_comment 表结构
+-- 检查 wl_comment 表结构
 SELECT column_name, data_type 
 FROM information_schema.columns 
-WHERE table_name = 'waline_comment' 
+WHERE table_name = 'wl_comment'
   AND table_schema = 'public';
+```
+
+如果这些表不存在，请在 Supabase SQL Editor 中导入 Waline 官方 PostgreSQL 建表脚本：
+
+```
+https://raw.githubusercontent.com/walinejs/waline/main/assets/waline.pgsql
 ```
 
 ### 6. 常见错误及解决方案
@@ -103,19 +130,29 @@ WHERE table_name = 'waline_comment'
 
 #### 错误 3：数据库连接失败
 **症状**：500 错误，日志显示 `connection refused` 或 `timeout`
-**解决**：检查 Supabase URL 和 Key 是否正确
+**解决**：检查 `PG_HOST`、`PG_PORT`、`PG_USER`、`PG_PASSWORD`、`PG_SSL` 是否正确
 
 #### 错误 4：权限问题
 **症状**：500 错误，日志显示 `permission denied`
-**解决**：检查 Supabase RLS 策略是否允许匿名访问
+**解决**：确认使用的是 Waline 官方表结构；如启用了 RLS，需要确认策略允许 Waline 服务端需要的读写操作
 
 ## 🛠️ 快速修复
 
-### 方案 1：使用 LeanCloud（推荐新手）
+### 方案 1：检查 Supabase PostgreSQL 配置
 
-如果 Supabase 配置复杂，可以改用 LeanCloud：
+1. 确认 Vercel 使用的是 `PG_*` 或 `POSTGRES_*` 环境变量，而不是只配置 `SUPABASE_URL` / `SUPABASE_KEY`
+2. 确认 `PG_HOST` 形如 `db.xxxxxx.supabase.co`
+3. 确认 `PG_PORT=5432`
+4. 确认 `PG_SSL=true`
+5. 确认 Supabase SQL Editor 已导入 Waline 官方 `waline.pgsql`
+6. 确认表名是 `wl_comment`、`wl_users`、`wl_counter`
+7. 修改环境变量后，在 Vercel 重新部署
 
-1. 注册 [LeanCloud 国际版](https://console.leancloud.app/)（支持新用户）
+### 方案 2：使用 LeanCloud（仅限已有账号）
+
+如果你已经有 LeanCloud 国际版账号，也可以使用 LeanCloud：
+
+1. 登录 [LeanCloud 国际版](https://console.leancloud.app/)
 2. 创建应用
 3. 配置环境变量：
    ```
@@ -123,13 +160,6 @@ WHERE table_name = 'waline_comment'
    LEAN_KEY=你的_App_Key
    LEAN_MASTER_KEY=你的_Master_Key
    ```
-4. 重新部署
-
-### 方案 2：检查 Supabase 配置
-
-1. 确认环境变量名称是 `SUPABASE_URL`、`SUPABASE_KEY`、`SUPABASE_MASTER_KEY`
-2. 确认数据库表已创建
-3. 确认 RLS 策略允许匿名访问
 4. 重新部署
 
 ## 📞 获取帮助
