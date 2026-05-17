@@ -200,10 +200,9 @@ pygmentsCodefencesNumberInline = true
   enable = true
   
   # Waline 评论系统配置 (https://waline.js.org/) - 支持匿名评论
-  # 当前推荐使用 Supabase/PostgreSQL，并在 Vercel 配置 PG_* 或 POSTGRES_* 环境变量
-  # 配置指南: SUPABASE_QUICKSTART.md / WALINE_TROUBLESHOOTING.md
+  # 已停用，Vercel Serverless Function 持续报错 (FUNCTION_INVOCATION_FAILED)
   [params.page.comment.waline]
-    enable = true  # 匿名评论已开启（昵称必填，邮箱可选）
+    enable = false
     serverURL = "https://cygnus-blog-comments-3gbflut4g-cygnusyang-s-projects.vercel.app"  # 请填写你的 Waline 服务地址（如：https://your-waline.vercel.app）
     lang = "zh-CN"
     visitor = true  # 文章访问量统计
@@ -218,7 +217,7 @@ pygmentsCodefencesNumberInline = true
   # Giscus 评论系统配置 (https://giscus.app) - 需要 GitHub 账户登录
   # 基于 GitHub Discussions，无需服务器和数据库
   [params.page.comment.giscus]
-    enable = false
+    enable = true  # 替代 Waline，基于 GitHub Discussions
     # GitHub 仓库信息
     repo = "cygnusyang/cygnusyang.github.io"  # 你的 GitHub Pages 仓库
     repoId = "R_kgDOSUhMhQ"  # Giscus 自动生成
