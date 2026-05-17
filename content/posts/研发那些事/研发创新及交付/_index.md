@@ -5,7 +5,6 @@ draft: false
 icon: 🚀
 sort_by: Weight
 sort_order: asc
-layout: docs
 cascade:
   - category: "研发创新及交付"
     collections: ["研发那些事/研发创新及交付"]
